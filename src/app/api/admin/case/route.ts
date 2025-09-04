@@ -2,8 +2,9 @@
 import { NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { getStorage } from "@/server/storage/adapter";
 
-const CASES_DIR = path.join(process.cwd(), "content", "case-studies");
+const CASES_DIR = path.join(process.cwd(), "content", "case-studies"); // used only for local history backups
 const HISTORY_DIR = path.join(CASES_DIR, ".history");
 
 function bad(msg: string, code = 400) {
@@ -91,52 +92,34 @@ export async function POST(req: Request) {
     const socialCaption = toStr(body.socialCaption);
     if (socialCaption) data.socialCaption = socialCaption;
 
-    await fs.mkdir(CASES_DIR, { recursive: true });
-    const filePath = path.join(CASES_DIR, `${slug}.json`);
-    const prevFilePath = prevSlug && prevSlug !== slug
-      ? path.join(CASES_DIR, `${prevSlug}.json`)
-      : filePath;
+    const storage = getStorage();
 
     // backup previous version if exists
     try {
-      const prevRaw = await fs.readFile(prevFilePath, "utf8").catch(() => "");
-      if (prevRaw) {
+      const prev = await storage.getCase(prevSlug && prevSlug !== slug ? prevSlug : slug);
+      if (prev) {
         const ts = new Date().toISOString().replace(/[:.]/g, "-");
         const dir = path.join(HISTORY_DIR, prevSlug && prevSlug !== slug ? prevSlug : slug);
         await fs.mkdir(dir, { recursive: true });
-        await fs.writeFile(path.join(dir, `${ts}.json`), prevRaw, "utf8");
+        await fs.writeFile(path.join(dir, `${ts}.json`), JSON.stringify(prev, null, 2), "utf8");
       }
     } catch {}
 
     // If renaming from prevSlug -> slug, handle JSON + assets directory move
     if (prevSlug && prevSlug !== slug) {
-      const prevFile = path.join(CASES_DIR, `${prevSlug}.json`);
-      try {
-        // Write new first, then clean up old JSON
-        await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
-        // Remove old JSON if exists
-        await fs.unlink(prevFile).catch(() => {});
-        // Try to move public assets folder if present
-        const prevPub = path.join(process.cwd(), "public", "cases", prevSlug);
-        const newPub = path.join(process.cwd(), "public", "cases", slug);
-        try {
-          await fs.mkdir(path.join(process.cwd(), "public", "cases"), { recursive: true });
-          // Only rename if destination doesn't exist
-          await fs.rename(prevPub, newPub).catch(() => {});
-        } catch {}
-      } catch (e) {
-        // If anything failed, attempt to still write the new file
-        await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
+      // Write new JSON, delete previous, and try to move assets folder via adapter
+      await storage.putCase(slug, data);
+      await storage.deleteCase(prevSlug);
+      if (typeof (storage as any).moveAssetsFolder === 'function') {
+        try { await (storage as any).moveAssetsFolder(prevSlug, slug); } catch {}
       }
     } else {
-      await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
+      await storage.putCase(slug, data);
     }
 
     // scaffold public folder for assets (non-fatal if fails)
-    try {
-      const pub = path.join(process.cwd(), "public", "cases", slug);
-      await fs.mkdir(pub, { recursive: true });
-    } catch {}
+    // With local adapter, ensure folder exists (adapter will also create on upload)
+    try { await fs.mkdir(path.join(process.cwd(), "public", "cases", slug), { recursive: true }); } catch {}
 
     // optional n8n ping
     const hook = process.env.N8N_WEBHOOK_URL;
@@ -165,22 +148,19 @@ export async function GET(req: Request) {
   }
   const slug = (searchParams.get("slug") || "").trim();
   try {
-    const base = path.join(process.cwd(), "content", "case-studies");
+    const storage = getStorage();
     if (slug) {
-      const file = path.join(base, `${slug}.json`);
-      const raw = await fs.readFile(file, "utf8");
-      return NextResponse.json(JSON.parse(raw));
+      const data = await storage.getCase(slug);
+      if (!data) return bad("Not found", 404);
+      return NextResponse.json(data);
     }
-    const files = await fs.readdir(base).catch(() => []);
+    const slugs = await storage.listCaseSlugs();
     const items = await Promise.all(
-      files
-        .filter((f) => f.endsWith(".json"))
-        .map(async (f) => {
-          try {
-            const raw = JSON.parse(await fs.readFile(path.join(base, f), "utf8"));
-            return { slug: raw.slug || f.replace(/\.json$/, ""), title: raw.title || "", year: raw.year || 0 };
-          } catch { return null; }
-        })
+      slugs.map(async (s) => {
+        const raw = await storage.getCase(s);
+        if (!raw) return null;
+        return { slug: raw.slug || s, title: raw.title || "", year: raw.year || 0 };
+      })
     );
     return NextResponse.json((items.filter(Boolean) as any[]).sort((a, b) => (b.year || 0) - (a.year || 0)));
   } catch (err) {
@@ -199,11 +179,10 @@ export async function DELETE(req: Request) {
   const slug = (searchParams.get("slug") || "").trim();
   if (!slug) return bad("Missing slug");
   try {
-    const file = path.join(CASES_DIR, `${slug}.json`);
-    await fs.unlink(file);
+    const storage = getStorage();
+    await storage.deleteCase(slug);
     return NextResponse.json({ ok: true });
   } catch (e: any) {
-    if (e && e.code === "ENOENT") return bad("Not found", 404);
     return bad("Server error", 500);
   }
 }

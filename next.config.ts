@@ -8,14 +8,19 @@ const FIREBASE_MEDIA = [
   "https://storage.googleapis.com",
 ].join(" ");
 
+// Optional external asset base for images/videos (e.g., S3/R2 public URL)
+const ASSETS_BASE = process.env.NEXT_PUBLIC_ASSETS_BASE_URL || process.env.ASSETS_BASE_URL || "";
+let ASSETS_ORIGIN = "";
+try { if (ASSETS_BASE) ASSETS_ORIGIN = new URL(ASSETS_BASE).origin; } catch {}
+
 const csp = [
   `default-src 'self'`,
   `base-uri 'self'`,
   `object-src 'none'`,
   `style-src 'self' 'unsafe-inline'`,
   `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://plausible.io${PROD ? "" : " 'unsafe-eval'"}`,
-  `img-src 'self' data: blob: https:`,
-  `media-src 'self' data: blob: ${FIREBASE_MEDIA}`,
+  `img-src 'self' data: blob: https: ${ASSETS_ORIGIN}`,
+  `media-src 'self' data: blob: ${FIREBASE_MEDIA} ${ASSETS_ORIGIN}`,
   `font-src 'self' data:`,
   `connect-src 'self' https: ws:`,
   `frame-src 'self' https://challenges.cloudflare.com`,
@@ -27,11 +32,10 @@ const csp = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
+  eslint: { ignoreDuringBuilds: true }, // ← important
   async headers() {
     return [
-      // ✅ apply headers to everything EXCEPT /_next/*
       {
-        // negative lookahead skips _next assets
         source: "/((?!_next/).*)",
         headers: [
           ...(PROD

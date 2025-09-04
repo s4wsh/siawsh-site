@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { getStorage } from "@/server/storage/adapter";
 
 function bad(msg: string, code = 400) {
   return NextResponse.json({ ok: false, error: msg }, { status: code });
@@ -20,14 +21,12 @@ const PUB_CASES = path.join(process.cwd(), "public", "cases");
 export async function GET(req: Request) {
   if (!(await ensureAuth(req))) return bad("Unauthorized", 401);
   try {
-    const files = await fs.readdir(CASES_DIR).catch(() => []);
+    const storage = getStorage();
+    const slugs = await storage.listCaseSlugs();
     const cases: Array<{ slug: string; content: any }> = [];
-    for (const f of files.filter((x) => x.endsWith(".json"))) {
-      const slug = f.replace(/\.json$/i, "");
-      const raw = await fs.readFile(path.join(CASES_DIR, f), "utf8").catch(() => "");
-      if (raw) {
-        try { cases.push({ slug, content: JSON.parse(raw) }); } catch {}
-      }
+    for (const slug of slugs) {
+      const obj = await storage.getCase(slug);
+      if (obj) cases.push({ slug, content: obj });
     }
 
     // history
@@ -46,24 +45,11 @@ export async function GET(req: Request) {
 
     // assets index (no file data, just metadata)
     const assets: Record<string, Array<{ name: string; size: number; type: string }>> = {};
-    const assetSlugs = await fs.readdir(PUB_CASES).catch(() => []);
-    for (const s of assetSlugs) {
-      const dir = path.join(PUB_CASES, s);
-      const names = await fs.readdir(dir).catch(() => []);
-      const list: Array<{ name: string; size: number; type: string }> = [];
-      for (const n of names) {
-        try {
-          const stat = await fs.stat(path.join(dir, n));
-          if (!stat.isFile()) continue;
-          const type = /\.(png|jpe?g|gif|webp|svg|avif)$/i.test(n)
-            ? "image"
-            : /\.(mp4|mov|webm|ogg|m4v)$/i.test(n)
-            ? "video"
-            : "other";
-          list.push({ name: n, size: stat.size, type });
-        } catch {}
-      }
-      if (list.length) assets[s] = list;
+    for (const s of slugs) {
+      try {
+        const items = await storage.listAssets(s);
+        if (items.length) assets[s] = items.map(it => ({ name: it.name, size: it.size, type: it.type || 'other' }));
+      } catch {}
     }
 
     return NextResponse.json({ ok: true, cases, history, assets });
@@ -90,18 +76,16 @@ export async function POST(req: Request) {
     const data = item?.content ?? null;
     if (!data || typeof data !== "object") continue;
     try {
-      // backup current before overwrite
-      const dst = path.join(CASES_DIR, `${slug}.json`);
-      const current = await fs.readFile(dst, "utf8").catch(() => "");
-      if (current) {
+      const storage = getStorage();
+      const prev = await storage.getCase(slug);
+      if (prev) {
         const ts = new Date().toISOString().replace(/[:.]/g, "-");
         await fs.mkdir(path.join(HISTORY_DIR, slug), { recursive: true });
-        await fs.writeFile(path.join(HISTORY_DIR, slug, `${ts}-import.json`), current, "utf8");
+        await fs.writeFile(path.join(HISTORY_DIR, slug, `${ts}-import.json`), JSON.stringify(prev, null, 2), "utf8");
       }
-      await fs.writeFile(dst, JSON.stringify(data, null, 2), "utf8");
+      await storage.putCase(slug, data);
       count++;
     } catch {}
   }
   return NextResponse.json({ ok: true, imported: count });
 }
-

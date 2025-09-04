@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import path from "node:path";
 import fs from "node:fs/promises";
+import { getStorage } from "@/server/storage/adapter";
 
 function bad(msg: string, code = 400) {
   return NextResponse.json({ ok: false, error: msg }, { status: code });
@@ -20,7 +21,7 @@ async function ensureAuth(req: Request) {
   return true;
 }
 
-const PUB_CASES = path.join(process.cwd(), "public", "cases");
+const PUB_CASES = path.join(process.cwd(), "public", "cases"); // local adapter only
 
 export async function GET(req: Request) {
   if (!(await ensureAuth(req))) return bad("Unauthorized", 401);
@@ -28,25 +29,9 @@ export async function GET(req: Request) {
   const slug = (searchParams.get("slug") || "").trim();
   if (!slug) return bad("Missing slug");
   try {
-    const dir = path.join(PUB_CASES, slug);
-    const names = await fs.readdir(dir).catch(() => []);
-    const items = await Promise.all(
-      names.map(async (name) => {
-        try {
-          const stat = await fs.stat(path.join(dir, name));
-          if (!stat.isFile()) return null;
-          const t = isImage(name) ? "image" : isVideo(name) ? "video" : "other";
-          return {
-            name,
-            url: `/cases/${slug}/${name}`,
-            size: stat.size,
-            mtime: stat.mtimeMs,
-            type: t,
-          };
-        } catch { return null; }
-      })
-    );
-    return NextResponse.json({ ok: true, assets: items.filter(Boolean) });
+    const storage = getStorage();
+    const items = await storage.listAssets(slug);
+    return NextResponse.json({ ok: true, assets: items });
   } catch (e) {
     return bad("Server error", 500);
   }
@@ -59,11 +44,10 @@ export async function DELETE(req: Request) {
   const name = (searchParams.get("name") || "").trim();
   if (!slug || !name) return bad("Missing slug or name");
   try {
-    const file = path.join(PUB_CASES, slug, name);
-    await fs.unlink(file);
+    const storage = getStorage();
+    await storage.deleteAsset(slug, name);
     return NextResponse.json({ ok: true });
   } catch (e: any) {
-    if (e && e.code === "ENOENT") return bad("Not found", 404);
     return bad("Server error", 500);
   }
 }
@@ -83,14 +67,12 @@ export async function POST(req: Request) {
   const name = nameOverride || origName;
 
   try {
-    const dir = path.join(PUB_CASES, slug);
-    await fs.mkdir(dir, { recursive: true });
-    const arrayBuf = await file.arrayBuffer();
+    const storage = getStorage();
+    const arrayBuf = await (file as Blob).arrayBuffer();
     const buf = Buffer.from(arrayBuf);
-    await fs.writeFile(path.join(dir, name), buf);
-    return NextResponse.json({ ok: true, name, url: `/cases/${slug}/${name}` });
+    const out = await storage.putAsset(slug, name, buf, (file as any).type || undefined);
+    return NextResponse.json({ ok: true, name, url: out.url });
   } catch (e) {
     return bad("Server error", 500);
   }
 }
-

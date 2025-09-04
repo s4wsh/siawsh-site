@@ -7,8 +7,11 @@ import { getCaseBySlug } from "@/lib/cases";
 
 export const dynamic = 'force-dynamic';
 
-export default async function CasePage({ params }: { params: { slug: string } }) {
-  const cs = await getCaseBySlug(params.slug).catch(() => null);
+// Note: some Next.js setups infer `params` as a Promise.
+// Accept Promise form to satisfy the framework's `PageProps` constraint in CI.
+export default async function CasePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const cs = await getCaseBySlug(slug).catch(() => null);
   if (!cs) return notFound();
 
   return (

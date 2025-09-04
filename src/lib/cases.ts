@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { getStorage } from "@/server/storage/adapter";
 
 export type CaseStudy = {
   slug: string;
@@ -62,15 +63,26 @@ function normalizeCase(raw: any, slugFromFile: string): CaseStudy {
   };
 }
 
-async function safeParse(filePath: string): Promise<CaseStudy | null> {
+async function safeParse(filePathOrSlug: string, fromFs = true): Promise<CaseStudy | null> {
   try {
-    const raw = await fs.readFile(filePath, "utf8");
+    let raw: string | null = null;
+    let slugForName = "";
+    if (fromFs) {
+      slugForName = path.basename(filePathOrSlug, ".json");
+      raw = await fs.readFile(filePathOrSlug, "utf8");
+    } else {
+      slugForName = filePathOrSlug;
+      const storage = getStorage();
+      const obj = await storage.getCase(slugForName);
+      if (!obj) return null;
+      return normalizeCase(obj, slugForName);
+    }
     if (!raw.trim()) {
-      console.error("[cases] Empty JSON:", filePath);
+      console.error("[cases] Empty JSON:", filePathOrSlug);
       return null;
     }
     const parsed = JSON.parse(raw);
-    const slug = path.basename(filePath, ".json");
+    const slug = slugForName;
     const normalized = normalizeCase(parsed, slug);
 
     if (!normalized.slug || !normalized.title) {
@@ -79,32 +91,51 @@ async function safeParse(filePath: string): Promise<CaseStudy | null> {
     }
     return normalized;
   } catch (err) {
-    console.error("[cases] JSON parse failed:", filePath, err);
+    console.error("[cases] JSON parse failed:", filePathOrSlug, err);
     return null;
   }
 }
 
 export async function getCaseSlugs(): Promise<string[]> {
-  const files = await fs.readdir(CASES_DIR).catch(() => []);
-  return files
-    .filter((f) => f.toLowerCase().endsWith(".json"))
-    .map((f) => f.replace(/\.json$/i, ""));
+  const provider = (process.env.STORAGE_PROVIDER || "local").toLowerCase();
+  if (provider === "local") {
+    const files = await fs.readdir(CASES_DIR).catch(() => []);
+    return files
+      .filter((f) => f.toLowerCase().endsWith(".json"))
+      .map((f) => f.replace(/\.json$/i, ""));
+  }
+  const storage = getStorage();
+  return storage.listCaseSlugs();
 }
 
 export async function getCaseBySlug(slug: string): Promise<CaseStudy> {
-  const filePath = path.join(CASES_DIR, `${slug}.json`);
-  const cs = await safeParse(filePath);
+  const provider = (process.env.STORAGE_PROVIDER || "local").toLowerCase();
+  let cs: CaseStudy | null = null;
+  if (provider === "local") {
+    const filePath = path.join(CASES_DIR, `${slug}.json`);
+    cs = await safeParse(filePath);
+  } else {
+    cs = await safeParse(slug, false);
+  }
   if (!cs) throw new Error(`Invalid or missing case JSON: ${slug}`);
   return cs;
 }
 
 export async function getAllCases(): Promise<CaseStudy[]> {
-  const files = await fs.readdir(CASES_DIR).catch(() => []);
-  const items = await Promise.all(
-    files
-      .filter((f) => f.toLowerCase().endsWith(".json"))
-      .map((f) => safeParse(path.join(CASES_DIR, f)))
-  );
+  const provider = (process.env.STORAGE_PROVIDER || "local").toLowerCase();
+  let items: Array<CaseStudy | null> = [];
+  if (provider === "local") {
+    const files = await fs.readdir(CASES_DIR).catch(() => []);
+    items = await Promise.all(
+      files
+        .filter((f) => f.toLowerCase().endsWith(".json"))
+        .map((f) => safeParse(path.join(CASES_DIR, f)))
+    );
+  } else {
+    const storage = getStorage();
+    const slugs = await storage.listCaseSlugs();
+    items = await Promise.all(slugs.map((s) => safeParse(s, false)));
+  }
   // newest year first, then title
   return (items.filter(Boolean) as CaseStudy[]).sort((a, b) => {
     if ((b.year ?? 0) !== (a.year ?? 0)) return (b.year ?? 0) - (a.year ?? 0);

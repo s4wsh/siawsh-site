@@ -1,0 +1,23 @@
+{
+  "id": "/",
+  "name": "Siawsh Studio",
+  "short_name": "Siawsh",
+  "description": "Minimal, future-modern design. Case studies, process, and updates.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#00ffff",
+  "icons": [
+    { "src": "/icons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/android-chrome-192x192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/android-chrome-512x512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Work", "short_name": "Work", "url": "/work" },
+    { "name": "Contact", "short_name": "Contact", "url": "/contact" }
+  ],
+  "prefer_related_applications": false
+}

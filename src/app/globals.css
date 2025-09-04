@@ -1,26 +1,114 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ---------- Base vars (page background + default text) ---------- */
+:root { --background:#101010; --foreground:#ededed; }
 
+/* ---------- Tailwind v4 tokens ---------- */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper:#ffffff;   /* background */
+  --color-ink:#111111;     /* text */
+  --color-accent:#00ffff;  /* accent (or #ff4a00) */
+  --color-mist:#eaeaea;    /* borders */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ---------- Global base ---------- */
+html { background: var(--background); color: var(--foreground); }
 body {
+  margin: 0; /* remove default UA margin that can create gaps on mobile */
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
 }
+
+/* Selection */
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 25%, transparent);
+  color: var(--color-ink);
+}
+@supports not (color: oklab(0 0 0)) {
+  ::selection { background: rgba(0,255,255,.25); color: #111; }
+}
+
+/* Media defaults */
+img, picture, video, canvas, svg { display:block; max-width:100%; }
+button, input, select, textarea { font: inherit; }
+
+/* Accessible focus */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ===== Hide the native mouse cursor everywhere (desktop only) =====
+   We *do not* special-case inputs — the text caret will still show while typing,
+   but the mac pointer/ibeam icon will be hidden so only your custom cursor is visible.
+*/
+@media (pointer: fine) {
+  html, body, * { cursor: none !important; }
+  /* If you ever need to opt-out on a specific element, add this class: */
+  .allow-native-cursor { cursor: auto !important; }
+}
+
+/* Clean up any old overlays */
+.cursor-halo, .cursor-circle { display: none !important; }
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* Three.js */
+canvas { user-select: none; outline: none; }
+
+/* Layers */
+.grid-overlay { pointer-events: none; }
+.menu-overlay { pointer-events: auto; }
+
+/* Nearest-target guidance for custom cursor */
+[data-cursor-near] {
+  outline: none;
+  /* Soft inner ring instead of dashed outline to avoid jagged artifacts */
+  box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--color-accent) 38%, transparent),
+              0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* Tilt helper */
+.tilt-parent { perspective: 800px; }
+
+/* ---------- Form defaults (visible text + placeholder + autofill) ---------- */
+.form-field {
+  width: 100%;
+  border: 1px solid var(--color-mist);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.form-field::placeholder { color: #737373; opacity: 1; }
+.form-field:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-accent) 35%, transparent);
+}
+
+/* Make Chrome autofill readable on light/dark */
+input.form-field:-webkit-autofill,
+textarea.form-field:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-ink);
+  box-shadow: 0 0 0px 1000px var(--color-paper) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+.caret-accent { caret-color: var(--color-accent); }
+
+/* ---------- Readability helpers for mixed surfaces ---------- */
+/* Any element styled as a white surface gets dark text by default */
+[class*="bg-paper"] { color: var(--color-ink) !important; }
+/* Ensure accent surfaces default to dark text for contrast */
+[class*="bg-accent"] { color: var(--color-ink) !important; }

@@ -1,0 +1,26 @@
+{
+  "slug": "Test project",
+  "title": "This is one the most exciting setion",
+  "client": "Siawsh",
+  "year": 2025,
+  "tags": [
+    "Website design"
+  ],
+  "cover": "https://static.wixstatic.com/media/baca16_c38c08955c48478089a83a7c47123ab5~mv2.jpg/v1/fill/w_1480,h_740,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/baca16_c38c08955c48478089a83a7c47123ab5~mv2.jpg",
+  "blueprint": "Stage 2: The Framework - Deconstructing the Form\nWith a clear blueprint, the product was engineered in 3D. Every element, from the main speaker driver to the acoustic mesh of the enclosure, was modeled with photorealistic detail and mechanical plausibility in mind. This technical deep-dive ensures the final visuals are not just beautiful, but believable.",
+  "framework": "ntroduction: The Challenge of Vision\n\nEvery designer dreams of working with leading-edge brands. But how do you showcase a capability for high-end commercial work without borrowing from—or infringing on—existing trademarks?\n\nThis was the professional hurdle that sparked the AURA project. The challenge wasn't simply to create a beautiful product, but to build an entire brand world from scratch, proving a complete concept-to-creation capability.",
+  "finish": "The Solution: Instead of Borrowing a Brand, We Built One.\nThe solution was to go a step further. This is AURA, a conceptual smart speaker brand built on an ethos of minimalist design, premium materials, and immersive audio. It represents the ideal client partnership: one founded on a bold vision and a passion for flawless execution.",
+  "images": [
+    "https://static.wixstatic.com/media/baca16_2817242facae4ccaa948045fae09b42c~mv2.jpg/v1/fill/w_1480,h_740,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/baca16_2817242facae4ccaa948045fae09b42c~mv2.jpg",
+    "https://static.wixstatic.com/media/baca16_d4f2a14b53144b209c507ac5ed92a1ce~mv2.jpg/v1/fill/w_1480,h_592,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/baca16_d4f2a14b53144b209c507ac5ed92a1ce~mv2.jpg",
+    "https://static.wixstatic.com/media/baca16_7b18551a78ba481c93c055ea4ae6d4af~mv2.jpg/v1/fill/w_1480,h_740,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/baca16_7b18551a78ba481c93c055ea4ae6d4af~mv2.jpg"
+  ],
+  "video": "https://vimeo.com/1100810961",
+  "channels": {
+    "blog": true,
+    "behance": false,
+    "linkedin": false,
+    "facebook": true,
+    "instagram": false
+  }
+}

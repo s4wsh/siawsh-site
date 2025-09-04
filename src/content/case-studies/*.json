@@ -1,0 +1,4 @@
+# dashboard write-protect
+ADMIN_TOKEN=choose-a-long-random-string
+# optional: n8n webhook to kick off asset generation / social posts
+N8N_WEBHOOK_URL=https://your-n8n.example.com/webhook/case-created

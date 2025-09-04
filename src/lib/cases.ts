@@ -1,180 +1,126 @@
-import fs from "node:fs/promises"; 
-import path from "node:path"; import { 
-getStorage } from 
-"@/server/storage/adapter";
+cat > src/lib/cases.ts <<'TS'
+import { promises as fs } from "node:fs";
+import path from "node:path";
 
-export type CaseStudy = {
-  slug: string; title: string; client?: 
-  string; year: number; tags: string[]; 
-  cover?: string; blueprint?: string; 
-  framework?: string; finish?: string; 
-  images?: string[]; video?: string; 
+export type CaseDoc = {
+  slug: string;
+  title: string;
+  year?: number | string;
+  tags?: string[];
+  cover?: string;
+  blueprint?: string;
+  framework?: string;
+  finish?: string;
+  images?: string[];
+  video?: string;
   channels?: {
-    blog?: boolean; behance?: boolean; 
-    linkedin?: boolean; facebook?: 
-    boolean; instagram?: boolean;
-  }; socialCaption?: string; };
+    blog?: boolean;
+    behance?: boolean;
+    linkedin?: boolean;
+    facebook?: boolean;
+    instagram?: boolean;
+  };
+  socialCaption?: string;
+};
 
-const CASES_DIR = 
-path.join(process.cwd(), "content", 
-"case-studies");
+const CASE_DIR = path.join(process.cwd(), "content", "case-studies");
+const SAFE_SLUG = /^[a-z0-9-]+$/;
 
-function toStringArray(v: unknown): 
-string[] {
-  if (Array.isArray(v)) return 
-  v.map(String).filter(Boolean); if 
-  (typeof v === "string") {
-    return v.split(",").map((s) => 
-s.trim()).filter(Boolean);
-  } return []; }
+function toSafeSlug(s: string) {
+  return s
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "-")
+    .replace(/-+/g, "-");
+}
 
-function normalizeCase(raw: any, 
-slugFromFile: string): CaseStudy {
-  const slug = String(raw?.slug || 
-  slugFromFile).trim(); const title = 
-  String(raw?.title || "").trim(); const 
-  yearNum = 
-  Number.parseInt(String(raw?.year ?? 
-  ""), 10); const year = 
-  Number.isFinite(yearNum) ? yearNum : 
-  0;
-
+function normalizeCase(parsed: any, fallbackSlug: string): CaseDoc {
+  const slug = parsed?.slug ? toSafeSlug(String(parsed.slug)) : toSafeSlug(fallbackSlug);
+  const title = String(parsed?.title || "").trim();
   return {
-    slug, title, client: raw?.client ? 
-    String(raw.client) : undefined, 
-    year, tags: 
-    toStringArray(raw?.tags), cover: 
-    raw?.cover ? String(raw.cover) : 
-    undefined, blueprint: raw?.blueprint 
-    ? String(raw.blueprint) : undefined, 
-    framework: raw?.framework ? 
-    String(raw.framework) : undefined, 
-    finish: raw?.finish ? 
-    String(raw.finish) : undefined, 
-    images: Array.isArray(raw?.images) ? 
-    raw.images.map(String) : undefined, 
-    video: raw?.video ? 
-    String(raw.video) : undefined, 
-    channels: raw?.channels ? {
-      blog: !!raw.channels.blog, 
-      behance: !!raw.channels.behance, 
-      linkedin: !!raw.channels.linkedin, 
-      facebook: !!raw.channels.facebook, 
-      instagram: 
-      !!raw.channels.instagram,
-    } : undefined, socialCaption: 
-    raw?.socialCaption ? 
-    String(raw.socialCaption) : 
-    undefined,
-  }; }
-
-async function safeParse(filePathOrSlug: 
-string, fromFs = true): 
-Promise<CaseStudy | null> {
-  try {
-    let raw: string | null = null; let 
-    slugForName = ""; if (fromFs) {
-      slugForName = 
-      path.basename(filePathOrSlug, 
-      ".json"); raw = await 
-      fs.readFile(filePathOrSlug, 
-      "utf8");
-    } else {
-      slugForName = filePathOrSlug; 
-      const storage = getStorage(); 
-      const obj = await 
-      storage.getCase(slugForName); if 
-      (!obj) return null; return 
-      normalizeCase(obj, slugForName);
-    } if (!raw.trim()) {
-      console.error("[cases] Empty 
-      JSON:", filePathOrSlug); return 
-      null;
-    } const parsed = JSON.parse(raw); 
-    const slug = sluif (!normalized.slug || !normalized.title) {
-  console.error("[cases] Missing slug/title");
-  return null;
+    slug,
+    title,
+    year: parsed?.year,
+    tags: Array.isArray(parsed?.tags) ? parsed.tags.map(String) : undefined,
+    cover: parsed?.cover ? String(parsed.cover) : undefined,
+    blueprint: parsed?.blueprint ? String(parsed.blueprint) : undefined,
+    framework: parsed?.framework ? String(parsed.framework) : undefined,
+    finish: parsed?.finish ? String(parsed.finish) : undefined,
+    images: Array.isArray(parsed?.images) ? parsed.images.map(String) : undefined,
+    video: parsed?.video ? String(parsed.video) : undefined,
+    channels: parsed?.channels ? {
+      blog: !!parsed.channels.blog,
+      behance: !!parsed.channels.behance,
+      linkedin: !!parsed.channels.linkedin,
+      facebook: !!parsed.channels.facebook,
+      instagram: !!parsed.channels.instagram,
+    } : undefined,
+    socialCaption: parsed?.socialCaption ? String(parsed.socialCaption) : undefined,
+  };
 }
-gForName; const 
-    normalized = normalizeCase(parsed, 
-    slug);
 
-    if (!normalized.slug || 
-!normalized.title) {
-      console.error("[cases] Missing 
-      slug/title:", filePath); return 
-      null;
-    } return normalized;
-  } catch (err) {
-    console.error("[cases] JSON parse 
-    failed:", filePathOrSlug, err); 
+async function readFileIfExists(fp: string): Promise<string | null> {
+  try { return await fs.readFile(fp, "utf8"); } catch { return null; }
+}
+
+async function safeParseFromFile(filePathOrSlug: string): Promise<CaseDoc | null> {
+  // Accept either a full path to .json or a slug name
+  let jsonPath = filePathOrSlug.endsWith(".json")
+    ? filePathOrSlug
+    : path.join(CASE_DIR, `${filePathOrSlug}.json`);
+
+  const raw = await readFileIfExists(jsonPath);
+  const fallbackSlug = path.basename(jsonPath, ".json");
+
+  if (!raw || !raw.trim()) {
+    console.error("[cases] Empty or missing JSON");
     return null;
-  } }
+  }
 
-export async function getCaseSlugs(): 
-Promise<string[]> {
-  const provider = 
-  (process.env.STORAGE_PROVIDER || 
-  "local").toLowerCase(); if (provider 
-  === "local") {
-    const files = await 
-    fs.readdir(CASES_DIR).catch(() => 
-    []); return files
-      .filter((f) => 
-      f.toLowerCase().endsWith(".json")) 
-      .map((f) => f.replace(/\.json$/i, 
-      ""));
-  } const storage = getStorage(); return 
-  storage.listCaseSlugs();
+  try {
+    const parsed = JSON.parse(raw);
+    const normalized = normalizeCase(parsed, fallbackSlug);
+    if (!normalized.slug || !normalized.title) {
+      console.error("[cases] Missing slug/title");
+      return null;
+    }
+    return normalized;
+  } catch (e) {
+    console.error("[cases] JSON parse failed:", jsonPath, e);
+    return null;
+  }
 }
 
-export async function 
-getCaseBySlug(slug: string): 
-Promise<CaseStudy> {
-  const provider = 
-  (process.env.STORAGE_PROVIDER || 
-  "local").toLowerCase(); let cs: 
-  CaseStudy | null = null; if (provider 
-  === "local") {
-    const filePath = 
-    path.join(CASES_DIR, 
-    `${slug}.json`); cs = await 
-    safeParse(filePath);
-  } else {
-    cs = await safeParse(slug, false);
-  } if (!cs) throw new Error(`Invalid or 
-  missing case JSON: ${slug}`); return 
-  cs;
+export async function getCaseBySlug(slug: string): Promise<CaseDoc> {
+  const safe = SAFE_SLUG.test(slug) ? slug : toSafeSlug(slug);
+  const doc = await safeParseFromFile(safe);
+  if (!doc) throw new Error(`Invalid or missing case JSON: ${encodeURIComponent(slug)}`);
+  return doc;
 }
 
-export async function getAllCases(): 
-Promise<CaseStudy[]> {
-  const provider = 
-  (process.env.STORAGE_PROVIDER || 
-  "local").toLowerCase(); let items: 
-  Array<CaseStudy | null> = []; if 
-  (provider === "local") {
-    const files = await 
-    fs.readdir(CASES_DIR).catch(() => 
-    []); items = await Promise.all(
-      files
-        .filter((f) => 
-        f.toLowerCase().endsWith(".json")) 
-        .map((f) => 
-        safeParse(path.join(CASES_DIR, 
-        f)))
-    );
-  } else {
-    const storage = getStorage(); const 
-    slugs = await 
-    storage.listCaseSlugs(); items = 
-    await Promise.all(slugs.map((s) => 
-    safeParse(s, false)));
-  } // newest year first, then title 
-  return (items.filter(Boolean) as 
-  CaseStudy[]).sort((a, b) => {
-    if ((b.year ?? 0) !== (a.year ?? 0)) 
-    return (b.year ?? 0) - (a.year ?? 
-    0); return 
-    a.title.localeCompare(b.title);
-  }); }
+export async function getCaseSlugs(): Promise<string[]> {
+  try {
+    const files = await fs.readdir(CASE_DIR);
+    const jsons = files.filter(f => f.endsWith(".json"));
+    // Prefer slug from inside file; fall back to filename
+    const results: string[] = [];
+    for (const f of jsons) {
+      const full = path.join(CASE_DIR, f);
+      const raw = await readFileIfExists(full);
+      if (!raw) continue;
+      try {
+        const parsed = JSON.parse(raw);
+        const slug = parsed?.slug ? toSafeSlug(String(parsed.slug)) : toSafeSlug(path.basename(f, ".json"));
+        if (SAFE_SLUG.test(slug)) results.push(slug);
+      } catch {
+        // skip bad JSON
+      }
+    }
+    return Array.from(new Set(results));
+  } catch {
+    // directory missing → empty list
+    return [];
+  }
+}
+TS

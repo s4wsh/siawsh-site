@@ -4,6 +4,16 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { getStorage } from "@/server/storage/adapter";
 
+// Ensure filenames and stored slugs are safe and consistent
+function toSafeSlug(s: string) {
+  return s
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "-")
+    .replace(/-+/g, "-");
+}
+
 const CASES_DIR = path.join(process.cwd(), "content", "case-studies"); // used only for local history backups
 const HISTORY_DIR = path.join(CASES_DIR, ".history");
 
@@ -55,15 +65,27 @@ export async function POST(req: Request) {
     // normalize
     const prevSlug = toStr((body as any).prevSlug).trim();
     const slug = toStr(body.slug).trim();
+    const safeSlug = toSafeSlug(slug);
     const title = toStr(body.title).trim();
     const year = toNum(body.year);
     const tags = toStrArr(body.tags);
+    // categories: accept string or array; keep legacy `category` as primary
+    const allowed = ["interior","graphic","motion"] as const;
+    const fromSingle = toStr((body as any).category).toLowerCase();
+    let categories: string[] = Array.isArray((body as any).categories)
+      ? (body as any).categories.map((x: any) => toStr(x).toLowerCase())
+      : [];
+    if (!categories.length && fromSingle) categories = [fromSingle];
+    categories = Array.from(new Set(categories.filter(c => (allowed as readonly string[]).includes(c))));
+    const category = categories[0] || undefined;
 
     if (!slug || !title) return bad("Missing slug/title");
 
     const data: any = {
-      slug,
+      slug: safeSlug,
       title,
+      category,            // legacy primary
+      categories,          // preferred multi
       client: toStr(body.client) || undefined,
       year,
       tags,
@@ -78,6 +100,8 @@ export async function POST(req: Request) {
             .map((s) => s.trim())
             .filter(Boolean),
       video: toStr(body.video) || undefined,
+      imagesAlt: typeof (body.imagesAlt) === 'object' && body.imagesAlt ? body.imagesAlt : undefined,
+      seo: typeof (body.seo) === 'object' && body.seo ? body.seo : undefined,
     };
 
     // optional channels + social caption
@@ -96,30 +120,33 @@ export async function POST(req: Request) {
 
     // backup previous version if exists
     try {
-      const prev = await storage.getCase(prevSlug && prevSlug !== slug ? prevSlug : slug);
+      const prevSafe = prevSlug ? toSafeSlug(prevSlug) : "";
+      const prev = await storage.getCase(prevSafe || safeSlug);
       if (prev) {
         const ts = new Date().toISOString().replace(/[:.]/g, "-");
-        const dir = path.join(HISTORY_DIR, prevSlug && prevSlug !== slug ? prevSlug : slug);
+        const dir = path.join(HISTORY_DIR, prevSafe || safeSlug);
         await fs.mkdir(dir, { recursive: true });
         await fs.writeFile(path.join(dir, `${ts}.json`), JSON.stringify(prev, null, 2), "utf8");
       }
     } catch {}
 
-    // If renaming from prevSlug -> slug, handle JSON + assets directory move
-    if (prevSlug && prevSlug !== slug) {
+    // If renaming from prevSlug -> slug OR previous filename normalization differs
+    const prevSafe = prevSlug ? toSafeSlug(prevSlug) : "";
+    const isRename = !!prevSlug && (prevSlug !== slug || prevSafe !== safeSlug);
+    if (isRename) {
       // Write new JSON, delete previous, and try to move assets folder via adapter
-      await storage.putCase(slug, data);
-      await storage.deleteCase(prevSlug);
+      await storage.putCase(safeSlug, data);
+      await storage.deleteCase(prevSafe);
       if (typeof (storage as any).moveAssetsFolder === 'function') {
-        try { await (storage as any).moveAssetsFolder(prevSlug, slug); } catch {}
+        try { await (storage as any).moveAssetsFolder(prevSafe, safeSlug); } catch {}
       }
     } else {
-      await storage.putCase(slug, data);
+      await storage.putCase(safeSlug, data);
     }
 
     // scaffold public folder for assets (non-fatal if fails)
     // With local adapter, ensure folder exists (adapter will also create on upload)
-    try { await fs.mkdir(path.join(process.cwd(), "public", "cases", slug), { recursive: true }); } catch {}
+    try { await fs.mkdir(path.join(process.cwd(), "public", "cases", safeSlug), { recursive: true }); } catch {}
 
     // optional n8n ping
     const hook = process.env.N8N_WEBHOOK_URL;
@@ -131,7 +158,7 @@ export async function POST(req: Request) {
       }).catch(() => {});
     }
 
-    return NextResponse.json({ ok: true, slug });
+    return NextResponse.json({ ok: true, slug: safeSlug });
   } catch (err) {
     console.error("admin/case error:", err);
     return bad("Server error", 500);
@@ -159,7 +186,14 @@ export async function GET(req: Request) {
       slugs.map(async (s) => {
         const raw = await storage.getCase(s);
         if (!raw) return null;
-        return { slug: raw.slug || s, title: raw.title || "", year: raw.year || 0 };
+        return {
+          slug: raw.slug || s,
+          title: raw.title || "",
+          year: raw.year || 0,
+          category: raw.category,
+          categories: Array.isArray(raw.categories) ? raw.categories : (raw.category ? [raw.category] : []),
+          blog: !!(raw?.channels?.blog),
+        };
       })
     );
     return NextResponse.json((items.filter(Boolean) as any[]).sort((a, b) => (b.year || 0) - (a.year || 0)));

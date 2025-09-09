@@ -5,12 +5,15 @@ import Footer from "@/components/Footer";
 import WorkSceneClient from "@/components/WorkSceneClient";
 import { getCaseBySlug } from "@/lib/cases";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-// Note: some Next.js setups infer `params` as a Promise.
-// Accept Promise form to satisfy the framework's `PageProps` constraint in CI.
-export default async function CasePage({ params }: { params: Promise<{ slug: string }> }) {
+type Params = { slug: string };
+
+export default async function CasePage(
+  { params }: { params: Promise<Params> }
+) {
   const { slug } = await params;
+
   const cs = await getCaseBySlug(slug).catch(() => null);
   if (!cs) return notFound();
 
@@ -56,7 +59,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
           </section>
         )}
 
-        {/* Interactive preview (kept) */}
+        {/* Interactive preview */}
         <section id="preview" className="space-y-3 scroll-mt-24">
           <h2 className="text-lg font-medium">Interactive Preview</h2>
           <WorkSceneClient />

@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getAllCases } from "@/lib/cases";
+import { getAllCases, type CaseDoc } from "@/lib/cases";
 import Link from "next/link";
 
 export const metadata = {
@@ -8,9 +8,11 @@ export const metadata = {
   description: "Project write-ups and updates.",
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page(){
-  const items = await getAllCases();
-  const posts = items.filter((c) => c.channels?.blog);
+  const items: CaseDoc[] = await getAllCases();
+  const posts = items.filter((c: CaseDoc) => !!c.channels?.blog);
   return (
     <>
       <Header />
@@ -20,7 +22,7 @@ export default async function Page(){
           <p className="mt-4 text-neutral-600">No posts yet. Publish a case to Blog from Admin.</p>
         ) : (
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.map((p) => (
+            {posts.map((p: CaseDoc) => (
               <Link key={p.slug} href={`/case-studies/${p.slug}`} className="block rounded-2xl overflow-hidden border">
                 {p.cover ? (
                   <img src={p.cover} alt={p.title} className="h-56 w-full object-cover" />

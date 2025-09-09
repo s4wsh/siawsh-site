@@ -2,15 +2,17 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import Link from "next/link";
-import { getAllCases } from "@/lib/cases";
+import { getAllCases, type CaseDoc } from "@/lib/cases";
 
 export const metadata = {
   title: "Case Studies — Siawsh Studio",
   description: "Selected work and processes.",
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function CaseStudiesPage() {
-  const cases = await getAllCases();
+  const cases: CaseDoc[] = await getAllCases();
 
   return (
     <>
@@ -24,7 +26,7 @@ export default async function CaseStudiesPage() {
         </Reveal>
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {cases.map((cs, i) => (
+          {cases.map((cs: CaseDoc, i: number) => (
             <Reveal key={cs.slug} delay={i * 0.04}>
               <Link
                 href={`/case-studies/${cs.slug}`}

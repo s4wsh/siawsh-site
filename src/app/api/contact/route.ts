@@ -125,19 +125,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // ===== TEMP DEBUG — remove after it prints OK once =====
-    if (DEV) {
-      const seen = SMTP_PASS;
-      const expected = "ngxghrelkyjajcjj";
-      if (seen !== expected) {
-        return NextResponse.json(
-          { ok:false, error:"Route sees a DIFFERENT SMTP_PASS than expected",
-            debug:{ PASS_LEN: seen.length, PASS_HEX: Buffer.from(seen,'utf8').toString('hex') } },
-          { status: 500 }
-        );
-      }
-    }
-    // =======================================================
+    // Dev-only debug removed: do not hard-fail on password mismatch
 
     // Try 587/LOGIN, then 465/LOGIN. Send directly (skip verify()).
     let transporter = makeTransport({ authMethod: "LOGIN" });

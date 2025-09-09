@@ -8,10 +8,12 @@ const FIREBASE_MEDIA = [
   "https://storage.googleapis.com",
 ].join(" ");
 
-// Optional external asset base for images/videos (e.g., S3/R2 public URL)
-const ASSETS_BASE = process.env.NEXT_PUBLIC_ASSETS_BASE_URL || process.env.ASSETS_BASE_URL || "";
+const ASSETS_BASE =
+  process.env.NEXT_PUBLIC_ASSETS_BASE_URL || process.env.ASSETS_BASE_URL || "";
 let ASSETS_ORIGIN = "";
-try { if (ASSETS_BASE) ASSETS_ORIGIN = new URL(ASSETS_BASE).origin; } catch {}
+try {
+  if (ASSETS_BASE) ASSETS_ORIGIN = new URL(ASSETS_BASE).origin;
+} catch { /* ignore */ }
 
 const csp = [
   `default-src 'self'`,
@@ -32,7 +34,12 @@ const csp = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
-  eslint: { ignoreDuringBuilds: true }, // ← important
+  eslint: { ignoreDuringBuilds: true },
+
+  // SSR build (recommended for this app)
+
+  // Applies only when a Next server is running (dev/SSR). For Netlify static,
+  // mirror these in /public/_headers as well.
   async headers() {
     return [
       {

@@ -8,7 +8,7 @@ import HomeHero3D from "@/components/HomeHero3D";
 import Magnetic from "@/components/Magnetic";
 import Magnet from "@/components/Magnet";
 import Link from "next/link";
-import { CASES } from "@/content/cases";
+import { getAllCases, type CaseDoc } from "@/lib/cases";
 import Reveal from "@/components/Reveal";
 import ScrollSection from "@/components/ScrollSection";
 import TypingText from "@/components/TypingText";
@@ -18,7 +18,10 @@ export const metadata = {
   description: "Minimal, future-modern design. Case studies, process, and updates.",
 };
 
-export default function HomePage() {
+export const dynamic = 'force-dynamic';
+
+export default async function HomePage() {
+  const cases: CaseDoc[] = await getAllCases();
   return (
     <>
       <Header />
@@ -58,10 +61,14 @@ export default function HomePage() {
 
         {/* Services */}
         <ScrollSection className="py-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[{t:"Interior",b:"Spaces with clean lines, light, and function.",h:"/services#interior",img:"/media/hero/hero-poster.jpg"},
-              {t:"Graphic",b:"Branding and visuals that speak clearly.",h:"/services#graphic",img:"/cases/aura-speaker/stylish.png"},
-              {t:"Motion", b:"Smooth, satisfying animations for brands and spaces.",h:"/services#motion",img:"/cases/aura-speaker/zoomed.png"}]
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-2xl font-semibold">Services</h2>
+            <Link href="/services" className="text-sm underline opacity-80 hover:opacity-100">All services</Link>
+          </div>
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[{t:"Interior",b:"Spaces with clean lines, light, and function.",h:"/services?category=interior",img:"/media/hero/hero-poster.jpg",f:["Spatial planning","Material & lighting direction","Furniture & signage"]},
+              {t:"Graphic",b:"Branding and visuals that speak clearly.",h:"/services?category=graphic",img:"/cases/aura-speaker/stylish.png",f:["Identity systems","Campaign & print","Web and product visuals"]},
+              {t:"Motion", b:"Smooth, satisfying animations for brands and spaces.",h:"/services?category=motion",img:"/cases/aura-speaker/zoomed.png",f:["Logo/brand motion","Product animation","Social & broadcast edits"]}]
               .map((it, i, arr) => {
                 // deterministic pseudo-random delay (stable across renders)
                 const hash = Array.from(it.t).reduce((a,c)=>a+c.charCodeAt(0),0);
@@ -69,21 +76,21 @@ export default function HomePage() {
                 const delay = 0.05 + order * 0.08;
                 return (
                   <Reveal key={it.t} delay={delay}>
-                    <ServiceCardMedia title={it.t} blurb={it.b} href={it.h} imgSrc={it.img} />
+                    <ServiceCardMedia title={it.t} blurb={it.b} href={it.h} imgSrc={it.img} features={it.f} />
                   </Reveal>
                 );
               })}
           </div>
         </ScrollSection>
 
-        {/* Case Studies */}
+        {/* Case Studies — latest 3 from JSON */}
         <ScrollSection className="py-10">
           <div className="flex items-baseline justify-between">
             <h2 className="text-2xl font-semibold">Case studies</h2>
             <Link href="/case-studies" className="text-sm underline opacity-80 hover:opacity-100">View all</Link>
           </div>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-5">
-            {CASES.slice(0, 3).map((cs, i, arr) => {
+            {cases.slice(0, 3).map((cs, i, arr) => {
               const hash = Array.from(cs.slug).reduce((a,c)=>a+c.charCodeAt(0),0);
               const order = hash % arr.length;
               const delay = 0.06 + order * 0.08;
@@ -91,15 +98,13 @@ export default function HomePage() {
                 <Reveal key={cs.slug} delay={delay}>
                   <Link href={`/case-studies/${cs.slug}`} className="group block rounded-2xl overflow-hidden border relative">
                     <div className="aspect-[4/3] bg-black/70">
-                      {cs.cover ? (
-                        <img src={cs.cover} alt={cs.title} className="h-full w-full object-cover" />
-                      ) : (
-                        <div className="h-full w-full bg-mist" />
-                      )}
+                      {cs.cover ? (<img src={cs.cover} alt={cs.title} className="h-full w-full object-cover" />) : (<div className="h-full w-full bg-mist" />)}
                     </div>
                     <div className="p-3">
                       <h3 className="font-medium group-hover:underline">{cs.title}</h3>
-                      {cs.excerpt && <p className="mt-1 text-sm opacity-70">{cs.excerpt}</p>}
+                      {"socialCaption" in cs && (cs as any).socialCaption && (
+                        <p className="mt-1 text-sm opacity-70">{(cs as any).socialCaption}</p>
+                      )}
                     </div>
                     {/* subtle scanlines */}
                     <div aria-hidden className="pointer-events-none absolute inset-0 opacity-5" style={{backgroundImage:"repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 3px)"}} />
@@ -117,7 +122,7 @@ export default function HomePage() {
             <Link href="/work" className="text-sm underline opacity-80 hover:opacity-100">Explore work</Link>
           </div>
           <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
-            {CASES.flatMap((c) => c.images || [])
+            {cases.flatMap((c) => (c.images || []).map(src => ({ src, alt: `${c.title}` })))
               .slice(0, 8)
               .map((img, i) => (
                 <Reveal key={i} delay={0.04 + (i % 4) * 0.05}>

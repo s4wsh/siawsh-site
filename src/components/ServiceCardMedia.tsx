@@ -7,12 +7,14 @@ export default function ServiceCardMedia({
   href,
   imgSrc,
   imgAlt = "",
+  features,
 }: {
   title: string;
   blurb: string;
   href: string;
   imgSrc: string;
   imgAlt?: string;
+  features?: string[];
 }) {
   return (
     <Link
@@ -40,6 +42,13 @@ export default function ServiceCardMedia({
           </span>
         </div>
         <p className="mt-2 text-sm text-neutral-600">{blurb}</p>
+        {Array.isArray(features) && features.length ? (
+          <ul className="mt-3 text-xs text-neutral-600 space-y-1 list-disc pl-5">
+            {features.slice(0,4).map((f, i) => (
+              <li key={i}>{f}</li>
+            ))}
+          </ul>
+        ) : null}
       </div>
 
       {/* Edge feather */}
@@ -47,4 +56,3 @@ export default function ServiceCardMedia({
     </Link>
   );
 }
-

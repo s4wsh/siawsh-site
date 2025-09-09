@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import Magnetic from "@/components/Magnetic";
 import Link from "next/link";
+import ServicesTabs from "@/components/ServicesTabs";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Services — Siawsh Studio",
@@ -38,34 +40,10 @@ export default function ServicesPage() {
           </header>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
-          <Reveal>
-            <div className="rounded-2xl border border-mist p-5 bg-paper/80">
-              <h3 className="text-lg font-semibold">Interior</h3>
-              <p className="mt-2 text-sm text-neutral-600">
-                Spaces with clean lines, light, and function.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.05}>
-            <div className="rounded-2xl border border-mist p-5 bg-paper/80">
-              <h3 className="text-lg font-semibold">Graphic</h3>
-              <p className="mt-2 text-sm text-neutral-600">
-                Branding and visuals that speak clearly.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="rounded-2xl border border-mist p-5 bg-paper/80">
-              <h3 className="text-lg font-semibold">Motion</h3>
-              <p className="mt-2 text-sm text-neutral-600">
-                Smooth, satisfying animations for brands and spaces.
-              </p>
-            </div>
-          </Reveal>
-        </div>
+        {/* Wrap in Suspense because ServicesTabs uses useSearchParams */}
+        <Suspense>
+          <ServicesTabs />
+        </Suspense>
       </main>
       <Footer />
     </>

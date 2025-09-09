@@ -1,20 +1,18 @@
 // src/app/case-studies/[slug]/page.tsx
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getCaseBySlug, getCaseSlugs } from "@/lib/cases";
+import { getCaseBySlug } from "@/lib/cases";
+import { notFound } from "next/navigation";
+export const dynamic = 'force-dynamic';
 
 type Params = { slug: string };
-
-export async function generateStaticParams() {
-  const slugs = await getCaseSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
 
 export async function generateMetadata(
   { params }: { params: Promise<Params> }
 ) {
   const { slug } = await params;
-  const cs = await getCaseBySlug(slug);
+  const cs = await getCaseBySlug(slug).catch(() => null);
+  if (!cs) return notFound();
   return {
     title: `${cs.title} — Case Study — Siawsh`,
     description: (cs.blueprint || cs.framework || cs.finish || "Case study by Siawsh Studio")
@@ -28,6 +26,27 @@ export default async function CasePage(
 ) {
   const { slug } = await params;
   const cs = await getCaseBySlug(slug);
+
+  const isPlayableMedia = (u: string) => /\.(mp4|webm)([?#].*)?$/i.test(u) || u.startsWith("/");
+  const toEmbed = (u: string): string | null => {
+    try {
+      const url = new URL(u);
+      const host = url.hostname;
+      if (host.includes("vimeo.com")) {
+        const m = url.pathname.match(/\/(\d+)/);
+        return m ? `https://player.vimeo.com/video/${m[1]}` : null;
+      }
+      if (host.includes("youtube.com")) {
+        const id = url.searchParams.get("v");
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+      if (host === "youtu.be") {
+        const id = url.pathname.replace(/^\//, "");
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+    } catch {}
+    return null;
+  };
 
   return (
     <>
@@ -79,6 +98,29 @@ export default async function CasePage(
               />
             ))}
           </div>
+        )}
+
+        {/* Video */}
+        {cs.video && (
+          <section className="mt-10">
+            {isPlayableMedia(cs.video) ? (
+              <video className="rounded-xl border w-full" controls src={cs.video} />
+            ) : toEmbed(cs.video) ? (
+              <div className="aspect-video w-full overflow-hidden rounded-xl border">
+                <iframe
+                  src={toEmbed(cs.video) as string}
+                  className="h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  title={`${cs.title} video`}
+                />
+              </div>
+            ) : (
+              <a href={cs.video} className="underline" target="_blank" rel="noreferrer">
+                Watch video
+              </a>
+            )}
+          </section>
         )}
 
         {/* CTA */}

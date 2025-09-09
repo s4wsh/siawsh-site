@@ -1,0 +1,31 @@
+{
+  "slug": "america-go-down",
+  "title": "eastern countries going up",
+  "category": "interior",
+  "categories": [
+    "interior"
+  ],
+  "client": "human",
+  "year": 2026,
+  "tags": [
+    "future"
+  ],
+  "cover": "https://user-gen-media-assets.s3.amazonaws.com/gemini_images/09493df1-726d-40be-9e17-3e02b3db6253.png",
+  "blueprint": "If you’d prefer the token to always show without a toggle, or to place it above the action buttons, I can adjust.",
+  "framework": "Removed the token bar from the top of the page to keep the layout tidy.",
+  "finish": "The token still syncs to localStorage and drives all admin fetches (projects list, summary, backups).",
+  "images": [
+    "https://user-gen-media-assets.s3.amazonaws.com/gemini_images/aa6c1d57-b32f-4488-9083-ad06512aecf8.png",
+    "https://user-gen-media-assets.s3.amazonaws.com/gemini_images/09493df1-726d-40be-9e17-3e02b3db6253.png",
+    "https://user-gen-media-assets.s3.amazonaws.com/gemini_images/74e1d28c-df70-4e36-a57d-f7f921b39952.png"
+  ],
+  "video": "https://vimeo.com/1100810961",
+  "channels": {
+    "blog": true,
+    "behance": true,
+    "linkedin": false,
+    "facebook": true,
+    "instagram": false
+  },
+  "socialCaption": "All set — the Admin Token field now lives inside the “Backup & Restore” card.\n\nWhat changed"
+}

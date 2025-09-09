@@ -30,6 +30,42 @@ class LocalAdapter implements StorageAdapter {
   private CASES_DIR = path.join(process.cwd(), "content", "case-studies");
   private PUB_CASES = path.join(process.cwd(), "public", "cases");
 
+  private toSafeSlug(s: string) {
+    return (s || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "-")
+      .replace(/-+/g, "-");
+  }
+
+  private async resolveAssetsDir(slug: string): Promise<string> {
+    const safe = this.toSafeSlug(slug);
+    const primary = path.join(this.PUB_CASES, safe);
+    try {
+      const st = await fs.stat(primary).catch(() => null);
+      if (st && st.isDirectory()) return primary;
+    } catch {}
+    // Fallback: find a folder whose normalized name matches, then move it to the safe path
+    try {
+      const parent = this.PUB_CASES;
+      const names = await fs.readdir(parent).catch(() => []);
+      for (const name of names) {
+        const dir = path.join(parent, name);
+        const st = await fs.stat(dir).catch(() => null);
+        if (!st || !st.isDirectory()) continue;
+        const norm = this.toSafeSlug(name);
+        if (norm === safe && name !== safe) {
+          // Move to normalized path for future stability
+          await fs.mkdir(path.dirname(primary), { recursive: true }).catch(() => {});
+          await fs.rename(dir, primary).catch(() => {});
+          return primary;
+        }
+      }
+    } catch {}
+    return primary; // default path (may not exist yet)
+  }
+
   async getCase(slug: string): Promise<any | null> {
     try { const raw = await fs.readFile(path.join(this.CASES_DIR, `${slug}.json`), "utf8"); return JSON.parse(raw); } catch { return null; }
   }
@@ -45,7 +81,7 @@ class LocalAdapter implements StorageAdapter {
     return files.filter(f => f.endsWith('.json')).map(f => f.replace(/\.json$/i, ''));
   }
   async listAssets(slug: string): Promise<AssetItem[]> {
-    const dir = path.join(this.PUB_CASES, slug);
+    const dir = await this.resolveAssetsDir(slug);
     const names = await fs.readdir(dir).catch(() => []);
     const out: AssetItem[] = [];
     for (const name of names) {
@@ -58,21 +94,24 @@ class LocalAdapter implements StorageAdapter {
     return out;
   }
   async putAsset(slug: string, name: string, buf: Buffer): Promise<{ url: string }> {
-    const dir = path.join(this.PUB_CASES, slug);
+    const dir = await this.resolveAssetsDir(slug);
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(path.join(dir, name), buf);
-    return { url: this.getAssetUrl(slug, name) };
+    const safe = this.toSafeSlug(slug);
+    return { url: this.getAssetUrl(safe, name) };
   }
   async deleteAsset(slug: string, name: string): Promise<void> {
-    await fs.unlink(path.join(this.PUB_CASES, slug, name)).catch(() => {});
+    const dir = await this.resolveAssetsDir(slug);
+    await fs.unlink(path.join(dir, name)).catch(() => {});
   }
   async moveAssetsFolder(fromSlug: string, toSlug: string): Promise<void> {
-    const from = path.join(this.PUB_CASES, fromSlug);
-    const to = path.join(this.PUB_CASES, toSlug);
+    const from = await this.resolveAssetsDir(fromSlug);
+    const safeTo = this.toSafeSlug(toSlug);
+    const to = path.join(this.PUB_CASES, safeTo);
     await fs.mkdir(path.dirname(to), { recursive: true });
     await fs.rename(from, to).catch(() => {});
   }
-  getAssetUrl(slug: string, name: string): string { return `/cases/${slug}/${name}`; }
+  getAssetUrl(slug: string, name: string): string { return `/cases/${this.toSafeSlug(slug)}/${name}`; }
 }
 
 class S3Adapter implements StorageAdapter {

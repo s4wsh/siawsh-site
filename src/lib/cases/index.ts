@@ -1,4 +1,3 @@
-cat > src/lib/cases.ts <<'TS'
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
@@ -7,6 +6,9 @@ export type CaseDoc = {
   title: string;
   year?: number | string;
   tags?: string[];
+  // NEW: support both shapes
+  category?: string;
+  categories?: string[];
   cover?: string;
   blueprint?: string;
   framework?: string;
@@ -38,24 +40,39 @@ function toSafeSlug(s: string) {
 function normalizeCase(parsed: any, fallbackSlug: string): CaseDoc {
   const slug = parsed?.slug ? toSafeSlug(String(parsed.slug)) : toSafeSlug(fallbackSlug);
   const title = String(parsed?.title || "").trim();
+  // Normalize categories: accept either `category` (string) or `categories` (array)
+  const catSingle = parsed?.category ? String(parsed.category).trim().toLowerCase() : undefined;
+  const catArray: string[] | undefined = Array.isArray(parsed?.categories)
+    ? (parsed.categories as unknown[])
+        .map((s) => String(s).trim().toLowerCase())
+        .filter(Boolean) as string[]
+    : undefined;
+  const categories: string[] | undefined = (catArray && catArray.length > 0)
+    ? Array.from(new Set<string>(catArray))
+    : (catSingle ? [catSingle] : undefined);
   return {
     slug,
     title,
     year: parsed?.year,
     tags: Array.isArray(parsed?.tags) ? parsed.tags.map(String) : undefined,
+    // Keep both shapes available for compatibility across the app
+    category: categories?.[0],
+    categories,
     cover: parsed?.cover ? String(parsed.cover) : undefined,
     blueprint: parsed?.blueprint ? String(parsed.blueprint) : undefined,
     framework: parsed?.framework ? String(parsed.framework) : undefined,
     finish: parsed?.finish ? String(parsed.finish) : undefined,
     images: Array.isArray(parsed?.images) ? parsed.images.map(String) : undefined,
     video: parsed?.video ? String(parsed.video) : undefined,
-    channels: parsed?.channels ? {
-      blog: !!parsed.channels.blog,
-      behance: !!parsed.channels.behance,
-      linkedin: !!parsed.channels.linkedin,
-      facebook: !!parsed.channels.facebook,
-      instagram: !!parsed.channels.instagram,
-    } : undefined,
+    channels: parsed?.channels
+      ? {
+          blog: !!parsed.channels.blog,
+          behance: !!parsed.channels.behance,
+          linkedin: !!parsed.channels.linkedin,
+          facebook: !!parsed.channels.facebook,
+          instagram: !!parsed.channels.instagram,
+        }
+      : undefined,
     socialCaption: parsed?.socialCaption ? String(parsed.socialCaption) : undefined,
   };
 }
@@ -65,24 +82,19 @@ async function readFileIfExists(fp: string): Promise<string | null> {
 }
 
 async function safeParseFromFile(filePathOrSlug: string): Promise<CaseDoc | null> {
-  // Accept either a full path to .json or a slug name
-  let jsonPath = filePathOrSlug.endsWith(".json")
+  const jsonPath = filePathOrSlug.endsWith(".json")
     ? filePathOrSlug
     : path.join(CASE_DIR, `${filePathOrSlug}.json`);
 
   const raw = await readFileIfExists(jsonPath);
   const fallbackSlug = path.basename(jsonPath, ".json");
-
-  if (!raw || !raw.trim()) {
-    console.error("[cases] Empty or missing JSON");
-    return null;
-  }
+  if (!raw || !raw.trim()) { console.error("[cases] Empty or missing JSON:", jsonPath); return null; }
 
   try {
     const parsed = JSON.parse(raw);
     const normalized = normalizeCase(parsed, fallbackSlug);
     if (!normalized.slug || !normalized.title) {
-      console.error("[cases] Missing slug/title");
+      console.error("[cases] Missing slug/title:", jsonPath);
       return null;
     }
     return normalized;
@@ -102,8 +114,7 @@ export async function getCaseBySlug(slug: string): Promise<CaseDoc> {
 export async function getCaseSlugs(): Promise<string[]> {
   try {
     const files = await fs.readdir(CASE_DIR);
-    const jsons = files.filter(f => f.endsWith(".json"));
-    // Prefer slug from inside file; fall back to filename
+    const jsons = files.filter((f) => f.endsWith(".json"));
     const results: string[] = [];
     for (const f of jsons) {
       const full = path.join(CASE_DIR, f);
@@ -111,16 +122,30 @@ export async function getCaseSlugs(): Promise<string[]> {
       if (!raw) continue;
       try {
         const parsed = JSON.parse(raw);
-        const slug = parsed?.slug ? toSafeSlug(String(parsed.slug)) : toSafeSlug(path.basename(f, ".json"));
+        const slug = parsed?.slug
+          ? toSafeSlug(String(parsed.slug))
+          : toSafeSlug(path.basename(f, ".json"));
         if (SAFE_SLUG.test(slug)) results.push(slug);
-      } catch {
-        // skip bad JSON
-      }
+      } catch { /* skip bad JSON */ }
     }
     return Array.from(new Set(results));
   } catch {
-    // directory missing → empty list
     return [];
   }
 }
-TS
+
+/* ---- required by your pages ---- */
+export async function getAllCases(): Promise<CaseDoc[]> {
+  const slugs = await getCaseSlugs();
+  const items = await Promise.all(slugs.map((s) => safeParseFromFile(s)));
+  const cases = items.filter(Boolean) as CaseDoc[];
+  return cases.sort((a, b) => {
+    const ay = typeof a.year === "number" ? a.year : parseInt(String(a.year || "0"), 10) || 0;
+    const by = typeof b.year === "number" ? b.year : parseInt(String(b.year || "0"), 10) || 0;
+    if (by !== ay) return by - ay;
+    return a.title.localeCompare(b.title);
+  });
+}
+
+export { getCaseSlugs as getAllSlugs }; // legacy alias
+

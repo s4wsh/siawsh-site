@@ -1,0 +1,200 @@
+:root {
+  --transition-speed: 0.4s;
+}
+
+/* Spatial Theme - Architecture & Furniture */
+[data-theme='spatial'] {
+  --bg-color: #f7f7f5;
+  --text-color: #1a1a1a;
+  --accent-color: #8c7b6c;
+  --card-bg: #ffffff;
+  --border-color: #e0e0dc;
+  --font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Cinematic Theme - Graphics & Motion */
+[data-theme='cinematic'] {
+  --bg-color: #0b0b0d;
+  --text-color: #f0f0f3;
+  --accent-color: #00f0ff;
+  --card-bg: #16161a;
+  --border-color: #2a2a32;
+  --font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-color);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  transition: border-color var(--transition-speed), background-color var(--transition-speed);
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+}
+
+.logo span {
+  color: var(--accent-color);
+}
+
+.theme-switcher {
+  display: flex;
+  background: var(--card-bg);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid var(--border-color);
+}
+
+.switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.switch-btn.active {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 0.9rem;
+}
+
+/* Portfolio Grid & Cards */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent-color);
+}
+
+.media-wrapper {
+  width: 100%;
+  height: 240px;
+  background: #111;
+  overflow: hidden;
+}
+
+.card-image, .card-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-info {
+  padding: 20px;
+}
+
+.project-info h3 {
+  margin: 0 0 6px 0;
+  font-size: 1.1rem;
+}
+
+.project-info span {
+  font-size: 0.85rem;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Contact Desk */
+.contact-section {
+  margin-top: 100px;
+  padding: 60px 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.contact-container {
+  max-width: 600px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 1rem;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--accent-color);
+}
+
+.submit-btn {
+  padding: 16px 32px;
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.submit-btn:hover {
+  opacity: 0.9;
+}
+
+.success-message {
+  padding: 30px;
+  background: var(--card-bg);
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  margin-top: 20px;
+}

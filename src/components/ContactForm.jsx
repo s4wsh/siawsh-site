@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStudioTheme } from './ThemeContext';
+import { useStudioTheme } from '../context/ThemeContext';
 
 export default function ContactForm() {
   const { mode, t } = useStudioTheme();

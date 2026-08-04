@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStudioTheme } from './ThemeContext';
+import { useStudioTheme } from '../context/ThemeContext';
 
 export default function Footer() {
   const { mode, t } = useStudioTheme();

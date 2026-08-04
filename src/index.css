@@ -1,4 +1,53 @@
+@import "tailwindcss";
+
 :root {
+  --transition-speed: 0.35s;
+  --radius-lg: 0px;
+  --radius-sm: 0px;
+}
+
+[data-theme='spatial'] {
+  --bg-color: #f7f7f5;
+  --text-color: #1a1a1a;
+  --accent-color: #8c7b6c;
+  --card-bg: #ffffff;
+  --border-color: rgba(0, 0, 0, 0.15);
+  --muted-text: #666666;
+  --glass-bg: rgba(235, 235, 230, 0.82);
+  --glass-drawer-bg: rgba(235, 235, 230, 0.94);
+  --glass-switcher-bg: rgba(0, 0, 0, 0.04);
+  --glass-switcher-active: #1a1a1a;
+  --glass-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.12);
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+[data-theme='cinematic'] {
+  --bg-color: #0b0b0d;
+  --text-color: #f0f0f3;
+  --accent-color: #00f0ff;
+  --card-bg: #16161a;
+  --border-color: rgba(255, 255, 255, 0.18);
+  --muted-text: #8a8a93;
+  --glass-bg: rgba(11, 11, 13, 0.85);
+  --glass-drawer-bg: rgba(11, 11, 13, 0.95);
+  --glass-switcher-bg: rgba(255, 255, 255, 0.05);
+  --glass-switcher-active: #00f0ff;
+  --glass-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.7);
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* PASTE THE REST OF YOUR ORIGINAL 782-LINE CSS BELOW THIS LINE */:root {
   --transition-speed: 0.35s;
   --radius-lg: 0px;
   --radius-sm: 0px;

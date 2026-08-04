@@ -1,0 +1,47 @@
+/* src/components/Loader.css */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.loader-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Center Container for Motion Assets */
+.loader-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 80vw;
+  max-height: 80vh;
+}
+
+/* Video & Motion Asset Styling */
+.loader-logo-video,
+.loader-logo-img {
+  width: 240px; /* Adjust size to fit your logo dimensions */
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .loader-logo-video,
+  .loader-logo-img {
+    width: 180px;
+  }
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useStudioTheme } from '../../context/ThemeContext';
+import '../sections/ContactForm.css';
 
 export default function ContactForm() {
   const { mode, t } = useStudioTheme();
@@ -47,7 +48,7 @@ export default function ContactForm() {
   return (
     <section className="contact-section" id="contact">
       <div className="contact-container">
-        <h2>{t.contact?.title}</h2>
+        <h2 className="contact-title">{t.contact?.title || "Start a Project"}</h2>
         <p className="contact-subtitle">
           {mode === 'spatial'
             ? t.contact?.descSpatial
@@ -63,7 +64,7 @@ export default function ContactForm() {
           <form className="contact-form" onSubmit={handleSubmit}>
             {/* Discipline Selection Buttons */}
             <div className="discipline-selector">
-              <label className="field-label">{t.contact?.disciplineLabel || "Select Service"}</label>
+              <label className="field-label">{t.contact?.disciplineLabel || "PROJECT SERVICE"}</label>
               <div className="discipline-grid">
                 {disciplines.map((item) => (
                   <button
@@ -82,7 +83,7 @@ export default function ContactForm() {
               <input 
                 type="text" 
                 name="name" 
-                placeholder={t.contact?.namePlaceholder} 
+                placeholder={t.contact?.namePlaceholder || "Your Name"} 
                 required 
                 className="form-input" 
               />
@@ -91,7 +92,7 @@ export default function ContactForm() {
               <input 
                 type="email" 
                 name="email" 
-                placeholder={t.contact?.emailPlaceholder} 
+                placeholder={t.contact?.emailPlaceholder || "Your Email"} 
                 required 
                 className="form-input" 
               />
@@ -99,14 +100,14 @@ export default function ContactForm() {
             <div className="form-group">
               <textarea 
                 name="message" 
-                placeholder={t.contact?.msgPlaceholder} 
+                placeholder={t.contact?.msgPlaceholder || "Tell us about your project..."} 
                 rows="5" 
                 required 
                 className="form-input"
               ></textarea>
             </div>
             <button type="submit" className="submit-btn" disabled={loading}>
-              {loading ? t.contact?.btnSending : t.contact?.btnSend}
+              {loading ? (t.contact?.btnSending || "Sending...") : (t.contact?.btnSend || "Send Request")}
             </button>
           </form>
         )}

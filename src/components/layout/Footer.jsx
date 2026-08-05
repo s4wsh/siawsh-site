@@ -1,3 +1,5 @@
+// src/components/layout/Footer.jsx
+
 import React from 'react';
 import { useStudioTheme } from '../../context/ThemeContext';
 
@@ -25,16 +27,52 @@ export default function Footer() {
           <div className="footer-links-group">
             <div className="footer-col">
               <h4>{t.footer?.connect || "Connect"}</h4>
-              <a href="mailto:hello@siawsh.co" className="footer-link">hello@siawsh.co</a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="footer-link">Instagram</a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="footer-link">LinkedIn</a>
-              <a href="https://vimeo.com" target="_blank" rel="noreferrer" className="footer-link">Vimeo</a>
+              <a 
+                href="https://www.instagram.com/siafsari/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="footer-link"
+              >
+                Instagram
+              </a>
+              <a 
+                href="https://www.behance.net/siawsh" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="footer-link"
+              >
+                Behance
+              </a>
+              <a 
+                href="https://vimeo.com/siawsh" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="footer-link"
+              >
+                Vimeo
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/siavash-afsari/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="footer-link"
+              >
+                LinkedIn
+              </a>
             </div>
 
             <div className="footer-col">
               <h4>{t.footer?.discipline || "Disciplines"}</h4>
-              <span>{mode === 'spatial' ? (t.footer?.arch || 'Architecture & Interior') : (t.footer?.motion || 'Motion & Visual Arts')}</span>
-              <span>{mode === 'spatial' ? (t.footer?.furniture || 'Object & Furniture') : (t.footer?.branding || 'Kinetic Branding')}</span>
+              <span>
+                {mode === 'spatial' 
+                  ? (t.footer?.arch || 'Architecture & Interior') 
+                  : (t.footer?.motion || 'Motion & Visual Arts')}
+              </span>
+              <span>
+                {mode === 'spatial' 
+                  ? (t.footer?.furniture || 'Object & Furniture') 
+                  : (t.footer?.branding || 'Kinetic Branding')}
+              </span>
             </div>
           </div>
         </div>

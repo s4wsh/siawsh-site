@@ -21,6 +21,7 @@
 .about-header-block {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .about-eyebrow {
@@ -51,9 +52,10 @@
   font-size: 1.05rem;
   line-height: 1.75;
   opacity: 0.85;
+  width: 100%;
 }
 
-/* Section Subheadings - Negative Title Contrast Fix */
+/* Section Subheadings - Contrast & Visibility Fix */
 .section-subheading {
   font-size: 0.875rem;
   font-weight: 700;
@@ -62,8 +64,8 @@
   margin-bottom: 32px;
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  color: #111111; /* Clean high-contrast dark text */
-  background: none !important; /* Forces removal of unwanted highlight blocks */
+  color: #111111; /* Default high-contrast text for Spatial (light) mode */
+  background: transparent !important;
   display: block;
 }
 
@@ -125,7 +127,6 @@
 
 /* Process Section */
 .process-block {
-  max-width: 900px;
   width: 100%;
 }
 
@@ -133,6 +134,7 @@
   font-size: 1.125rem;
   line-height: 1.8;
   opacity: 0.85;
+  max-width: 900px;
 }
 
 /* Stat Cards Grid Alignment */
@@ -178,51 +180,42 @@
   line-height: 1.4;
 }
 
-/* Dark Mode Overrides (Cinematic Mode) */
-[data-theme="dark"] .about-section,
-.dark-mode .about-section {
+/* Cinematic Dark Mode Dynamic Overrides */
+[data-theme="cinematic"] .about-section {
   border-top-color: rgba(255, 255, 255, 0.08);
 }
 
-[data-theme="dark"] .section-subheading,
-.dark-mode .section-subheading {
-  color: #F3F4F6;
-  border-bottom-color: rgba(255, 255, 255, 0.1);
+[data-theme="cinematic"] .section-subheading {
+  color: #ffffff !important;
+  border-bottom-color: rgba(255, 255, 255, 0.15);
 }
 
-[data-theme="dark"] .capability-card,
-.dark-mode .capability-card {
+[data-theme="cinematic"] .capability-card {
   background: rgba(255, 255, 255, 0.02);
   border-color: rgba(255, 255, 255, 0.08);
 }
 
-[data-theme="dark"] .capability-card:hover,
-.dark-mode .capability-card:hover {
+[data-theme="cinematic"] .capability-card:hover {
   background: rgba(255, 255, 255, 0.04);
   border-color: rgba(0, 229, 255, 0.4);
 }
 
-[data-theme="dark"] .about-stat-card,
-.dark-mode .about-stat-card {
+[data-theme="cinematic"] .about-stat-card {
   background: rgba(255, 255, 255, 0.02);
   border-color: rgba(255, 255, 255, 0.08);
 }
 
-[data-theme="dark"] .about-stat-card:hover,
-.dark-mode .about-stat-card:hover {
+[data-theme="cinematic"] .about-stat-card:hover {
   background: rgba(255, 255, 255, 0.03);
   border-color: rgba(0, 229, 255, 0.3);
 }
 
-[data-theme="dark"] .about-stats-grid,
-.dark-mode .about-stats-grid {
+[data-theme="cinematic"] .about-stats-grid {
   border-top-color: rgba(255, 255, 255, 0.08);
 }
 
-[data-theme="dark"] .about-eyebrow,
-.dark-mode .about-eyebrow,
-[data-theme="dark"] .capability-index,
-.dark-mode .capability-index {
+[data-theme="cinematic"] .about-eyebrow,
+[data-theme="cinematic"] .capability-index {
   color: #00e5ff;
 }
 

@@ -1,44 +1,54 @@
 // src/App.jsx
+
 import React, { useState, Component } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from './context/ThemeContext';
-import Navbar from './components/Navbar';
-import ContactForm from './components/ContactForm';
-import Footer from './components/Footer';
-import Modal from './components/Modal';
-import HeroSection from './components/sections/HeroSection';
-import WorkSection from './components/sections/WorkSection';
-import AboutSection from './components/sections/AboutSection';
-import Loader from './components/Loader';
+
+// Layout Components
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import Loader from './components/common/Loader';
+
+// Pages
+import Home from './pages/Home';
+import SpatialPage from './pages/SpatialPage';
+import CinematicPage from './pages/CinematicPage';
+import ProjectDetailPage from './pages/ProjectDetailPage';
+
+// Hooks & Styles
 import useSmoothScroll from './hooks/useSmoothScroll';
 import './index.css';
 
-// Safety Guard for Analytics
 class AnalyticsBoundary extends Component {
   state = { hasError: false };
+
   static getDerivedStateFromError() {
     return { hasError: true };
   }
+
   componentDidCatch(error) {
-    console.warn("Analytics blocked or failed to load:", error);
+    console.warn('Analytics blocked or failed to load:', error);
   }
+
   render() {
     if (this.state.hasError) return null;
     return this.props.children;
   }
 }
 
-function MainContent() {
+function MainAppShell() {
   const [loading, setLoading] = useState(true);
-  const [selectedProject, setSelectedProject] = useState(null);
+
+  // Initialize Lenis smooth scrolling engine
   useSmoothScroll();
 
   return (
     <>
-      {/* Fullscreen Animated Black Loader */}
+      {/* Fullscreen Initial Loader */}
       {loading && <Loader onFinish={() => setLoading(false)} />}
 
-      {/* Main Website Structure with Smooth Fade-In Reveal */}
+      {/* App Layout Container */}
       <div
         style={{
           opacity: loading ? 0 : 1,
@@ -47,14 +57,18 @@ function MainContent() {
         }}
       >
         <Navbar />
-        <HeroSection />
 
-        <div className="app-container">
-          <WorkSection onSelectProject={setSelectedProject} />
-          <AboutSection />
-          <ContactForm />
-          <Modal project={selectedProject} onClose={() => setSelectedProject(null)} />
-        </div>
+        <Routes>
+          {/* Landing Route */}
+          <Route path="/" element={<Home />} />
+
+          {/* Practice Routes */}
+          <Route path="/spatial" element={<SpatialPage />} />
+          <Route path="/cinematic" element={<CinematicPage />} />
+
+          {/* Standalone Project Detail Page */}
+          <Route path="/project/:projectId" element={<ProjectDetailPage />} />
+        </Routes>
 
         <Footer />
       </div>
@@ -65,10 +79,12 @@ function MainContent() {
 export default function App() {
   return (
     <ThemeProvider>
-      <MainContent />
-      <AnalyticsBoundary>
-        <Analytics />
-      </AnalyticsBoundary>
+      <Router>
+        <MainAppShell />
+        <AnalyticsBoundary>
+          <Analytics />
+        </AnalyticsBoundary>
+      </Router>
     </ThemeProvider>
   );
 }

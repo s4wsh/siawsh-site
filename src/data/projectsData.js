@@ -47,12 +47,70 @@ export const auraProject = (t = {}) => ({
   ],
 
   otherWorks: [
-    { id: "luckys-custom-homes", title: "Project 01: Lucky’s Custom Homes — Visual Identity & Brand System" },
-    { id: "concrete-horizon-villa", title: "Project 02: Architectural Visualization & Spatial Lighting" }
+    { id: "flick-delivery", title: "Project 01: Flick Delivery — Brand Identity & Motion Graphics" },
+    { id: "luckys-custom-homes", title: "Project 02: Lucky’s Custom Homes — Visual Identity & Brand System" }
   ]
 });
 
-// Cinematic Card Project 01: Lucky’s Custom Homes
+// Cinematic Card Project: Flick Delivery
+export const flickDeliveryProject = (t = {}) => ({
+  id: "flick-delivery",
+  projectName: "Flick Delivery",
+  title: t.projects?.flick?.title || "Flick Delivery — Brand Identity, Motion Graphics & Visual System",
+  headline: "Building a Dynamic Identity for Next-Gen Local Logistics",
+  subtitle: "Combining eco-friendly logistics, energetic motion design, and a high-speed mark to launch Northern Cyprus’s leading delivery platform.",
+  category: "Brand Identity & Motion",
+  span: "bento-span-8",
+  imageSrc: "/projects/flickdelivery/drop_box.webp",
+  coverImage: "/projects/flickdelivery/drop_box.webp",
+  heroVideo: "/projects/flickdelivery/flick_delivery.mp4",
+  previewVideoSrc: "/projects/flickdelivery/flick_delivery.mp4",
+  year: "2026",
+  client: "Flick Delivery",
+  location: "Northern Cyprus",
+  disciplines: ["Brand Identity", "Motion Graphics", "Visual System"],
+  isVideo: true,
+
+  // Context & Research Overview
+  contextParagraph: "Flick Delivery launched in Northern Cyprus to revolutionize last-mile logistics for local businesses through speed, simplicity, and eco-friendly practices. The primary challenge was crafting a brand identity that felt fast and modern while signaling sustainability—starting with bicycle deliveries to reduce urban environmental impact. SIAWSH was commissioned to build a complete visual system and explainer video that bridges digital usability with physical, on-the-ground presence.",
+  contextImage: "/projects/flickdelivery/drop_box.webp",
+  moodboardImage: "/projects/flickdelivery/drop_box.webp",
+
+  // Logo Architecture & Motion Strategy
+  strategyTitle: "Logo Architecture & Motion Strategy",
+  engineeringTitle: "Logo Architecture & Motion Strategy",
+  strategyParagraph: "Local businesses were struggling to compete with massive delivery apps, while customers wanted quick, eco-friendly options. They needed a brand that felt fast, reliable, and approachable. SIAWSH solved this by designing a logo that merges an 'F' with a forward arrow—symbolizing speed without feeling corporate. Built on a grid, it scales cleanly from phone screens to courier bikes. To bring it all together, SIAWSH created a quick motion explainer video that breaks down the delivery process into simple, engaging visual steps, showing merchants and buyers just how easy local shipping can be.",
+  engineeringParagraph: "Local businesses were struggling to compete with massive delivery apps, while customers wanted quick, eco-friendly options. They needed a brand that felt fast, reliable, and approachable. SIAWSH solved this by designing a logo that merges an 'F' with a forward arrow—symbolizing speed without feeling corporate. Built on a grid, it scales cleanly from phone screens to courier bikes. To bring it all together, SIAWSH created a quick motion explainer video that breaks down the delivery process into simple, engaging visual steps, showing merchants and buyers just how easy local shipping can be.",
+  alignmentImage: "/projects/flickdelivery/hands_to_hands.webp",
+  explosionImage: "/projects/flickdelivery/hands_to_hands.webp",
+
+  // Recognition & Market Standing
+  competitorParagraph: "While traditional logistics brands rely on heavy, corporate iconography, Flick Delivery establishes an agile, eco-conscious identity. By combining vibrant green chevron accents with natural kraft packaging, the brand stands out in the Northern Cyprus market as a modern, community-focused platform.",
+
+  // Quote Section
+  ethosTitle: "Empowering Local Commerce",
+  ethosQuote: "Flick Delivery provides fast, simple, efficient, and eco-friendly solutions for local businesses, empowering them to connect with customers through a modern, reliable platform.",
+  quoteSource: "Flick Delivery Team",
+
+  // Gallery
+  galleryImages: [
+    {
+      src: "/projects/flickdelivery/all_orders.webp",
+      caption: "Fleet tracking interface and branded eco-friendly delivery packaging."
+    },
+    {
+      src: "/projects/flickdelivery/hands_to_hands.webp",
+      caption: "Direct merchant-to-customer parcel handoff visual."
+    }
+  ],
+
+  otherWorks: [
+    { id: "luckys-custom-homes", title: "Project 01: Lucky’s Custom Homes — Visual Identity" },
+    { id: "aura-smart-speaker", title: "Project 02: AURA — Conceptual 3D Design & Motion Showcase" }
+  ]
+});
+
+// Cinematic Card Project 02: Lucky’s Custom Homes
 export const luckysCustomHomesProject = (t = {}) => ({
   id: "luckys-custom-homes",
   projectName: "Lucky’s Custom Homes",
@@ -60,7 +118,7 @@ export const luckysCustomHomesProject = (t = {}) => ({
   headline: "Grounding Regional Heritage in Minimalist Identity",
   subtitle: "A modern brand identity for a southern New Mexico custom home builder, balancing regional warm desert tones with an agile combination mark.",
   category: "Visual Identity & Brand System",
-  span: "bento-span-8",
+  span: "bento-span-4",
   imageSrc: "/projects/luckys-custom-homes/hero-dusk.jpg",
   coverImage: "/projects/luckys-custom-homes/hero-dusk.jpg",
   heroImage: "/projects/luckys-custom-homes/hero-dusk.jpg",
@@ -70,12 +128,10 @@ export const luckysCustomHomesProject = (t = {}) => ({
   disciplines: ["Brand Identity", "Visual System", "Collateral Design"],
   isVideo: false,
 
-  // Section 1: Context & Market Research Overview
   contextParagraph: "Market research into Lucky’s Custom Homes—a custom home builder based in southern New Mexico—revealed that connecting with local homeowners requires a deep resonance with the Desert Southwest’s natural environment. While key local competitors like Veloz Homes lean heavily into high-end luxury and Palo Verde prioritizes ultra-simplicity, Lucky’s needed an identity that built immediate trust without sacrificing design sophistication. The challenge was to anchor the 'Lucky' name in a refined visual mark while drawing directly from the region's organic landscape.",
   contextImage: "/projects/luckys-custom-homes/market-research-overview.jpg",
   moodboardImage: "/projects/luckys-custom-homes/market-research-overview.jpg",
 
-  // Section 2: Strategy, Typography & Alignment Grid
   strategyTitle: "Strategy, Typography & System Execution",
   engineeringTitle: "Strategy, Typography & System Execution",
   strategyParagraph: "To balance regional authenticity with visual clarity, SIAWSH engineered a minimalist combination mark featuring a stylized single-line shamrock paired with structured typography. Built using geometric precision and optical alignment, the emblem scales effortlessly across digital channels, heavy construction equipment, and print collateral. The typographic foundation relies on Montserrat (Bold & Regular) to maintain a modern, clean, and structural feel. The color palette translates the warmth of the Southwest directly into the identity using terracotta (#E2725B), desert beige (#F5E6CC), vibrant sage green (#4CAF50), and deep charcoal (#333333) for high-contrast readability.",
@@ -83,15 +139,12 @@ export const luckysCustomHomesProject = (t = {}) => ({
   alignmentImage: "/projects/luckys-custom-homes/alignment-grid-breakdown.jpg",
   explosionImage: "/projects/luckys-custom-homes/alignment-grid-breakdown.jpg",
 
-  // Section 3: Market Positioning & Recognition
   competitorParagraph: "Positioned strategically between high-end luxury residential builders and mass-market contractors, the new identity gives Lucky’s Custom Homes a distinct, memorable presence in the New Mexico market. By pairing an approachable shamrock motif with grounded desert tones, the brand establishes an authentic visual identity that fosters immediate client trust.",
 
-  // Section 4: Quote & Brand Tagline
   ethosTitle: "Shaping Your Future",
   ethosQuote: "The desert southwest’s earthy tones—terracotta, beige, and muted green—connect deeply with local homeowners. This combination mark provides a professional, warm, and regionally distinct identity that sets us apart from local competition.",
   quoteSource: "Southwest Design Guide",
 
-  // Section 5: Gallery & Physical Collateral
   galleryImages: [
     {
       src: "/projects/luckys-custom-homes/style-guide.jpg",
@@ -104,8 +157,8 @@ export const luckysCustomHomesProject = (t = {}) => ({
   ],
 
   otherWorks: [
-    { id: "aura-smart-speaker", title: "Project 01: AURA — Conceptual 3D Design & Motion Showcase" },
-    { id: "concrete-horizon-villa", title: "Project 03: Spatial Architecture & Landscape Visualization" }
+    { id: "flick-delivery", title: "Project 01: Flick Delivery — Brand Identity & Motion" },
+    { id: "aura-smart-speaker", title: "Project 02: AURA — Conceptual 3D Design & Motion Showcase" }
   ]
 });
 
@@ -123,8 +176,8 @@ export const nordicPavilionProject = (t = {}) => ({
   client: "Nordic Cultural Foundation",
   isVideo: false,
   otherWorks: [
-    { id: "luckys-custom-homes", title: "Project 01: Lucky’s Custom Homes" },
-    { id: "abstract-3d-showreel", title: "Project 02: Abstract 3D Showreel" }
+    { id: "flick-delivery", title: "Project 01: Flick Delivery" },
+    { id: "luckys-custom-homes", title: "Project 02: Lucky’s Custom Homes" }
   ]
 });
 
@@ -142,7 +195,7 @@ export const minimalLoungeChairProject = (t = {}) => ({
   client: "Studio Edition",
   isVideo: false,
   otherWorks: [
-    { id: "neonic-kinetic-branding", title: "Project 02: Neonic Kinetic Branding" }
+    { id: "flick-delivery", title: "Project 01: Flick Delivery" }
   ]
 });
 
@@ -182,7 +235,7 @@ export const monolithStudioProject = (t = {}) => ({
   ]
 });
 
-// Cinematic Card Project 02: Cybernetic Identity
+// Cinematic Card Project 03: Cybernetic Identity
 export const cyberneticIdentityProject = (t = {}) => ({
   id: "cybernetic-identity",
   title: t.projects?.cyber?.title || "Cybernetic Identity",
@@ -196,11 +249,11 @@ export const cyberneticIdentityProject = (t = {}) => ({
   client: "Cyber Corp",
   isVideo: false,
   otherWorks: [
-    { id: "luckys-custom-homes", title: "Project 01: Lucky’s Custom Homes" }
+    { id: "flick-delivery", title: "Project 01: Flick Delivery" }
   ]
 });
 
-// Cinematic Card Project 03: Abstract 3D Showreel
+// Cinematic Card Project 04: Abstract 3D Showreel
 export const abstractShowreelProject = (t = {}) => ({
   id: "abstract-3d-showreel",
   title: t.projects?.showreel?.title || "Abstract 3D Showreel",
@@ -219,7 +272,7 @@ export const abstractShowreelProject = (t = {}) => ({
   ]
 });
 
-// Cinematic Card Project 04: Neonic Kinetic Branding
+// Cinematic Card Project 05: Neonic Kinetic Branding
 export const neonicBrandingProject = (t = {}) => ({
   id: "neonic-kinetic-branding",
   title: t.projects?.neonic?.title || "Neonic Kinetic Branding",
@@ -252,9 +305,10 @@ export const getSpatialProjects = (t = {}) => [
 ];
 
 /**
- * Returns cards exclusively for Cinematic practice grid (includes Lucky's Custom Homes)
+ * Returns cards exclusively for Cinematic practice grid (Includes Flick Delivery & Lucky's)
  */
 export const getCinematicProjects = (t = {}) => [
+  flickDeliveryProject(t),
   luckysCustomHomesProject(t),
   cyberneticIdentityProject(t),
   abstractShowreelProject(t),

@@ -19,6 +19,9 @@ export const auraProject = (t = {}) => ({
   year: "2026",
   client: "Studio Concept",
   isVideo: true,
+  loop: true,
+  autoPlay: true,
+  muted: true,
 
   contextParagraph: "This project originated as a personal challenge to build a commercial-grade 3D and motion design showcase. The primary creative hurdle was clear: How do you demonstrate high-level technical rendering skills for a premium tech product without infringing on existing brand trademarks? The solution was to design an entirely original product from the ground up. Instead of borrowing a brand, AURA was born—a conceptual smart speaker rooted in architectural minimalism, premium physical textures, and immersive acoustic design.",
   contextImage: "/projects/aura-smart-speaker/moodboard.jpg",
@@ -52,7 +55,7 @@ export const auraProject = (t = {}) => ({
   ]
 });
 
-// Cinematic Card Project: Flick Delivery
+// Cinematic Card Project 01: Flick Delivery
 export const flickDeliveryProject = (t = {}) => ({
   id: "flick-delivery",
   projectName: "Flick Delivery",
@@ -70,6 +73,9 @@ export const flickDeliveryProject = (t = {}) => ({
   location: "Northern Cyprus",
   disciplines: ["Brand Identity", "Motion Graphics", "Visual System"],
   isVideo: true,
+  loop: true,
+  autoPlay: true,
+  muted: true,
 
   // Context & Research Overview
   contextParagraph: "Flick Delivery launched in Northern Cyprus to revolutionize last-mile logistics for local businesses through speed, simplicity, and eco-friendly practices. The primary challenge was crafting a brand identity that felt fast and modern while signaling sustainability—starting with bicycle deliveries to reduce urban environmental impact. SIAWSH was commissioned to build a complete visual system and explainer video that bridges digital usability with physical, on-the-ground presence.",
@@ -118,7 +124,7 @@ export const luckysCustomHomesProject = (t = {}) => ({
   headline: "Grounding Regional Heritage in Minimalist Identity",
   subtitle: "A modern brand identity for a southern New Mexico custom home builder, balancing regional warm desert tones with an agile combination mark.",
   category: "Visual Identity & Brand System",
-  span: "bento-span-4",
+  span: "bento-span-8",
   imageSrc: "/projects/luckys-custom-homes/hero-dusk.jpg",
   coverImage: "/projects/luckys-custom-homes/hero-dusk.jpg",
   heroImage: "/projects/luckys-custom-homes/hero-dusk.jpg",
@@ -231,62 +237,7 @@ export const monolithStudioProject = (t = {}) => ({
   client: "Monolith Labs",
   isVideo: false,
   otherWorks: [
-    { id: "cybernetic-identity", title: "Project 01: Cybernetic Identity" }
-  ]
-});
-
-// Cinematic Card Project 03: Cybernetic Identity
-export const cyberneticIdentityProject = (t = {}) => ({
-  id: "cybernetic-identity",
-  title: t.projects?.cyber?.title || "Cybernetic Identity",
-  subtitle: "Generative brand design system for autonomous platforms.",
-  category: t.projects?.cyber?.category || "Graphic Design",
-  span: "bento-span-4",
-  imageSrc: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
-  coverImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
-  description: "A dynamic, code-driven typographic identity system that mutates based on real-time network traffic and user interactions.",
-  year: "2026",
-  client: "Cyber Corp",
-  isVideo: false,
-  otherWorks: [
-    { id: "flick-delivery", title: "Project 01: Flick Delivery" }
-  ]
-});
-
-// Cinematic Card Project 04: Abstract 3D Showreel
-export const abstractShowreelProject = (t = {}) => ({
-  id: "abstract-3d-showreel",
-  title: t.projects?.showreel?.title || "Abstract 3D Showreel",
-  subtitle: "Compilation of motion research and visual simulations.",
-  category: t.projects?.showreel?.category || "Motion Graphics",
-  span: "bento-span-8",
-  imageSrc: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80",
-  coverImage: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80",
-  previewVideoSrc: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-  description: "An annual retrospective showcase exploring fluid physics, optical distortion, and photorealistic spatial light.",
-  year: "2025",
-  client: "Studio Reel",
-  isVideo: true,
-  otherWorks: [
-    { id: "nordic-pavilion", title: "Project 01: Nordic Pavilion" }
-  ]
-});
-
-// Cinematic Card Project 05: Neonic Kinetic Branding
-export const neonicBrandingProject = (t = {}) => ({
-  id: "neonic-kinetic-branding",
-  title: t.projects?.neonic?.title || "Neonic Kinetic Branding",
-  subtitle: "High-contrast visual language for modern sound design.",
-  category: t.projects?.neonic?.category || "Branding",
-  span: "bento-span-4",
-  imageSrc: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
-  coverImage: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
-  description: "Custom neon signages and audio-reactive motion graphics crafted for international electronic music venues.",
-  year: "2025",
-  client: "Neonic Records",
-  isVideo: false,
-  otherWorks: [
-    { id: "minimal-lounge-chair", title: "Project 01: Minimal Lounge Chair" }
+    { id: "luckys-custom-homes", title: "Project 01: Lucky’s Custom Homes" }
   ]
 });
 
@@ -305,14 +256,11 @@ export const getSpatialProjects = (t = {}) => [
 ];
 
 /**
- * Returns cards exclusively for Cinematic practice grid (Includes Flick Delivery & Lucky's)
+ * Returns cards exclusively for Cinematic practice grid (Only active production projects)
  */
 export const getCinematicProjects = (t = {}) => [
   flickDeliveryProject(t),
-  luckysCustomHomesProject(t),
-  cyberneticIdentityProject(t),
-  abstractShowreelProject(t),
-  neonicBrandingProject(t)
+  luckysCustomHomesProject(t)
 ];
 
 // -------------------------------------------------------------
@@ -320,7 +268,7 @@ export const getCinematicProjects = (t = {}) => [
 // -------------------------------------------------------------
 
 /**
- * Resolves any project by ID (including Hero and all practice cards)
+ * Resolves any project by ID (including Hero and all active practice cards)
  */
 export const getAllProjects = (t = {}) => {
   const map = new Map();

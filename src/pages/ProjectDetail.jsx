@@ -1,9 +1,81 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
 import { projectsData } from '../data/projectsData.js';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
+
+/**
+ * Performance-Optimized Lazy Video Component
+ * Only initializes playback and GPU decoding when scrolled into view.
+ * Automatically pauses playback when out of view to eliminate scroll lag.
+ */
+function LazyVideo({ 
+  src, 
+  className = "", 
+  aspectRatio = "16/9", 
+  objectFit = "cover", 
+  label = null 
+}) {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: '200px 0px' }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+    if (isInView) {
+      videoRef.current.play().catch(() => {});
+    } else {
+      videoRef.current.pause();
+    }
+  }, [isInView]);
+
+  // Convert "16/9" string to inline style if needed
+  const styleAspectRatio = aspectRatio.includes('/') ? aspectRatio.replace('/', ' / ') : aspectRatio;
+
+  return (
+    <div 
+      ref={containerRef} 
+      className={`relative w-full overflow-hidden bg-neutral-900 border border-current/10 ${className}`}
+      style={{ aspectRatio: styleAspectRatio }}
+    >
+      <video
+        ref={videoRef}
+        src={src}
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        className="h-full w-full"
+        style={{ 
+          objectFit,
+          willChange: 'transform',
+          transform: 'translateZ(0)'
+        }}
+      />
+      {label && (
+        <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1 text-[10px] uppercase tracking-widest text-white z-10">
+          {label}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function ProjectDetail() {
   const { id } = useParams();
@@ -13,7 +85,7 @@ export default function ProjectDetail() {
   const project = projectsData.find((p) => p.id === id);
 
   // Filter related projects based on shared categories
-  const relatedProjects = React.useMemo(() => {
+  const relatedProjects = useMemo(() => {
     if (!project || !project.categoryType) return [];
     return projectsData
       .filter(
@@ -103,12 +175,12 @@ export default function ProjectDetail() {
 
   const heroVideoSrc = heroVideo || null;
 
-  const filteredPostHeroVideos = React.useMemo(() => {
+  const filteredPostHeroVideos = useMemo(() => {
     if (!postHeroVideoGrid || !postHeroVideoGrid.videos) return [];
     return postHeroVideoGrid.videos.filter((vid) => vid.src && vid.src !== heroVideoSrc);
   }, [postHeroVideoGrid, heroVideoSrc]);
 
-  const usedVideoSrcs = React.useMemo(() => {
+  const usedVideoSrcs = useMemo(() => {
     const set = new Set();
     if (heroVideoSrc) set.add(heroVideoSrc);
     filteredPostHeroVideos.forEach((vid) => {
@@ -117,7 +189,7 @@ export default function ProjectDetail() {
     return set;
   }, [heroVideoSrc, filteredPostHeroVideos]);
 
-  const filteredTheySaidVideos = React.useMemo(() => {
+  const filteredTheySaidVideos = useMemo(() => {
     if (!theySaidVideos) return [];
     return theySaidVideos.filter((vid) => {
       const src = typeof vid === 'string' ? vid : vid?.src;
@@ -156,7 +228,11 @@ export default function ProjectDetail() {
           {(heroVideo || heroImage) && (
             <div className="w-full overflow-hidden bg-neutral-900 border border-current/10" style={{ aspectRatio: '16 / 9' }}>
               {heroVideo ? (
-                <video src={heroVideo} autoPlay loop muted playsInline className="h-full w-full object-cover" />
+                <LazyVideo 
+                  src={heroVideo} 
+                  aspectRatio="16/9" 
+                  objectFit="cover" 
+                />
               ) : (
                 <img src={heroImage} alt={title} className="h-full w-full object-cover" />
               )}
@@ -167,21 +243,13 @@ export default function ProjectDetail() {
           {hasPostHeroVideoGrid && filteredPostHeroVideos.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredPostHeroVideos.map((vid) => (
-                <div key={vid.id || vid.src} className="relative w-full overflow-hidden bg-neutral-900 border border-current/10 aspect-9/16">
-                  <video
-                    src={vid.src}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="h-full w-full object-contain"
-                  />
-                  {vid.label && (
-                    <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1 text-[10px] uppercase tracking-widest text-white">
-                      {vid.label}
-                    </div>
-                  )}
-                </div>
+                <LazyVideo
+                  key={vid.id || vid.src}
+                  src={vid.src}
+                  aspectRatio={vid.aspectRatio || postHeroVideoGrid?.aspectRatio || "16/9"}
+                  objectFit={vid.objectFit || postHeroVideoGrid?.objectFit || "cover"}
+                  label={vid.label}
+                />
               ))}
             </div>
           )}
@@ -289,6 +357,7 @@ export default function ProjectDetail() {
                       src={img}
                       alt={`Detail view ${idx + 1}`}
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                 ))}
@@ -297,19 +366,12 @@ export default function ProjectDetail() {
               {filteredTheySaidVideos.map((vid, idx) => {
                 const src = typeof vid === 'string' ? vid : vid?.src;
                 return (
-                  <div
+                  <LazyVideo
                     key={`gallery-vid-${idx}`}
-                    className="w-full overflow-hidden border border-current/10 bg-neutral-900 aspect-video"
-                  >
-                    <video
-                      src={src}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                    src={src}
+                    aspectRatio="16/9"
+                    objectFit="cover"
+                  />
                 );
               })}
             </div>
@@ -335,6 +397,7 @@ export default function ProjectDetail() {
                         src={item.heroImage}
                         alt={item.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
                       />
                     </div>
                     <div>

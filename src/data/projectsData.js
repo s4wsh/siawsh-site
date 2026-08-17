@@ -74,9 +74,9 @@ export const projectsData = [
 
     // Gallery Assets (The rest of the visual proofing assets)
     theySaidImages: [
-      "/projects/Caesar/test_billboard.jpg",
-      "/projects/Caesar/test_billboard_1.JPG",
-      "/projects/Caesar/October_schedule.jpg"
+      "/projects/Caesar/test_billboard.webp",
+      "/projects/Caesar/test_billboard_1.webp",
+      "/projects/Caesar/October_schedule.webp"
     ],
     theySaidVideos: []
   },

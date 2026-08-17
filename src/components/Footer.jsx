@@ -8,14 +8,12 @@ export default function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Dynamic Instagram link based on spatial vs. cinematic mode
   const instagramUrl = mode === 'spatial' 
     ? 'https://www.instagram.com/siawsh/' 
     : 'https://www.instagram.com/siafsari/';
 
   return (
     <footer className="site-footer">
-      {/* Standardized alignment wrapper replacing app-container */}
       <div className="mx-auto max-w-7xl px-6 md:px-12 w-full footer-content">
         <div className="footer-top">
           <div className="footer-brand">

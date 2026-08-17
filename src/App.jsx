@@ -12,7 +12,6 @@ import ProjectDetail from './pages/ProjectDetail.jsx';
 import useSmoothScroll from './hooks/useSmoothScroll.js';
 import './index.css';
 
-// Global Layout wrapper that initializes Lenis and manages route scroll resets
 function GlobalLayout({ children }) {
   useSmoothScroll();
   const { pathname } = useLocation();
@@ -42,10 +41,8 @@ function HomePage() {
 }
 
 export default function App() {
-  // Determine if loader should run ONLY once on initial application load
   const [showLoader, setShowLoader] = useState(() => {
-    const hasLoaded = sessionStorage.getItem('hasLoadedSession');
-    return !hasLoaded;
+    return !sessionStorage.getItem('hasLoadedSession');
   });
 
   const handleLoaderFinish = () => {

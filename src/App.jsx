@@ -1,54 +1,42 @@
-// src/App.jsx
-
-import React, { useState, Component } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Analytics } from '@vercel/analytics/react';
-import { ThemeProvider } from './context/ThemeContext';
-
-// Layout Components
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import Loader from './components/common/Loader';
-
-// Pages
-import Home from './pages/Home';
-import SpatialPage from './pages/SpatialPage';
-import CinematicPage from './pages/CinematicPage';
-import ProjectDetailPage from './pages/ProjectDetailPage';
-
-// Hooks & Styles
-import useSmoothScroll from './hooks/useSmoothScroll';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { ThemeProvider, useStudioTheme } from './context/ThemeContext.jsx';
+import Navbar from './components/Navbar.jsx';
+import ContactForm from './components/ContactForm.jsx';
+import Footer from './components/Footer.jsx';
+import HeroSection from './sections/HeroSection.jsx';
+import SelectedPractices from './sections/SelectedPractices.jsx';
+import AboutSection from './sections/AboutSection.jsx';
+import Loader from './components/Loader.jsx';
+import ProjectDetail from './pages/ProjectDetail.jsx';
+import useSmoothScroll from './hooks/useSmoothScroll.js';
 import './index.css';
 
-class AnalyticsBoundary extends Component {
-  state = { hasError: false };
+// Global Layout wrapper that initializes Lenis and manages route scroll resets
+function GlobalLayout({ children }) {
+  useSmoothScroll();
+  const { pathname } = useLocation();
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
-  componentDidCatch(error) {
-    console.warn('Analytics blocked or failed to load:', error);
-  }
-
-  render() {
-    if (this.state.hasError) return null;
-    return this.props.children;
-  }
+  return <>{children}</>;
 }
 
-function MainAppShell() {
-  const [loading, setLoading] = useState(true);
+function HomePage() {
+  const [loading, setLoading] = useState(() => !sessionStorage.getItem('hasSeenLoader'));
+  const { isLight } = useStudioTheme();
 
-  // Initialize Lenis smooth scrolling engine
-  useSmoothScroll();
+  const handleLoaderFinish = () => {
+    sessionStorage.setItem('hasSeenLoader', 'true');
+    setLoading(false);
+  };
 
   return (
-    <>
-      {/* Fullscreen Initial Loader */}
-      {loading && <Loader onFinish={() => setLoading(false)} />}
+    <div className={`min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
+      {loading && <Loader onFinish={handleLoaderFinish} />}
 
-      {/* App Layout Container */}
       <div
         style={{
           opacity: loading ? 0 : 1,
@@ -57,34 +45,29 @@ function MainAppShell() {
         }}
       >
         <Navbar />
-
-        <Routes>
-          {/* Landing Route */}
-          <Route path="/" element={<Home />} />
-
-          {/* Practice Routes */}
-          <Route path="/spatial" element={<SpatialPage />} />
-          <Route path="/cinematic" element={<CinematicPage />} />
-
-          {/* Standalone Project Detail Page */}
-          <Route path="/project/:projectId" element={<ProjectDetailPage />} />
-        </Routes>
-
+        <main className="pt-0">
+          <HeroSection />
+          <SelectedPractices />
+          <AboutSection />
+          <ContactForm />
+        </main>
         <Footer />
       </div>
-    </>
+    </div>
   );
 }
 
 export default function App() {
   return (
     <ThemeProvider>
-      <Router>
-        <MainAppShell />
-        <AnalyticsBoundary>
-          <Analytics />
-        </AnalyticsBoundary>
-      </Router>
+      <BrowserRouter>
+        <GlobalLayout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/work/:id" element={<ProjectDetail />} />
+          </Routes>
+        </GlobalLayout>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

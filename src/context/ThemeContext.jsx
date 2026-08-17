@@ -29,14 +29,20 @@ export function ThemeProvider({ children }) {
     localStorage.setItem('app_lang', lang);
   }, [mode, lang, t]);
 
-  // 3. Memoized context value to prevent unnecessary re-renders
-  const value = useMemo(() => ({
-    mode,
-    setMode,
-    lang,
-    setLang,
-    t,
-  }), [mode, lang, t]);
+  // 3. Memoized context value
+  const value = useMemo(() => {
+    const isLight = mode === 'spatial';
+    return {
+      mode,
+      setMode,
+      activePractice: mode,
+      setActivePractice: setMode,
+      isLight,
+      lang,
+      setLang,
+      t,
+    };
+  }, [mode, lang, t]);
 
   return (
     <ThemeContext.Provider value={value}>

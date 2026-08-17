@@ -1,5 +1,35 @@
 @import "tailwindcss";
 
+/* Disable browser native smooth scroll interference */
+html, body {
+  scroll-behavior: auto !important;
+  overscroll-behavior-y: none;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* GPU Hardware Acceleration to eliminate sub-pixel line jumping */
+main, .break-inside-avoid, img, video {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
 :root {
   --transition-speed: 0.35s;
   --radius-lg: 0px;
@@ -47,31 +77,59 @@ body {
   min-height: 100vh;
 }
 
-/* -------------------------------------------------------------
-   STANDARDIZED GLOBAL GRID CONTAINER ALIGNMENT
-------------------------------------------------------------- */
-.app-container,
-.contact-container,
-.about-wrapper,
-.footer-container,
-.hero-statement-wrapper,
-.site-container {
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 32px;
-  box-sizing: border-box;
+/* PASTE THE REST OF YOUR ORIGINAL 782-LINE CSS BELOW THIS LINE */:root {
+  --transition-speed: 0.35s;
+  --radius-lg: 0px;
+  --radius-sm: 0px;
 }
 
-@media (max-width: 768px) {
-  .app-container,
-  .contact-container,
-  .about-wrapper,
-  .footer-container,
-  .hero-statement-wrapper,
-  .site-container {
-    padding: 0 20px;
-  }
+[data-theme='spatial'] {
+  --bg-color: #f7f7f5;
+  --text-color: #1a1a1a;
+  --accent-color: #8c7b6c;
+  --card-bg: #ffffff;
+  --border-color: rgba(0, 0, 0, 0.15);
+  --muted-text: #666666;
+  /* Darker, richer glass values for light mode */
+  --glass-bg: rgba(235, 235, 230, 0.82);
+  --glass-drawer-bg: rgba(235, 235, 230, 0.94);
+  --glass-switcher-bg: rgba(0, 0, 0, 0.04);
+  --glass-switcher-active: #1a1a1a;
+  --glass-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.12);
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+[data-theme='cinematic'] {
+  --bg-color: #0b0b0d;
+  --text-color: #f0f0f3;
+  --accent-color: #00f0ff;
+  --card-bg: #16161a;
+  --border-color: rgba(255, 255, 255, 0.18);
+  --muted-text: #8a8a93;
+  /* Deep, dark glassiness for cinematic mode */
+  --glass-bg: rgba(11, 11, 13, 0.85);
+  --glass-drawer-bg: rgba(11, 11, 13, 0.95);
+  --glass-switcher-bg: rgba(255, 255, 255, 0.05);
+  --glass-switcher-active: #00f0ff;
+  --glass-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.7);
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.app-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
 /* -------------------------------------------------------------
@@ -81,9 +139,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 32px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 0 40px;
   height: 72px;
   position: fixed;
   top: 0;
@@ -290,6 +346,7 @@ body {
   gap: 6px;
 }
 
+/* Crisp Rectangular Sharp Line Buttons */
 .lang-pill-btn {
   background: transparent;
   border: 1px solid var(--border-color);
@@ -338,8 +395,9 @@ body {
 }
 
 .hero-statement-wrapper {
-  padding-top: 50px;
-  padding-bottom: 40px;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 50px 40px 40px 40px;
 }
 
 .mode-badge {
@@ -484,6 +542,11 @@ body {
   align-items: center;
 }
 
+.about-container h2 {
+  font-size: 1.75rem;
+  margin-top: 0;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -517,6 +580,11 @@ body {
 .contact-section {
   padding: 70px 0;
   border-top: 1px solid var(--border-color);
+}
+
+.contact-container {
+  max-width: 680px;
+  margin: 0;
 }
 
 .contact-container h2 {
@@ -749,9 +817,17 @@ html[dir="rtl"] .form-input {
 }
 
 @media (max-width: 768px) {
+  .app-container {
+    padding: 0 16px;
+  }
+
   .hero-media-wrapper {
     height: 50vh;
     min-height: 320px;
+  }
+
+  .hero-statement-wrapper {
+    padding: 24px 16px;
   }
 
   .hero-title {
@@ -770,7 +846,7 @@ html[dir="rtl"] .form-input {
   }
 
   .navbar-glass {
-    padding: 0 20px;
+    padding: 0 16px;
     height: 64px;
   }
 

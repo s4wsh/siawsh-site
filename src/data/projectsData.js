@@ -22,9 +22,9 @@ export const projectsData = [
 
     // Hero Media (Using reference_billboard.mp4)
     heroImage: "/projects/Caesar/magusa_billboard.JPG",
-    heroVideo: "/projects/Caesar/reference_billboard.mp4",
-    cardVideo: "/projects/Caesar/reference_billboard.mp4",
-    video: "/projects/Caesar/reference_billboard.mp4",
+    heroVideo: "/projects/Caesar/reference_billboard.webm",
+    cardVideo: "/projects/Caesar/reference_billboard.webm",
+    video: "/projects/Caesar/reference_billboard.webm",
 
     // Post-Hero Dual Video Section (Other promotional videos)
     hasPostHeroVideoGrid: true,
@@ -35,14 +35,14 @@ export const projectsData = [
       videos: [
         {
           id: "caesar-prop-ad",
-          src: "/projects/Caesar/property_ads.MP4",
+          src: "/projects/Caesar/property_ads.webm",
           label: "Luxury Real Estate & Investment Commercial",
           aspectRatio: "16:9",
           objectFit: "cover"
         },
         {
           id: "caesar-dining-ad",
-          src: "/projects/Caesar/restuarant_video.MP4",
+          src: "/projects/Caesar/restuarant_video.webm",
           label: "Culinary & Resort Hospitality Experience",
           aspectRatio: "16:9",
           objectFit: "cover"

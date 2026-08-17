@@ -25,11 +25,11 @@ function GlobalLayout({ children }) {
 }
 
 function HomePage() {
-  const [loading, setLoading] = useState(() => !sessionStorage.getItem('hasSeenLoader'));
+  // Always trigger the loader on home page mount
+  const [loading, setLoading] = useState(true);
   const { isLight } = useStudioTheme();
 
   const handleLoaderFinish = () => {
-    sessionStorage.setItem('hasSeenLoader', 'true');
     setLoading(false);
   };
 

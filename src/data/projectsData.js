@@ -1,287 +1,274 @@
-// src/data/projectsData.js
+export const projectsData = [
+  {
+    id: "caesar-resort-campaign",
+    title: "Caesar Resort Visual Identity & OOH Advertising",
+    subtitle: "Developing large-scale OOH billboards, promotional video commercials, and social media schedules for Caesar Resort.",
+    categoryType: ["cinematic"],
+    tagline: "INTEGRATED CAMPAIGN & VISUAL IDENTITY",
+    aspectRatio: "rectangular",
+    logo: null,
 
-// -------------------------------------------------------------
-// STANDALONE PROJECT OBJECTS (Individual Cards & Hero Projects)
-// -------------------------------------------------------------
+    // SEO Metadata
+    metaTitle: "Caesar Resort Visual Identity & OOH Advertising Campaign | Case Study",
+    metaDescription: "Multi-channel visual identity, out-of-home (OOH) billboard advertising, video commercial production, and social graphic systems developed for Caesar Resort.",
+    keywords: [
+      "resort billboard design",
+      "real estate video advertising",
+      "OOH campaign design",
+      "hospitality visual identity",
+      "commercial video production"
+    ],
+    schemaType: "CreativeWork",
 
-// Hero Project: AURA Smart Speaker
-export const auraProject = (t = {}) => ({
-  id: "aura-smart-speaker",
-  projectName: "AURA Smart Speaker",
-  title: t.projects?.aura?.title || "AURA — Conceptual 3D Design & Motion Showcase",
-  subtitle: "Combining architectural minimalism, tactile materiality, and 3D motion design to showcase high-end product visualization without trademark constraints.",
-  headline: "Crafting a Next-Generation Smart Speaker Identity",
-  category: "Industrial & Motion Design",
-  span: "bento-span-8",
-  imageSrc: "/projects/aura-smart-speaker/ambient-render.jpg",
-  coverImage: "/projects/aura-smart-speaker/ambient-render.jpg",
-  heroVideo: "/projects/aura-smart-speaker/hero-loop.mp4",
-  year: "2026",
-  client: "Studio Concept",
-  isVideo: true,
-  loop: true,
-  autoPlay: true,
-  muted: true,
+    // Hero Media (Using reference_billboard.mp4)
+    heroImage: "/projects/Caesar/magusa_billboard.JPG",
+    heroVideo: "/projects/Caesar/reference_billboard.mp4",
+    cardVideo: "/projects/Caesar/reference_billboard.mp4",
+    video: "/projects/Caesar/reference_billboard.mp4",
 
-  contextParagraph: "This project originated as a personal challenge to build a commercial-grade 3D and motion design showcase. The primary creative hurdle was clear: How do you demonstrate high-level technical rendering skills for a premium tech product without infringing on existing brand trademarks? The solution was to design an entirely original product from the ground up. Instead of borrowing a brand, AURA was born—a conceptual smart speaker rooted in architectural minimalism, premium physical textures, and immersive acoustic design.",
-  contextImage: "/projects/aura-smart-speaker/moodboard.jpg",
-  moodboardImage: "/projects/aura-smart-speaker/moodboard.jpg",
-
-  engineeringTitle: "Engineering an Identity & Technical Execution",
-  engineeringParagraph: "Before drafting a single polygon in 3D space, a comprehensive blueprint was established to define the speaker's form, function, and ergonomic balance. The main body features a rounded rectangular prism with soft vertical curves and an integrated carrying handle carved directly into the top profile. High-fidelity acoustic drivers and passive radiators were modeled to match real-world audio engineering standards. Materiality was prioritized by contrasting tactile acoustic mesh fabric against cold, high-grade aluminum and capacitive, light-responsive glass touch controls.",
-  alignmentImage: "/projects/aura-smart-speaker/explosion-diagram.jpg",
-  explosionImage: "/projects/aura-smart-speaker/explosion-diagram.jpg",
-
-  competitorParagraph: "By developing a bespoke hardware ecosystem, the project sits comfortably alongside design-forward audio leaders like Bang & Olufsen and Teenage Engineering. It demonstrates a complete end-to-end pipeline—from initial product blueprinting and CAD modeling to industrial texturing and commercial motion lighting.",
-  ethosTitle: "The Design Ethos",
-  ethosQuote: "AURA was designed at the intersection of minimalist architecture, natural materials, and ambient light—creating a product that feels both technologically advanced and warmly integrated into a living space.",
-  ambientRender: "/projects/aura-smart-speaker/ambient-render.jpg",
-  macroRender: "/projects/aura-smart-speaker/macro-fabric.jpg",
-
-  galleryImages: [
-    {
-      src: "/projects/aura-smart-speaker/ambient-render.jpg",
-      caption: "Ambient studio render demonstrating material contrast and integrated light strip."
+    // Post-Hero Dual Video Section (Other promotional videos)
+    hasPostHeroVideoGrid: true,
+    postHeroVideoGrid: {
+      layout: "dual-frames",
+      aspectRatio: "16/9",
+      objectFit: "cover",
+      videos: [
+        {
+          id: "caesar-prop-ad",
+          src: "/projects/Caesar/property_ads.MP4",
+          label: "Luxury Real Estate & Investment Commercial",
+          aspectRatio: "16:9",
+          objectFit: "cover"
+        },
+        {
+          id: "caesar-dining-ad",
+          src: "/projects/Caesar/restuarant_video.MP4",
+          label: "Culinary & Resort Hospitality Experience",
+          aspectRatio: "16:9",
+          objectFit: "cover"
+        }
+      ]
     },
-    {
-      src: "/projects/aura-smart-speaker/macro-fabric.jpg",
-      caption: "Macro view of acoustic mesh texturing and aluminum handle edge detail."
-    }
-  ],
 
-  otherWorks: [
-    { id: "flick-delivery", title: "Project 01: Flick Delivery — Brand Identity & Motion Graphics" },
-    { id: "luckys-custom-homes", title: "Project 02: Lucky’s Custom Homes — Visual Identity & Brand System" }
-  ]
-});
-
-// Cinematic Card Project 01: Flick Delivery
-export const flickDeliveryProject = (t = {}) => ({
-  id: "flick-delivery",
-  projectName: "Flick Delivery",
-  title: t.projects?.flick?.title || "Flick Delivery — Brand Identity, Motion Graphics & Visual System",
-  headline: "Building a Dynamic Identity for Next-Gen Local Logistics",
-  subtitle: "Combining eco-friendly logistics, energetic motion design, and a high-speed mark to launch Northern Cyprus’s leading delivery platform.",
-  category: "Brand Identity & Motion",
-  span: "bento-span-8",
-  imageSrc: "/projects/flickdelivery/drop_box.webp",
-  coverImage: "/projects/flickdelivery/drop_box.webp",
-  heroVideo: "/projects/flickdelivery/flick_delivery.mp4",
-  previewVideoSrc: "/projects/flickdelivery/flick_delivery.mp4",
-  year: "2026",
-  client: "Flick Delivery",
-  location: "Northern Cyprus",
-  disciplines: ["Brand Identity", "Motion Graphics", "Visual System"],
-  isVideo: true,
-  loop: true,
-  autoPlay: true,
-  muted: true,
-
-  // Context & Research Overview
-  contextParagraph: "Flick Delivery launched in Northern Cyprus to revolutionize last-mile logistics for local businesses through speed, simplicity, and eco-friendly practices. The primary challenge was crafting a brand identity that felt fast and modern while signaling sustainability—starting with bicycle deliveries to reduce urban environmental impact. SIAWSH was commissioned to build a complete visual system and explainer video that bridges digital usability with physical, on-the-ground presence.",
-  contextImage: "/projects/flickdelivery/drop_box.webp",
-  moodboardImage: "/projects/flickdelivery/drop_box.webp",
-
-  // Logo Architecture & Motion Strategy
-  strategyTitle: "Logo Architecture & Motion Strategy",
-  engineeringTitle: "Logo Architecture & Motion Strategy",
-  strategyParagraph: "Local businesses were struggling to compete with massive delivery apps, while customers wanted quick, eco-friendly options. They needed a brand that felt fast, reliable, and approachable. SIAWSH solved this by designing a logo that merges an 'F' with a forward arrow—symbolizing speed without feeling corporate. Built on a grid, it scales cleanly from phone screens to courier bikes. To bring it all together, SIAWSH created a quick motion explainer video that breaks down the delivery process into simple, engaging visual steps, showing merchants and buyers just how easy local shipping can be.",
-  engineeringParagraph: "Local businesses were struggling to compete with massive delivery apps, while customers wanted quick, eco-friendly options. They needed a brand that felt fast, reliable, and approachable. SIAWSH solved this by designing a logo that merges an 'F' with a forward arrow—symbolizing speed without feeling corporate. Built on a grid, it scales cleanly from phone screens to courier bikes. To bring it all together, SIAWSH created a quick motion explainer video that breaks down the delivery process into simple, engaging visual steps, showing merchants and buyers just how easy local shipping can be.",
-  alignmentImage: "/projects/flickdelivery/hands_to_hands.webp",
-  explosionImage: "/projects/flickdelivery/hands_to_hands.webp",
-
-  // Recognition & Market Standing
-  competitorParagraph: "While traditional logistics brands rely on heavy, corporate iconography, Flick Delivery establishes an agile, eco-conscious identity. By combining vibrant green chevron accents with natural kraft packaging, the brand stands out in the Northern Cyprus market as a modern, community-focused platform.",
-
-  // Quote Section
-  ethosTitle: "Empowering Local Commerce",
-  ethosQuote: "Flick Delivery provides fast, simple, efficient, and eco-friendly solutions for local businesses, empowering them to connect with customers through a modern, reliable platform.",
-  quoteSource: "Flick Delivery Team",
-
-  // Gallery
-  galleryImages: [
-    {
-      src: "/projects/flickdelivery/all_orders.webp",
-      caption: "Fleet tracking interface and branded eco-friendly delivery packaging."
+    // Technical Specifications Matrix
+    specs: {
+      client: "Caesar Resort",
+      year: "2023–2024",
+      location: "Famagusta (Magusa), North Cyprus",
+      deliverables: "Out-of-Home (OOH) Billboard Design, Commercial Video Ads (Property & Dining), On-Site Videography & Motion Editing, Monthly Social Media Graphic Systems",
+      tools: "Adobe Photoshop, Adobe Illustrator, Adobe Premiere Pro, Adobe After Effects, DaVinci Resolve"
     },
-    {
-      src: "/projects/flickdelivery/hands_to_hands.webp",
-      caption: "Direct merchant-to-customer parcel handoff visual."
-    }
-  ],
 
-  otherWorks: [
-    { id: "luckys-custom-homes", title: "Project 01: Lucky’s Custom Homes — Visual Identity" },
-    { id: "aura-smart-speaker", title: "Project 02: AURA — Conceptual 3D Design & Motion Showcase" }
-  ]
-});
+    // Section 01: Concept & Context (Next section featuring magusa_billboard)
+    contextParagraph: "Caesar Resort required a comprehensive visual asset suite to drive property sales and boost hospitality engagement across physical and digital touchpoints. The project demanded high-impact out-of-home (OOH) billboards across high-traffic routes in Famagusta (Magusa), alongside promotional video ads tailored for real estate investment and resort dining experiences. The core challenge was maintaining brand consistency across massive physical print formats and fast-paced digital video campaigns, ensuring both regional physical presence and online conversion metrics were met seamlessly.",
+    contextImage: "/projects/Caesar/magusa_billboard.JPG",
 
-// Cinematic Card Project 02: Lucky’s Custom Homes
-export const luckysCustomHomesProject = (t = {}) => ({
-  id: "luckys-custom-homes",
-  projectName: "Lucky’s Custom Homes",
-  title: t.projects?.luckys?.title || "Lucky’s Custom Homes — Visual Identity & Brand System Design",
-  headline: "Grounding Regional Heritage in Minimalist Identity",
-  subtitle: "A modern brand identity for a southern New Mexico custom home builder, balancing regional warm desert tones with an agile combination mark.",
-  category: "Visual Identity & Brand System",
-  span: "bento-span-8",
-  imageSrc: "/projects/luckys-custom-homes/hero-dusk.jpg",
-  coverImage: "/projects/luckys-custom-homes/hero-dusk.jpg",
-  heroImage: "/projects/luckys-custom-homes/hero-dusk.jpg",
-  year: "2026",
-  client: "Lucky’s Custom Homes",
-  location: "Southern New Mexico, USA",
-  disciplines: ["Brand Identity", "Visual System", "Collateral Design"],
-  isVideo: false,
+    // Section 02: Execution & Strategy
+    mainParagraph: "We structured an integrated production workflow spanning print design, on-site videography, and digital motion graphics. For the OOH campaign, high-resolution 3D renders and photography were prepped for large-scale print, testing visibility and contrast across several billboard concepts. For digital channels, on-site videography captured real estate architecture and restaurant atmospheres, which were then cut into high-converting commercial video ads. To maintain ongoing guest engagement, structured social calendar graphics were established for seasonal resort activities.",
+    mainImage: "/projects/Caesar/phase_6_billboard.JPG",
 
-  contextParagraph: "Market research into Lucky’s Custom Homes—a custom home builder based in southern New Mexico—revealed that connecting with local homeowners requires a deep resonance with the Desert Southwest’s natural environment. While key local competitors like Veloz Homes lean heavily into high-end luxury and Palo Verde prioritizes ultra-simplicity, Lucky’s needed an identity that built immediate trust without sacrificing design sophistication. The challenge was to anchor the 'Lucky' name in a refined visual mark while drawing directly from the region's organic landscape.",
-  contextImage: "/projects/luckys-custom-homes/market-research-overview.jpg",
-  moodboardImage: "/projects/luckys-custom-homes/market-research-overview.jpg",
+    // Section 04: Impact & Recognition
+    recognition: "Featured Real Estate & Hospitality Brand Identity Case Study",
+    theySaidTitle: "Direct Client Quote",
+    theySaidParagraph: "The combination of high-impact roadside billboards and polished video commercials gave our property sales and resort venues an undeniable presence across Cyprus.",
 
-  strategyTitle: "Strategy, Typography & System Execution",
-  engineeringTitle: "Strategy, Typography & System Execution",
-  strategyParagraph: "To balance regional authenticity with visual clarity, SIAWSH engineered a minimalist combination mark featuring a stylized single-line shamrock paired with structured typography. Built using geometric precision and optical alignment, the emblem scales effortlessly across digital channels, heavy construction equipment, and print collateral. The typographic foundation relies on Montserrat (Bold & Regular) to maintain a modern, clean, and structural feel. The color palette translates the warmth of the Southwest directly into the identity using terracotta (#E2725B), desert beige (#F5E6CC), vibrant sage green (#4CAF50), and deep charcoal (#333333) for high-contrast readability.",
-  engineeringParagraph: "To balance regional authenticity with visual clarity, SIAWSH engineered a minimalist combination mark featuring a stylized single-line shamrock paired with structured typography. Built using geometric precision and optical alignment, the emblem scales effortlessly across digital channels, heavy construction equipment, and print collateral. The typographic foundation relies on Montserrat (Bold & Regular) to maintain a modern, clean, and structural feel. The color palette translates the warmth of the Southwest directly into the identity using terracotta (#E2725B), desert beige (#F5E6CC), vibrant sage green (#4CAF50), and deep charcoal (#333333) for high-contrast readability.",
-  alignmentImage: "/projects/luckys-custom-homes/alignment-grid-breakdown.jpg",
-  explosionImage: "/projects/luckys-custom-homes/alignment-grid-breakdown.jpg",
+    // Gallery Assets (The rest of the visual proofing assets)
+    theySaidImages: [
+      "/projects/Caesar/test_billboard.jpg",
+      "/projects/Caesar/test_billboard_1.JPG",
+      "/projects/Caesar/October_schedule.jpg"
+    ],
+    theySaidVideos: []
+  },
+  {
+    id: "brave-bidding-platform",
+    title: "BRAVE Bidding Platform",
+    subtitle: "Structuring investor pitch decks, UI workflows, and promotional explainer media for a ConTech bidding marketplace.",
+    categoryType: ["cinematic"],
+    tagline: "BRAND & PRODUCT PRESENTATION",
+    aspectRatio: "rectangular",
+    logo: null,
+    
+    // SEO Metadata
+    metaTitle: "BRAVE Bidding Platform | Pitch Deck & Motion Design - Studio Practice",
+    metaDescription: "High-converting investor presentation deck, promotional video explainer, and digital platform UI/UX design developed for BRAVE subcontractor marketplace.",
+    keywords: [
+      "subcontractor bidding platform design",
+      "construction tech pitch deck",
+      "B2B SaaS motion design",
+      "con-tech presentation layout"
+    ],
+    schemaType: "CreativeWork",
 
-  competitorParagraph: "Positioned strategically between high-end luxury residential builders and mass-market contractors, the new identity gives Lucky’s Custom Homes a distinct, memorable presence in the New Mexico market. By pairing an approachable shamrock motif with grounded desert tones, the brand establishes an authentic visual identity that fosters immediate client trust.",
+    // Hero & Card Media
+    heroImage: "/projects/Brave/brave_deck_cover_overview.webp",
+    heroVideo: "/projects/Brave/brave_hero_explainer_video.mp4",
+    cardVideo: "/projects/Brave/brave_hero_explainer_video.mp4",
+    video: "/projects/Brave/brave_hero_explainer_video.mp4",
 
-  ethosTitle: "Shaping Your Future",
-  ethosQuote: "The desert southwest’s earthy tones—terracotta, beige, and muted green—connect deeply with local homeowners. This combination mark provides a professional, warm, and regionally distinct identity that sets us apart from local competition.",
-  quoteSource: "Southwest Design Guide",
-
-  galleryImages: [
-    {
-      src: "/projects/luckys-custom-homes/style-guide.jpg",
-      caption: "Style guide sheet illustrating color palette hex codes, typography hierarchy, icon-only mark, and full wordmark with tagline."
+    // Technical Specifications Matrix
+    specs: {
+      client: "BRAVE Platform (bravehub.co)",
+      year: "2024",
+      location: "Remote / Global",
+      deliverables: "Investor Sales Deck Design, Animated Motion Explainer Video, Marketing Landing Page & Web UI Concepts",
+      tools: "Figma, Adobe After Effects, Premiere Pro, Illustrator, Photoshop"
     },
-    {
-      src: "/projects/luckys-custom-homes/business-cards-mockup.jpg",
-      caption: "Physical collateral mockup showing tactile business cards featuring the dark charcoal mark and terracotta desert wave pattern."
-    }
-  ],
 
-  otherWorks: [
-    { id: "flick-delivery", title: "Project 01: Flick Delivery — Brand Identity & Motion" },
-    { id: "aura-smart-speaker", title: "Project 02: AURA — Conceptual 3D Design & Motion Showcase" }
-  ]
-});
+    // Section 01: Concept & Context
+    contextParagraph: "General contractors face high friction sourcing subcontractors, with only 15% achieving flawless execution due to time constraints, financial risk, and availability. BRAVE needed a multi-channel visual suite to communicate platform capabilities—automated verification, code compliance, and anti-fraud bidding algorithms—into concise collateral across video, web, and deck formats.",
+    contextImage: "/projects/Brave/brave_problem_analysis_slide.webp",
 
-// Spatial Card Project 01: Nordic Pavilion
-export const nordicPavilionProject = (t = {}) => ({
-  id: "nordic-pavilion",
-  title: t.projects?.nordic?.title || "Nordic Pavilion",
-  subtitle: "A study in minimal timber frameworks and ambient daylighting.",
-  category: t.projects?.nordic?.category || "Architecture",
-  span: "bento-span-8",
-  imageSrc: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-  coverImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-  description: "An exploration of sustainable Scandinavian timber structure designed to seamlessly harmonize with raw forest topography.",
-  year: "2025",
-  client: "Nordic Cultural Foundation",
-  isVideo: false,
-  otherWorks: [
-    { id: "flick-delivery", title: "Project 01: Flick Delivery" },
-    { id: "luckys-custom-homes", title: "Project 02: Lucky’s Custom Homes" }
-  ]
-});
+    // Section 02: Execution & Strategy
+    mainParagraph: "We built a three-tier communication strategy: an animated hero video, a high-converting web landing structure, and an investor sales deck. Utilizing a 'Post → Compare → Hire' UI framework, complex platform interactions were simplified into clear 3-step visual diagrams, high-contrast typography, and SaaS UI wireframes highlighting key advantages.",
+    mainImage: "/projects/Brave/brave_solution_architecture_slide.webp",
 
-// Spatial Card Project 02: Minimal Lounge Chair
-export const minimalLoungeChairProject = (t = {}) => ({
-  id: "minimal-lounge-chair",
-  title: t.projects?.lounge?.title || "Minimal Lounge Chair",
-  subtitle: "Ergonomic object exploration with raw tactile materials.",
-  category: t.projects?.lounge?.category || "Furniture Design",
-  span: "bento-span-4",
-  imageSrc: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1200&q=80",
-  coverImage: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1200&q=80",
-  description: "Precision-milled aluminum frame meets vegetable-tanned leather for a timeless interior statement.",
-  year: "2025",
-  client: "Studio Edition",
-  isVideo: false,
-  otherWorks: [
-    { id: "flick-delivery", title: "Project 01: Flick Delivery" }
-  ]
-});
+    // Section 04: Impact & Recognition
+    recognition: "Featured ConTech B2B Design Case Study",
+    theySaidTitle: "Direct Client Quote",
+    theySaidParagraph: "The video explainer, pitch deck, and platform visual identity gave us the exact clarity required to demonstrate our platform's value to both contractors and investors immediately.",
+    
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/Brave/brave_ui_bidding_flow_wireframe.webp",
+      "/projects/Brave/brave_competitive_advantage_matrix.webp"
+    ]
+  },
+  {
+    id: "aura-smart-speaker",
+    title: "AURA Smart Speaker",
+    subtitle: "Engineering a proprietary hardware brand identity through industrial design principles and high-fidelity 3D CGI.",
+    categoryType: ["cinematic"],
+    tagline: "CINEMATIC VISUALIZATION",
+    aspectRatio: "portrait",
+    logo: null,
+    
+    // SEO Metadata
+    metaTitle: "AURA Smart Speaker | 3D Commercial Visualization - Studio Practice",
+    metaDescription: "Conceptual smart speaker identity and 3D product visualization created for Cyprus International University, featuring custom hardware geometry and renders.",
+    keywords: [
+      "3D product visualization",
+      "conceptual smart speaker design",
+      "CGI product rendering",
+      "Cyprus International University project"
+    ],
+    schemaType: "CreativeWork",
 
-// Spatial Card Project 03: Concrete Horizon Villa
-export const concreteVillaProject = (t = {}) => ({
-  id: "concrete-horizon-villa",
-  title: t.projects?.villa?.title || "Concrete Horizon Villa",
-  subtitle: "Monolithic concrete architecture embedded into coastal cliffs.",
-  category: t.projects?.villa?.category || "Architecture",
-  span: "bento-span-4",
-  imageSrc: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
-  coverImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
-  description: "Form-finished board-formed concrete cantilevered over ocean waters, framing horizon views through floor-to-ceiling glass.",
-  year: "2026",
-  client: "Private Client",
-  isVideo: false,
-  otherWorks: [
-    { id: "aura-smart-speaker", title: "Project 01: AURA Smart Speaker" }
-  ]
-});
+    // Hero & Card Media
+    heroImage: "/projects/aura/aura_model-a_isometric_dark.webp",
+    heroVideo: "/projects/aura/final_aura_speeaker.mp4",
+    cardVideo: "/projects/aura/final_aura_speeaker.mp4",
+    video: "/projects/aura/final_aura_speeaker.mp4",
 
-// Spatial Card Project 04: Monolith Interior Studio
-export const monolithStudioProject = (t = {}) => ({
-  id: "monolith-interior-studio",
-  title: t.projects?.monolith?.title || "Monolith Interior Studio",
-  subtitle: "Subterranean workspace focused on light discipline.",
-  category: t.projects?.monolith?.category || "Interior Space",
-  span: "bento-span-8",
-  imageSrc: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
-  coverImage: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
-  description: "A dark, atmospheric creative office utilizing recessed indirect lighting strips and acoustic micro-perforated steel panels.",
-  year: "2024",
-  client: "Monolith Labs",
-  isVideo: false,
-  otherWorks: [
-    { id: "luckys-custom-homes", title: "Project 01: Lucky’s Custom Homes" }
-  ]
-});
+    // Technical Specifications Matrix
+    specs: {
+      client: "Academic Project / Cyprus International University",
+      year: "2025",
+      location: "Nicosia, Cyprus",
+      deliverables: "Industrial Design Blueprint, Exploded Technical Diagrams, Micro-Texture Material Maps, 4K Product Renders",
+      tools: "Blender, Cinema 4D, Octane/Redshift, Adobe Creative Suite"
+    },
 
-// -------------------------------------------------------------
-// SEPARATE PRACTICE GETTERS
-// -------------------------------------------------------------
+    // Section 01: Concept & Context
+    contextParagraph: "Developing a high-end commercial campaign for established tech entities presents trademark restrictions and artistic limitations. To demonstrate commercial visualization capabilities at Cyprus International University without IP infringement, the challenge required building an entire proprietary smart speaker brand from scratch. Every element—from acoustic form factor and tactile material selection to UI illumination—had to be engineered prior to 3D execution.",
+    contextImage: "/projects/aura/aura_model-a_hero_close-up.jpg.webp",
 
-/**
- * Returns cards exclusively for Spatial practice grid
- */
-export const getSpatialProjects = (t = {}) => [
-  nordicPavilionProject(t),
-  minimalLoungeChairProject(t),
-  concreteVillaProject(t),
-  monolithStudioProject(t)
+    // Section 02: Execution & Strategy
+    mainParagraph: "The design process began with establishing an industrial design blueprint defining form, function, and acoustic ergonomics. Hardware geometry integrates rounded anodized aluminium enclosures paired with woven acoustic grilles and capacitive glass panels. CAD geometry was converted into exploded technical diagrams to reveal internal drivers and PCB control layouts.",
+    mainImage: "/projects/aura/explotion-map.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Cyprus International University Project Portfolio Submission",
+    theySaidTitle: "Direct Client Quote",
+    theySaidParagraph: "AURA demonstrates how industrial product design and cinematic visualization converge—turning raw geometric ideas into a market-ready hardware brand identity.",
+    
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/aura/aura_material_fabric_grey.webp",
+      "/projects/aura/aura_material_metal_scratches.webp",
+      "/projects/aura/aura_model-b_front-angle_dark.webp"
+    ]
+  },
+  {
+    id: "bugsempire-3d-video-ad",
+    title: "BugsEmpire 3D Video Ad",
+    subtitle: "Producing a fully 3D vertical video commercial optimized for mobile web and Instagram engagement.",
+    categoryType: ["cinematic"],
+    tagline: "CINEMATIC ADVERTISING",
+    aspectRatio: "portrait",
+    objectFit: "contain",
+    logo: null,
+
+    // SEO Metadata
+    metaTitle: "BugsEmpire 3D Video Ad | Commercial Motion Graphics - Studio",
+    metaDescription: "High-converting 9:16 3D vertical video ad created for BugsEmpire using Blender 3D, After Effects motion graphics, and custom Adobe Audition sound design.",
+    keywords: [
+      "3D video ad production",
+      "Blender commercial motion graphics",
+      "vertical video ad design",
+      "Instagram 9:16 commercial"
+    ],
+    schemaType: "CreativeWork",
+
+    // Hero & Card Media
+    heroImage: "/projects/BugsEmpire/bugsempire_cards_red_variant_01.webp",
+    heroVideo: "/projects/BugsEmpire/bugsempire_vid_ad_sound_fx_v1.mp4",
+    cardVideo: "/projects/BugsEmpire/BugsEmpire - commercial v.2 - siawsh.mp4",
+    video: "/projects/BugsEmpire/bugsempire_vid_ad_sound_fx_v1.mp4",
+
+    // Post-Hero Dual Video Frame Section
+    hasPostHeroVideoGrid: true,
+    postHeroVideoGrid: {
+      layout: "dual-frames",
+      aspectRatio: "9/16",
+      objectFit: "contain",
+      videos: [
+        {
+          id: "ad-v1",
+          src: "/projects/BugsEmpire/BugsEmpire - commercial v.2 - siawsh.mp4",
+          label: "2.5D Motion Compositing & After Effects UI Layout",
+          aspectRatio: "9:16",
+          objectFit: "contain"
+        },
+        {
+          id: "ad-v2",
+          src: "/projects/BugsEmpire/bugsempire_commercial_gates_of_olympus_9x16.mp4",
+          label: "Custom 3D Blender Wireframe & Modeling Viewport",
+          aspectRatio: "9:16",
+          objectFit: "contain"
+        }
+      ]
+    },
+
+    // Technical Specifications Matrix
+    specs: {
+      client: "BugsEmpire",
+      year: "2025",
+      location: "Remote / Global",
+      deliverables: "9:16 Vertical Commercial Video Ads, 3D Asset Modeling, Motion Graphics Animation, Custom SFX & Audio Design",
+      tools: "Blender, Adobe Illustrator, Adobe After Effects, Adobe Audition"
+    },
+
+    // Section 01: Concept & Context
+    contextParagraph: "BugsEmpire required a high-converting digital video ad campaign designed specifically for mobile web and Instagram stories/reels placement. Operating strictly within a vertical 9:16 aspect ratio, the commercial needed to capture immediate user attention in competitive feed environments. The key challenge was building an immersive, custom 3D casino/gaming environment from scratch while maintaining crisp brand vector clarity, fluid motion graphics, and rich audio design optimized for mobile playback.",
+    contextImage: "/projects/BugsEmpire/bugsempire_cards_black_variant_01.webp",
+
+    // Section 02: Execution & Strategy
+    mainParagraph: "We engineered a fully integrated 3D pipeline centered on Blender for environment modeling, roulette mechanics, and camera animation. Custom vector card assets and UI elements were created in Adobe Illustrator before being composited and animated alongside 3D elements in After Effects. Audio design was crafted in Adobe Audition using custom SFX layers to complement visual motion. The entire campaign was built specifically for 9:16 vertical displays to maximize feed real estate and drive viewer retention.",
+    mainImage: "/projects/BugsEmpire/bugsempire_cards_red_variant_02.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Featured 3D Commercial Motion Graphics Portfolio Case Study",
+    theySaidTitle: "Direct Client Quote",
+    theySaidParagraph: "The 3D Blender execution and custom audio design gave our Instagram video ads a level of production quality that immediately elevated user conversion.",
+
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/BugsEmpire/bugsempire_cards_black_variant_02.webp",
+      "/projects/BugsEmpire/bugsempire_cards_red_variant_01.webp"
+    ],
+    theySaidVideos: [
+      "/projects/BugsEmpire/bugsempire_blender_3d_roulette_viewport.mp4"
+    ]
+  }
 ];
-
-/**
- * Returns cards exclusively for Cinematic practice grid (Only active production projects)
- */
-export const getCinematicProjects = (t = {}) => [
-  flickDeliveryProject(t),
-  luckysCustomHomesProject(t)
-];
-
-// -------------------------------------------------------------
-// GLOBAL RESOLVER
-// -------------------------------------------------------------
-
-/**
- * Resolves any project by ID (including Hero and all active practice cards)
- */
-export const getAllProjects = (t = {}) => {
-  const map = new Map();
-  
-  // Register Hero
-  const aura = auraProject(t);
-  map.set(aura.id, aura);
-
-  // Register Spatial & Cinematic Cards
-  [...getSpatialProjects(t), ...getCinematicProjects(t)].forEach((p) => map.set(p.id, p));
-
-  return Array.from(map.values());
-};
-
-const projectsData = getAllProjects();
-export default projectsData;

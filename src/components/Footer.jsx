@@ -8,6 +8,11 @@ export default function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Dynamic Instagram link based on spatial vs. cinematic mode
+  const instagramUrl = mode === 'spatial' 
+    ? 'https://www.instagram.com/siawsh/' 
+    : 'https://www.instagram.com/siafsari/';
+
   return (
     <footer className="site-footer">
       {/* Standardized alignment wrapper replacing app-container */}
@@ -27,9 +32,30 @@ export default function Footer() {
             <div className="footer-col">
               <h4>{t.footer?.connect || "Connect"}</h4>
               <a href="mailto:hello@siawsh.co" className="footer-link">hello@siawsh.co</a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="footer-link">Instagram</a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="footer-link">LinkedIn</a>
-              <a href="https://vimeo.com" target="_blank" rel="noreferrer" className="footer-link">Vimeo</a>
+              <a 
+                href={instagramUrl} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="footer-link"
+              >
+                Instagram
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/siavash-afsari/" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="footer-link"
+              >
+                LinkedIn
+              </a>
+              <a 
+                href="https://vimeo.com/siawsh" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="footer-link"
+              >
+                Vimeo
+              </a>
             </div>
 
             <div className="footer-col">

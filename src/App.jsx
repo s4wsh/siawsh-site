@@ -25,11 +25,15 @@ function GlobalLayout({ children }) {
 }
 
 function HomePage() {
-  // Always trigger the loader on home page mount
-  const [loading, setLoading] = useState(true);
+  // Check if this is the initial site load in the current tab session
+  const [loading, setLoading] = useState(() => {
+    return !sessionStorage.getItem('hasLoadedSession');
+  });
+  
   const { isLight } = useStudioTheme();
 
   const handleLoaderFinish = () => {
+    sessionStorage.setItem('hasLoadedSession', 'true');
     setLoading(false);
   };
 

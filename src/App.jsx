@@ -25,53 +25,54 @@ function GlobalLayout({ children }) {
 }
 
 function HomePage() {
-  // Check if this is the initial site load in the current tab session
-  const [loading, setLoading] = useState(() => {
-    return !sessionStorage.getItem('hasLoadedSession');
-  });
-  
   const { isLight } = useStudioTheme();
-
-  const handleLoaderFinish = () => {
-    sessionStorage.setItem('hasLoadedSession', 'true');
-    setLoading(false);
-  };
 
   return (
     <div className={`min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
-      {loading && <Loader onFinish={handleLoaderFinish} />}
-
-      <div
-        style={{
-          opacity: loading ? 0 : 1,
-          transition: 'opacity 0.8s ease-in-out',
-          pointerEvents: loading ? 'none' : 'auto',
-        }}
-      >
-        <Navbar />
-        <main className="pt-0">
-          <HeroSection />
-          <SelectedPractices />
-          <AboutSection />
-          <ContactForm />
-        </main>
-        <Footer />
-      </div>
+      <Navbar />
+      <main className="pt-0">
+        <HeroSection />
+        <SelectedPractices />
+        <AboutSection />
+        <ContactForm />
+      </main>
+      <Footer />
     </div>
   );
 }
 
 export default function App() {
+  // Determine if loader should run ONLY once on initial application load
+  const [showLoader, setShowLoader] = useState(() => {
+    const hasLoaded = sessionStorage.getItem('hasLoadedSession');
+    return !hasLoaded;
+  });
+
+  const handleLoaderFinish = () => {
+    sessionStorage.setItem('hasLoadedSession', 'true');
+    setShowLoader(false);
+  };
+
   return (
     <ThemeProvider>
-      <BrowserRouter>
-        <GlobalLayout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/work/:id" element={<ProjectDetail />} />
-          </Routes>
-        </GlobalLayout>
-      </BrowserRouter>
+      {showLoader && <Loader onFinish={handleLoaderFinish} />}
+      
+      <div
+        style={{
+          opacity: showLoader ? 0 : 1,
+          transition: 'opacity 0.8s ease-in-out',
+          pointerEvents: showLoader ? 'none' : 'auto',
+        }}
+      >
+        <BrowserRouter>
+          <GlobalLayout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/work/:id" element={<ProjectDetail />} />
+            </Routes>
+          </GlobalLayout>
+        </BrowserRouter>
+      </div>
     </ThemeProvider>
   );
 }

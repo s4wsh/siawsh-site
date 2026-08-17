@@ -26,7 +26,7 @@ export default function Loader({ onFinish }) {
     <div className={`loader-overlay ${isFading ? 'fade-out' : ''}`}>
       <div className="loader-logo-container">
         <video
-          src="/logo-motion.mp4"
+          src="/logo-motion.webm"
           autoPlay
           muted
           playsInline

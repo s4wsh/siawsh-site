@@ -29,7 +29,6 @@ export default function Footer() {
           <div className="footer-links-group">
             <div className="footer-col">
               <h4>{t.footer?.connect || "Connect"}</h4>
-              <a href="mailto:hello@siawsh.co" className="footer-link">hello@siawsh.co</a>
               <a 
                 href={instagramUrl} 
                 target="_blank" 
@@ -37,6 +36,14 @@ export default function Footer() {
                 className="footer-link"
               >
                 Instagram
+              </a>
+              <a 
+                href="https://www.behance.net/siawsh" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="footer-link"
+              >
+                Behance
               </a>
               <a 
                 href="https://www.linkedin.com/in/siavash-afsari/" 

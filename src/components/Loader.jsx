@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Loader.css';
 
 export default function Loader({ onFinish }) {
   const [isFading, setIsFading] = useState(false);
+  const videoRef = useRef(null);
 
   const handleComplete = () => {
     if (isFading) return;
@@ -14,7 +15,15 @@ export default function Loader({ onFinish }) {
   };
 
   useEffect(() => {
-    // Safety fallback: 3.5s max in case video fails or gets blocked
+    // Attempt programmatic playback to bypass strict browser restrictions
+    if (videoRef.current) {
+      videoRef.current.play().catch((err) => {
+        console.warn("Autoplay prevented or failed:", err);
+        handleComplete();
+      });
+    }
+
+    // Safety fallback: guaranteed exit after 3.5 seconds
     const fallbackTimer = setTimeout(() => {
       handleComplete();
     }, 3500);
@@ -26,14 +35,15 @@ export default function Loader({ onFinish }) {
     <div className={`loader-overlay ${isFading ? 'fade-out' : ''}`}>
       <div className="loader-logo-container">
         <video
-          src="/logo-motion.webm"
+          ref={videoRef}
+          src="/logo-motion.mp4"
           autoPlay
           muted
           playsInline
           preload="auto"
           onEnded={handleComplete}
           onError={(e) => {
-            console.error("Video failed to load:", e);
+            console.error("Video asset failed to load:", e);
             handleComplete();
           }}
           className="loader-logo-video"

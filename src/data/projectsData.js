@@ -1,5 +1,85 @@
 export const projectsData = [
   {
+    id: "almas-pedia-3d-visuals",
+    title: "Luxury Packaging 3D Visuals & Motion CGI",
+    subtitle: "High-precision 3D hard-surface modeling, procedural leatherette shading, and cinematic studio scene composition in Blender.",
+    categoryType: ["cinematic"],
+    tagline: "3D PRODUCT VISUALIZATION & MOTION CGI",
+    aspectRatio: "portrait",
+    objectFit: "contain",
+    logo: null,
+
+    // SEO Metadata
+    metaTitle: "Luxury Packaging 3D Visuals & Motion CGI | Technical Case Study",
+    metaDescription: "High-end 3D product modeling, procedural material shading, and studio lighting setup in Blender for luxury jewelry box packaging visualization.",
+    keywords: [
+      "luxury product 3D modeling",
+      "Blender jewelry packaging render",
+      "CGI studio lighting setup",
+      "procedural shader design"
+    ],
+    schemaType: "CreativeWork",
+
+    // Hero Media
+    heroImage: "/projects/almaspedia/almas_pedia_hero_emerald_studio_still.webp",
+    heroVideo: "/projects/almaspedia/two-scene-cinematic.webm",
+    cardVideo: "/projects/almaspedia/two-scene-cinematic.webm",
+    video: "/projects/almaspedia/two-scene-cinematic.webm",
+
+    // Post-Hero Dual Video Grid Section
+    hasPostHeroVideoGrid: true,
+    postHeroVideoGrid: {
+      layout: "dual-frames",
+      aspectRatio: "9/16",
+      objectFit: "contain",
+      videos: [
+        {
+          id: "almas-portrait-motion",
+          src: "/projects/almaspedia/almas_pedia_looped_portrait_motion_ad_9x16.webm",
+          label: "Looped Portrait Motion Ad (9:16)",
+          aspectRatio: "9:16",
+          objectFit: "contain"
+        },
+        {
+          id: "almas-two-scene-cinematic",
+          src: "/projects/almaspedia/two-scene-cinematic.webm",
+          label: "Cinematic Two-Scene Motion Sequence",
+          aspectRatio: "9:16",
+          objectFit: "contain"
+        }
+      ]
+    },
+
+    // Technical Specifications Matrix
+    specs: {
+      client: "Confidential / Private Client (Almas Pedia)",
+      year: "2025",
+      location: "Remote / Global",
+      deliverables: "High-Poly 3D Asset Modeling, Procedural Material & Texture Engineering, Cinematic Studio Lighting Setups, Looped Portrait Motion Ad (9:16)",
+      tools: "Blender 3D (Cycles Render Engine), Adobe After Effects, Adobe Illustrator"
+    },
+
+    // Section 01: Concept & Context
+    contextParagraph: "The project required creating photo-realistic 3D visual assets and dynamic looped motion graphics for luxury jewelry packaging enclosures. Executing high-end luxury renders demands absolute technical fidelity: realistic micro-displacement on matte leatherette textures, precise caustic light reflections through gemstone geometry, and controlled studio illumination. The main objective was building a scalable 3D production scene in Blender capable of generating still marketing imagery alongside a seamless portrait-oriented looped video ad.",
+    contextImage: "/projects/almaspedia/almas_pedia_blender_viewport_array_orthographic.webp",
+
+    // Section 02: Execution & Strategy
+    mainParagraph: "We engineered a custom production scene inside Blender focusing on parametric hard-surface modeling and advanced Cycles shader nodes. Packaging geometry was crafted with accurate bevel modifiers to capture realistic edge highlights. Lighting was constructed using multi-point area lights and gobo/cookie textures to cast soft, organic foliage shadows across velvet and emerald backdrops. For motion sequences, precise camera target tracking was deployed along an array of repeated geometry to create an infinite, seamless looping vertical ad asset.",
+    mainImage: "/projects/almaspedia/almas_pedia_gobo_lighting_soft_focus_render.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Featured 3D Product Visualization & Hard-Surface CGI Showcase",
+    theySaidTitle: "Direct Client Quote",
+    theySaidParagraph: "The Blender scene construction and lighting setups captured the physical material quality of our luxury packaging with incredible realism.",
+
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/almaspedia/almas_pedia_geometric_composition_flat_lay.webp",
+      "/projects/almaspedia/almas_pedia_neutral_monochrome_lighting_test.webp"
+    ],
+    theySaidVideos: []
+  },
+  {
     id: "caesar-resort-campaign",
     title: "Caesar Resort Visual Identity & OOH Advertising",
     subtitle: "Developing large-scale OOH billboards, promotional video commercials, and social media schedules for Caesar Resort.",
@@ -266,7 +346,6 @@ export const projectsData = [
     theySaidImages: [
       "/projects/BugsEmpire/bugsempire_cards_black_variant_02.webp",
       "/projects/BugsEmpire/bugsempire_cards_red_variant_01.webp"
-    
     ]
   },
   {

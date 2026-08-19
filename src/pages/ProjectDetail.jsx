@@ -80,9 +80,17 @@ function LazyVideo({
 export default function ProjectDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isLight } = useStudioTheme();
+  const { isLight, setMode } = useStudioTheme();
 
   const project = projectsData.find((p) => p.id === id);
+
+  useEffect(() => {
+    if (project?.categoryType?.includes('cinematic')) {
+      setMode('cinematic');
+    } else if (project?.categoryType?.includes('spatial')) {
+      setMode('spatial');
+    }
+  }, [project, setMode]);
 
   // Filter related projects based on shared categories
   const relatedProjects = useMemo(() => {
@@ -197,7 +205,7 @@ export default function ProjectDetail() {
     });
   }, [theySaidVideos, usedVideoSrcs]);
 
-  // Calculate total gallery assets count for flexible layout
+  // Calculate total gallery assets count
   const totalGalleryItems = (theySaidImages?.length || 0) + filteredTheySaidVideos.length;
 
   return (
@@ -323,99 +331,77 @@ export default function ProjectDetail() {
           )}
 
           {/* Recognition Banner */}
-          {recognition && (
-            <div className={`p-6 border text-xs font-semibold uppercase tracking-widest ${isLight ? 'border-black/10 bg-neutral-50' : 'border-white/10 bg-neutral-900'}`}>
-              Recognition: {recognition}
+          {(recognition || (theySaidParagraph && theySaidTitle)) && (
+            <div className={`p-8 md:p-12 border ${isLight ? 'border-black/10 bg-neutral-50' : 'border-white/10 bg-[#111]'} space-y-6`}>
+              {recognition && (
+                <div>
+                  <span className="text-[10px] font-semibold uppercase tracking-widest opacity-40 block mb-1">Recognition / Awards</span>
+                  <span className="text-sm md:text-base font-medium">{recognition}</span>
+                </div>
+              )}
+              {theySaidParagraph && (
+                <div className="border-t pt-6 border-current/10 space-y-2">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest opacity-40 block">{theySaidTitle || "Direct Client Quote"}</span>
+                  <blockquote className="text-base md:text-xl italic font-light leading-relaxed">
+                    "{theySaidParagraph}"
+                  </blockquote>
+                </div>
+              )}
             </div>
           )}
 
-          {/* Quote Block */}
-          {theySaidParagraph && (
-            <div className="py-8 space-y-3">
-              {theySaidTitle && <span className="text-xs uppercase tracking-widest opacity-40">{theySaidTitle}</span>}
-              <blockquote className="text-xl md:text-3xl font-light italic leading-relaxed max-w-3xl">
-                "{theySaidParagraph}"
-              </blockquote>
-            </div>
-          )}
-
-          {/* Unified Gallery: 3 Equal Frames in 1 Single Row */}
+          {/* Gallery Grid */}
           {totalGalleryItems > 0 && (
-            <div
-              className={`grid grid-cols-1 ${
-                totalGalleryItems === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'
-              } gap-8 pt-4`}
-            >
-              {/* Images */}
-              {theySaidImages &&
-                theySaidImages.map((img, idx) => (
-                  <div
-                    key={`gallery-img-${idx}`}
-                    className="w-full overflow-hidden border border-current/10 bg-neutral-900 aspect-video"
-                  >
-                    <img
-                      src={img}
-                      alt={`Detail view ${idx + 1}`}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
+            <div className="space-y-8 pt-8">
+              <div className="text-xs uppercase tracking-widest opacity-40">03 / Visual Exhibition & Gallery</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {theySaidImages?.map((img, idx) => (
+                  <div key={idx} className="w-full overflow-hidden border border-current/10">
+                    <img src={img} alt={`Gallery item ${idx + 1}`} className="w-full object-cover" />
                   </div>
                 ))}
-
-              {/* Videos */}
-              {filteredTheySaidVideos.map((vid, idx) => {
-                const src = typeof vid === 'string' ? vid : vid?.src;
-                return (
-                  <LazyVideo
-                    key={`gallery-vid-${idx}`}
-                    src={src}
-                    aspectRatio="16/9"
-                    objectFit="cover"
-                  />
-                );
-              })}
+                {filteredTheySaidVideos?.map((vid, idx) => {
+                  const src = typeof vid === 'string' ? vid : vid?.src;
+                  return (
+                    <LazyVideo
+                      key={idx}
+                      src={src}
+                      aspectRatio="16/9"
+                      objectFit="cover"
+                    />
+                  );
+                })}
+              </div>
             </div>
           )}
 
-          {/* Related Works */}
+          {/* Related Projects */}
           {relatedProjects.length > 0 && (
-            <div className="border-t pt-16 mt-20 border-current/10 space-y-8">
-              <div className="flex justify-between items-center">
-                <span className="text-xs uppercase tracking-widest font-semibold opacity-40">Selected Practices & Related Works</span>
-                <Link to="/" className="text-xs uppercase tracking-widest hover:underline opacity-60">View All</Link>
-              </div>
-
+            <div className="border-t pt-16 border-current/10 space-y-8">
+              <div className="text-xs uppercase tracking-widest opacity-40">Related Projects</div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {relatedProjects.map((item) => (
+                {relatedProjects.map((rel) => (
                   <Link
-                    key={item.id}
-                    to={`/work/${item.id}`}
-                    className="group space-y-3 block transition-transform duration-300 hover:-translate-y-1"
+                    key={rel.id}
+                    to={`/work/${rel.id}`}
+                    className="group block space-y-4 border border-current/10 p-4 transition-colors hover:border-current/30"
                   >
-                    <div className="w-full overflow-hidden border border-current/10 aspect-video bg-neutral-900">
+                    <div className="aspect-video w-full overflow-hidden bg-neutral-900">
                       <img
-                        src={item.heroImage}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
+                        src={rel.heroImage}
+                        alt={rel.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase tracking-widest opacity-40">{item.tagline}</span>
-                      <h3 className="text-lg font-medium tracking-tight group-hover:underline">{item.title}</h3>
+                      <h3 className="text-lg font-medium group-hover:underline">{rel.title}</h3>
+                      <p className="text-xs opacity-60 line-clamp-2 mt-1">{rel.subtitle}</p>
                     </div>
                   </Link>
                 ))}
               </div>
             </div>
           )}
-
-          {/* Bottom Return Link */}
-          <div className="border-t pt-12 flex justify-between items-center border-current/10">
-            <Link to="/" className="text-xs uppercase tracking-widest hover:underline opacity-80">
-              ← Return to All Practices
-            </Link>
-          </div>
 
         </div>
       </main>

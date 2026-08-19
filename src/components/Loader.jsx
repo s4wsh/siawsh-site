@@ -36,7 +36,7 @@ export default function Loader({ onFinish }) {
       <div className="loader-logo-container">
         <video
           ref={videoRef}
-          src="/logo-motion.mp4"
+          src="/logo-motion.webm"
           autoPlay
           muted
           playsInline

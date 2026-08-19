@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
 
 export default function ProjectCard({ project }) {
   const { isLight } = useStudioTheme();
   const navigate = useNavigate();
+  const videoRef = useRef(null);
 
   if (!project) return null;
 
@@ -13,6 +14,14 @@ export default function ProjectCard({ project }) {
   let computedRatio = '16 / 10';
   if (aspectRatio === 'square') computedRatio = '1 / 1';
   if (aspectRatio === 'portrait') computedRatio = '3 / 4';
+
+  const playPreview = () => {
+    videoRef.current?.play().catch(() => {});
+  };
+
+  const pausePreview = () => {
+    if (videoRef.current) videoRef.current.pause();
+  };
 
   return (
     <div 
@@ -29,11 +38,15 @@ export default function ProjectCard({ project }) {
       >
         {heroVideo ? (
           <video
+            ref={videoRef}
             src={heroVideo}
-            autoPlay
             loop
             muted
             playsInline
+            preload="none"
+            poster={heroImage}
+            onMouseEnter={playPreview}
+            onMouseLeave={pausePreview}
             className="h-full w-full object-cover rounded-none transition-transform duration-700 ease-out group-hover:scale-105"
           />
         ) : (

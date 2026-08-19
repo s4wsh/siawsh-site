@@ -20,13 +20,13 @@ export const projectsData = [
     ],
     schemaType: "CreativeWork",
 
-    // Hero Media (Using reference_billboard.mp4)
+    // Hero Media
     heroImage: "/projects/Caesar/magusa_billboard.JPG",
     heroVideo: "/projects/Caesar/reference_billboard.webm",
     cardVideo: "/projects/Caesar/reference_billboard.webm",
     video: "/projects/Caesar/reference_billboard.webm",
 
-    // Post-Hero Dual Video Section (Other promotional videos)
+    // Post-Hero Dual Video Section
     hasPostHeroVideoGrid: true,
     postHeroVideoGrid: {
       layout: "dual-frames",
@@ -59,7 +59,7 @@ export const projectsData = [
       tools: "Adobe Photoshop, Adobe Illustrator, Adobe Premiere Pro, Adobe After Effects, DaVinci Resolve"
     },
 
-    // Section 01: Concept & Context (Next section featuring magusa_billboard)
+    // Section 01: Concept & Context
     contextParagraph: "Caesar Resort required a comprehensive visual asset suite to drive property sales and boost hospitality engagement across physical and digital touchpoints. The project demanded high-impact out-of-home (OOH) billboards across high-traffic routes in Famagusta (Magusa), alongside promotional video ads tailored for real estate investment and resort dining experiences. The core challenge was maintaining brand consistency across massive physical print formats and fast-paced digital video campaigns, ensuring both regional physical presence and online conversion metrics were met seamlessly.",
     contextImage: "/projects/Caesar/magusa_billboard.JPG",
 
@@ -72,7 +72,7 @@ export const projectsData = [
     theySaidTitle: "Direct Client Quote",
     theySaidParagraph: "The combination of high-impact roadside billboards and polished video commercials gave our property sales and resort venues an undeniable presence across Cyprus.",
 
-    // Gallery Assets (The rest of the visual proofing assets)
+    // Gallery Assets
     theySaidImages: [
       "/projects/Caesar/test_billboard.webp",
       "/projects/Caesar/test_billboard_1.webp",
@@ -266,9 +266,58 @@ export const projectsData = [
     theySaidImages: [
       "/projects/BugsEmpire/bugsempire_cards_black_variant_02.webp",
       "/projects/BugsEmpire/bugsempire_cards_red_variant_01.webp"
+    
+    ]
+  },
+  {
+    id: "luckys-custom-homes",
+    title: "Lucky's Custom Homes Brand Identity & Visual System",
+    subtitle: "Developing a warm, modern visual identity and custom combination mark rooted in Southwest architectural design.",
+    categoryType: ["spatial", "cinematic"],
+    tagline: "BRAND IDENTITY & REGIONAL POSITIONING",
+    aspectRatio: "rectangular",
+    logo: null,
+
+    // SEO Metadata
+    metaTitle: "Lucky's Custom Homes Brand Identity & Visual System | Case Study",
+    metaDescription: "Comprehensive brand strategy, logo mark design, color palette, and regional architectural identity created for Lucky's Custom Homes in New Mexico.",
+    keywords: [
+      "custom home builder branding",
+      "real estate logo design",
+      "Southwest architectural visual identity",
+      "construction brand strategy"
     ],
-    theySaidVideos: [
-      "/projects/BugsEmpire/bugsempire_blender_3d_roulette_viewport.mp4"
+    schemaType: "CreativeWork",
+
+    // Hero Media
+    heroImage: "/projects/Lucky_homes/luckys_custom_homes_cover_dusk_hero.webp",
+
+    // Technical Specifications Matrix
+    specs: {
+      client: "Lucky's Custom Homes",
+      year: "2026",
+      location: "Southern New Mexico, USA",
+      deliverables: "Brand Strategy, Combination Mark & Logo Design, Optical Alignment Grid, Brand Style Guide (Typography & Color Palette), Stationery & Business Card Design, Architectural Photography Overlay Assets",
+      tools: "Adobe Illustrator, Adobe Photoshop, Figma"
+    },
+
+    // Section 01: Concept & Context
+    contextParagraph: "Lucky's Custom Homes, a custom home builder based in Southern New Mexico, needed a brand identity that felt warm, trustworthy, and distinctly tied to its desert southwest environment. Competitors in the regional market tended to lean either toward high-end luxury or stark simplicity. The challenge was creating a balanced, versatile brand mark that prominently featured the \"Lucky\" concept while maintaining professional credibility and echoing the region's earthy tones and architectural character.",
+    contextImage: "/projects/Lucky_homes/luckys_custom_homes_brand_strategy_research.webp",
+
+    // Section 02: Execution & Strategy
+    mainParagraph: "We created a minimalist combination logo featuring a stylized line-art shamrock paired with clean, bold typography (Montserrat). To reflect the surrounding desert landscape, we engineered a warm, regional palette consisting of Terracotta (#E2725B), Desert Beige (#F5E6CC), Muted Shamrock Green (#4CAF50), and Charcoal (#333333). Optical alignment grids were established to ensure logo balance across print collateral and physical job-site signage, while photographic overlays and print collateral mockups were developed to integrate the mark seamlessly onto stationery and property visuals.",
+    mainImage: "/projects/Lucky_homes/luckys_custom_homes_combination_logo_alignment.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Featured Real Estate & Construction Brand Identity Case Study",
+    theySaidTitle: "Direct Client Quote",
+    theySaidParagraph: "The logo and color palette perfectly bridge our local New Mexico environment with a clean, modern aesthetic that immediately builds trust with future homeowners.",
+
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/Lucky_homes/lucky's costum homes-04.jpg",
+      "/projects/Lucky_homes/lucky's costum homes-07.jpg"
     ]
   }
 ];

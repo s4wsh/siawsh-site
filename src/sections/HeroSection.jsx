@@ -15,12 +15,9 @@ export default function HeroSection() {
             className="h-full w-full object-cover"
           />
         ) : (
-          <video
-            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
+          <img
+            src="/images/hero_cinematic.webp"
+            alt="Cinematic Practice Banner"
             className="h-full w-full object-cover"
           />
         )}

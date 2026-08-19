@@ -5,7 +5,7 @@ export default function HeroSection() {
   const { mode, t, isLight } = useStudioTheme();
 
   return (
-    <header className="relative flex min-h-[85vh] w-full flex-col justify-end pb-16 pt-40" id="hero">
+    <header className="relative flex min-h-[85vh] w-full flex-col justify-end pb-4 pt-28" id="hero">
       {/* Background Media with full visibility and subtle contrast overlay */}
       <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
         {mode === 'spatial' ? (

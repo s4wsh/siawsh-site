@@ -5,7 +5,7 @@ export default function HeroSection() {
   const { mode, t, isLight } = useStudioTheme();
 
   return (
-    <header className="relative flex min-h-[85vh] w-full flex-col justify-end pb-4 pt-28" id="hero">
+    <header className="relative flex min-h-[85vh] w-full flex-col justify-end pb-0 pt-36" id="hero">
       {/* Background Media with full visibility and subtle contrast overlay */}
       <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
         {mode === 'spatial' ? (
@@ -31,7 +31,7 @@ export default function HeroSection() {
       </div>
 
       {/* Hero Content Container aligned with page margin */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-12 w-full space-y-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-12 w-full space-y-8 mb-2">
         
         {/* Badge / Practice Category */}
         <div>

@@ -1,5 +1,111 @@
 export const projectsData = [
   {
+    id: "croissant-house-branding",
+    title: "Croissant House Visual Identity & Spatial Design",
+    subtitle: "Developing a warm, modern brand identity, logo mark, and physical environmental design for Croissant House.",
+    categoryType: ["cinematic"],
+    tagline: "BRAND IDENTITY & SPATIAL INTEGRATION FOR A GERMAN BAKERY",
+    aspectRatio: "rectangular",
+    logo: null,
+
+    // SEO Metadata
+    metaTitle: "Croissant House Branding Case Study | Identity & Spatial Design (Germany)",
+    metaDescription: "Visual identity, logo design, color palette, and physical space application for Croissant House cafe in Germany (2024).",
+    keywords: [
+      "Croissant House branding",
+      "cafe visual identity",
+      "bakery logo design",
+      "spatial branding Germany"
+    ],
+    schemaType: "CreativeWork",
+
+    // Hero Media
+    heroImage: "/projects/croissanthouse/croissant_house_coffee_cup_and_fresh_croissant.webp",
+
+    // Technical Specifications Matrix
+    specs: {
+      client: "Croissant House",
+      year: "2024",
+      location: "Germany",
+      deliverables: "Logo Design, Monogram / Symbol Mark, Color Palette Specification, Print Packaging Mockups (Cups & Takeaway Bags), Exterior Window Graphics, Interior Wall Signage & Spatial Consultation",
+      tools: "Adobe Illustrator, Adobe Photoshop, Figma"
+    },
+
+    // Section 01: Concept & Context
+    contextParagraph: "Croissant House needed a cohesive brand identity for its launch in Germany (2024). The identity required a flexible logo system that translated seamlessly from digital assets and takeaway packaging to physical storefront windows and warm interior spaces.",
+    contextImage: "/projects/croissanthouse/croissant_house_brand_color_palette_and_logo_variants.webp",
+
+    // Section 02: Execution & Strategy
+    mainParagraph: "The logo centers on an organic line-art mark combining steam, pastry contours, and the integrated \"CH\" monogram. A color system featuring Burnt Sienna, Deep Teal, and Neutral Grey was established to provide versatility across light and dark applications. The identity was then extended to physical touchpoints—including custom coffee cups, paper takeaway bags, store window vinyl cutouts, and mounted interior acrylic signage.",
+    mainImage: "/projects/croissanthouse/croissant_house_takeaway_packaging_mockup.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Featured Brand Identity & Spatial Design Case Study",
+    theySaidTitle: "Project Outcome & Reflection",
+    theySaidParagraph: "Delivered a complete brand identity package and spatial execution for Croissant House's flagship German location, establishing a welcoming brand experience from packaging to store interior.",
+
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/croissanthouse/croissant_house_exterior_storefront_window_graphics.webp",
+      "/projects/croissanthouse/croissant_house_interior_spatial_design_and_signage.webp"
+    ],
+    theySaidVideos: []
+  },
+  {
+    id: "skinny-cow-packaging-redesign",
+    title: "Skinny Cow AI Packaging Redesign",
+    subtitle: "Reimagining the visual identity and tub packaging for Skinny Cow ice cream through AI image generation, color palette optimization, and 3D product modeling.",
+    categoryType: ["cinematic"],
+    tagline: "AI-ASSISTED PACKAGING REDESIGN & 3D RENDERING",
+    aspectRatio: "rectangular",
+    logo: null,
+
+    // SEO Metadata
+    metaTitle: "Skinny Cow AI Packaging Redesign | Student Case Study",
+    metaDescription: "Redesigning Skinny Cow ice cream packaging using AI-assisted asset generation in Adobe Firefly and 3D product rendering in Blender Cycles.",
+    keywords: [
+      "Skinny Cow packaging redesign",
+      "AI ice cream packaging",
+      "Blender 3D tub mockup",
+      "Adobe Firefly brand design"
+    ],
+    schemaType: "CreativeWork",
+
+    // Hero Media
+    heroImage: "/projects/SkinnyCow/skinny_cow_full_flavor_lineup_3d_render.webp",
+
+    // Technical Specifications Matrix
+    specs: {
+      client: "Cyprus International Academic / Study Project (Skinny Cow / Nestlé)",
+      year: "2025 – 2026",
+      location: "Cyprus",
+      deliverables: "AI Label Imagery Generation, Brand Color Palette System, Typography Selection, 500mL Tub 3D Modeling, Cycles Render Mockups, Packaging Layouts (Oh Fudge Cookie, Oh My! Vanilla Bean, Rock On! Rocky Road)",
+      tools: "Adobe Firefly, Coolors.ai, Blender (Cycles Renderer), Adobe Illustrator, Adobe Photoshop"
+    },
+
+    // Section 01: Concept & Context
+    contextParagraph: "Created as an international academic design project in Cyprus, this case study explores how emerging AI image generation can streamline and enhance commercial packaging workflows. The objective was to update Skinny Cow’s 500mL ice cream tubs with fresh imagery and clear nutritional hierarchy while preserving the brand's friendly, indulgent appeal.",
+    contextImage: "/projects/SkinnyCow/skinny_cow_vanilla_bean_3d_mockup_and_typography.webp",
+
+    // Section 02: Execution & Strategy
+    mainParagraph: "Using Adobe Firefly, prompt variations (V1–V4) were generated to produce high-resolution, dynamic ice cream scoops and splash artwork. Palette choices were developed in Coolors.ai to ensure distinct flavor separation across Oh Fudge Cookie, Vanilla Bean, and Rocky Road variants. The physical 500mL tubs and lids were modeled in Blender, textured with the flat label layouts, and lit in Cycles to produce clean product mockups.",
+    mainImage: "/projects/SkinnyCow/skinny_cow_rocky_road_3d_mockup_and_color_palette.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Academic Case Study / Packaging & AI Workflow",
+    theySaidTitle: "Project Outcome & Reflection",
+    theySaidParagraph: "This project provided practical experience in combining generative AI tools like Adobe Firefly with traditional 3D modeling in Blender, showing how AI imagery can integrate smoothly into standard packaging workflows while delivering a complete concept package consisting of three flat label designs, typography rules, color guides, and 3D Cycles renders.",
+
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/SkinnyCow/skinny_cow_fudge_cookie_3d_mockup_and_project_summary.webp",
+      "/projects/SkinnyCow/skinny_cow_rocky_road_label_layout_design.webp",
+      "/projects/SkinnyCow/skinny_cow_vanilla_bean_label_layout_design.webp",
+      "/projects/SkinnyCow/skinny_cow_fudge_cookie_label_layout_design.webp"
+    ],
+    theySaidVideos: []
+  },
+  {
     id: "almas-pedia-3d-visuals",
     title: "Luxury Packaging 3D Visuals & Motion CGI",
     subtitle: "High-precision 3D hard-surface modeling, procedural leatherette shading, and cinematic studio scene composition in Blender.",
@@ -432,7 +538,7 @@ export const projectsData = [
     id: "ario-built-spatial-design",
     title: "ARIO BUILT Spatial Furniture Design & Renderings",
     subtitle: "Translating foundational ideas into tangible spatial concepts through custom furniture design, material exploration, and architectural visualization for ARIO BUILT.",
-    categoryType: ["spatial"],
+    categoryType: ["cinematic"],
     tagline: "MATERIALITY, WARMTH & SPATIAL DESIGN",
     aspectRatio: "rectangular",
     logo: null,
@@ -486,7 +592,7 @@ export const projectsData = [
     id: "luckys-custom-homes",
     title: "Lucky's Custom Homes Brand Identity & Visual System",
     subtitle: "Developing a warm, modern visual identity and custom combination mark rooted in Southwest architectural design.",
-    categoryType: ["spatial", "cinematic"],
+    categoryType: ["cinematic"],
     tagline: "BRAND IDENTITY & REGIONAL POSITIONING",
     aspectRatio: "rectangular",
     logo: null,

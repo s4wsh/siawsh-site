@@ -349,6 +349,87 @@ export const projectsData = [
     ]
   },
   {
+    id: "hygear-brand-collateral-3d-cgi",
+    title: "HYGEAR Brand Collateral, 3D CGI & Packaging",
+    subtitle: "Crafting 3D product renders, packaging layouts, presentation decks, and video content for smart fitness company HYGEAR.",
+    categoryType: ["cinematic"],
+    tagline: "VISUAL ASSET DESIGN & CGI PRODUCTION",
+    aspectRatio: "rectangular",
+    logo: null,
+
+    // SEO Metadata
+    metaTitle: "HYGEAR Brand Collateral, 3D CGI & Packaging | Portfolio Case Study",
+    metaDescription: "Visual asset production and design work for California-based smart fitness brand HYGEAR, covering 3D product renders, packaging layouts, and presentation decks.",
+    keywords: [
+      "smart fitness equipment design",
+      "3D product CGI",
+      "fitness hardware packaging",
+      "tech presentation decks"
+    ],
+    schemaType: "CreativeWork",
+
+    // Hero Media
+    heroImage: "/projects/HYGEARFIT/hygear_gear_x_packaging_3d_render.webp",
+    heroVideo: "/projects/HYGEARFIT/HYGEAR SPIDER X- v.3.2.webm",
+    cardVideo: "/projects/HYGEARFIT/HYGEAR-GEARGO-ad-final renders.webm",
+    video: "/projects/HYGEARFIT/GEARX.0.webm",
+
+    // Post-Hero Dual Video Grid Section
+    hasPostHeroVideoGrid: true,
+    postHeroVideoGrid: {
+      layout: "dual-frames",
+      aspectRatio: "16/9",
+      objectFit: "cover",
+      videos: [
+        {
+          id: "hygear-gearx-ad",
+          src: "/projects/HYGEARFIT/GEARX.0.webm",
+          label: "Gear X Smart Hardware Motion Showcase",
+          aspectRatio: "16:9",
+          objectFit: "cover"
+        },
+        {
+          id: "hygear-geargo-ad",
+          src: "/projects/HYGEARFIT/HYGEAR-GEARGO-ad-final renders.webm",
+          label: "GEAR GO Portable System Reel",
+          aspectRatio: "16:9",
+          objectFit: "cover"
+        }
+      ]
+    },
+
+    // Technical Specifications Matrix
+    specs: {
+      client: "HYGEAR (HYGEARFIT)",
+      year: "2022 – 2024",
+      location: "California, USA",
+      deliverables: "3D Product Modeling & CGI Animation, Retail Packaging Layouts (Gear X, Spider X), Presentation & Pitch Decks, Brand Guidelines Collateral, Promotional Videography & Editing, Marketing Graphics",
+      tools: "Blender, Adobe After Effects, Adobe Illustrator, Adobe Photoshop, Figma"
+    },
+
+    // Section 01: Concept & Context
+    contextParagraph: "Working with HYGEAR—a California-based smart fitness brand driven by strong product strategy and engineering—required creating a wide variety of visual materials from 2022 to 2024. The goal was to build clean, professional visual assets that matched their technical standards. The challenge involved adapting the visual style across different mediums, including physical retail packaging, product renders, presentation decks, and promotional videos, to accurately reflect their app-connected hardware ecosystem.",
+    contextImage: "/projects/HYGEARFIT/hygear_hardware_xray_internal_electronics_render.webp",
+
+    // Section 02: Execution & Strategy
+    mainParagraph: "The process began with retail packaging layouts for the Gear X product line, focusing on structured typography, clear feature callouts, and clean panel alignment. In Blender, 3D models and lighting setups were built to generate clean CGI renders, including translucent material views that highlight internal hardware components. To support their team's communication needs, structured presentation decks were created to outline product roadmaps and multi-device app integrations clearly.",
+    mainImage: "/projects/HYGEARFIT/hygear_gear_x_packaging_3d_render.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Featured Smart Fitness & Consumer Hardware Case Study",
+    theySaidTitle: "Direct Client Quote",
+    theySaidParagraph: "Collaborating with HYGEAR provided a great opportunity to align design, 3D work, and visual media with a strong product strategy, ensuring every graphic and render served a clear purpose.",
+
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/HYGEARFIT/hygear_long_beach_community_event_flyer.webp",
+      "/projects/HYGEARFIT/hygear_apparel_and_lifestyle_brand_photography.webp",
+      "/projects/HYGEARFIT/hygear_presentation_deck_product_roadmap_slide.webp.webp"
+      
+    ],
+    theySaidVideos: []
+  },
+  {
     id: "luckys-custom-homes",
     title: "Lucky's Custom Homes Brand Identity & Visual System",
     subtitle: "Developing a warm, modern visual identity and custom combination mark rooted in Southwest architectural design.",

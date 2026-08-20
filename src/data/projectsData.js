@@ -425,7 +425,60 @@ export const projectsData = [
       "/projects/HYGEARFIT/hygear_long_beach_community_event_flyer.webp",
       "/projects/HYGEARFIT/hygear_apparel_and_lifestyle_brand_photography.webp",
       "/projects/HYGEARFIT/hygear_presentation_deck_product_roadmap_slide.webp.webp"
-      
+    ],
+    theySaidVideos: []
+  },
+  {
+    id: "ario-built-spatial-design",
+    title: "ARIO BUILT Spatial Furniture Design & Renderings",
+    subtitle: "Translating foundational ideas into tangible spatial concepts through custom furniture design, material exploration, and architectural visualization for ARIO BUILT.",
+    categoryType: ["spatial"],
+    tagline: "MATERIALITY, WARMTH & SPATIAL DESIGN",
+    aspectRatio: "rectangular",
+    logo: null,
+
+    // SEO Metadata
+    metaTitle: "ARIO BUILT Case Study | Spatial Furniture Design & Renderings",
+    metaDescription: "Visualizing custom furniture and architectural concepts for ARIO BUILT, integrating natural wood, warm ambient lighting, and refined craftsmanship.",
+    keywords: [
+      "custom furniture visualization",
+      "ARIO BUILT design studio",
+      "wood and light interior design",
+      "architectural 3D modeling"
+    ],
+    schemaType: "CreativeWork",
+
+    // Hero Media
+    heroImage: "/projects/Ario_built/ario_built_hero_dining_space_visualization.webp",
+
+    // Technical Specifications Matrix
+    specs: {
+      client: "ARIO BUILT",
+      year: "2026 – Present",
+      location: "Tehran, Iran",
+      deliverables: "Custom Furniture Design, 3D Architectural Visualization, Materiality Strategy (Wood, Bronze & Light Integration), Long-Term Brand & Spatial Roadmap",
+      tools: "Blender, Adobe Photoshop, Adobe Illustrator, Figma"
+    },
+
+    // Section 01: Concept & Context
+    contextParagraph: "ARIO BUILT initiated a long-term strategy starting in 2026, launching with bespoke furniture design as the foundation for broader spatial and architectural services. The objective was to visualize key design concepts that combine warm timber grains, subtle bronze accents, and integrated light elements to set the aesthetic direction for future collections and interior projects.",
+    contextImage: "/projects/Ario_built/ario_built_wood_joinery_bronze_detail_close_up.webp",
+
+    // Section 02: Execution & Strategy
+    mainParagraph: "We focused on translating core design principles into realistic visual representations. Starting with detail-oriented joinery, custom lighting pieces, and curated material care kits, we built 3D interior scenes that showcase how natural wood and soft ambient illumination interact within clean, contemporary living spaces.",
+    mainImage: "/projects/Ario_built/ario_built_kitchen_island_integrated_lighting_render.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Featured Furniture Design & Spatial Visualization Case Study",
+    theySaidTitle: "Direct Client Quote",
+    theySaidParagraph: "Working on ARIO BUILT’s initial phase made it possible to explore how subtle material pairings—wood, bronze, and warm light—can give a brand a clear, grounded visual signature right from the start.",
+
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/Ario_built/ario_built_minimalist_bench_architectural_render.webp",
+      "/projects/Ario_built/08.png",
+      "/projects/Ario_built/ario_built_patio_lounge_furniture_night_ambient_lighting.webp",
+      "/projects/Ario_built/ario_built_living_room_coffee_table_integrated_light.webp"
     ],
     theySaidVideos: []
   },

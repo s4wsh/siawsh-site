@@ -291,7 +291,7 @@ export const projectsData = [
     schemaType: "CreativeWork",
 
     // Hero & Card Media
-    heroImage: "/projects/BugsEmpire/bugsempire_cards_red_variant_01.webp",
+    heroImage: "/projects/BugsEmpire/bugsempire_cards_red_variant_00.webp",
     heroVideo: "/projects/BugsEmpire/bugsempire_vid_ad_sound_fx_v1.mp4",
     cardVideo: "/projects/BugsEmpire/BugsEmpire - commercial v.2 - siawsh.mp4",
     video: "/projects/BugsEmpire/bugsempire_vid_ad_sound_fx_v1.mp4",

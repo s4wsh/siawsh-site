@@ -88,16 +88,6 @@ export default function Navbar() {
     }
   };
 
-  const getSpatialLabel = () => {
-    if (lang === 'fa') return 'معماری';
-    return t.nav?.spatial || 'Spatial';
-  };
-
-  const getCinematicLabel = () => {
-    if (lang === 'fa') return 'سینمایی';
-    return t.nav?.cinematic || 'Cinematic';
-  };
-
   return (
     <>
       <nav className={`navbar-glass ${hidden ? 'navbar-hidden' : ''}`}>
@@ -105,7 +95,7 @@ export default function Navbar() {
           {/* Brand SVG Logo */}
           <div className="nav-brand">
             <a href="#hero" className="logo" onClick={handleLogoClick}>
-              <img src="/favicon.svg" alt="SIAWSH.CO Logo" className="navbar-logo-img" />
+              <img src="/favicon.svg" alt={t.nav.brandLogoAlt} className="navbar-logo-img" />
             </a>
           </div>
 
@@ -116,14 +106,14 @@ export default function Navbar() {
               className={`mode-line-btn ${mode === 'spatial' ? 'active' : ''}`}
               onClick={() => handleModeSwitch('spatial')}
             >
-              {getSpatialLabel()}
+              {t.nav.spatial}
             </button>
             <button
               type="button"
               className={`mode-line-btn ${mode === 'cinematic' ? 'active' : ''}`}
               onClick={() => handleModeSwitch('cinematic')}
             >
-              {getCinematicLabel()}
+              {t.nav.cinematic}
             </button>
           </div>
 
@@ -132,7 +122,7 @@ export default function Navbar() {
             <button 
               className={`hamburger-btn ${menuOpen ? 'open' : ''}`} 
               onClick={toggleMenu}
-              aria-label="Toggle Navigation Menu"
+              aria-label={t.nav.menuToggle}
               type="button"
             >
               <span className="bar"></span>
@@ -149,17 +139,17 @@ export default function Navbar() {
           <ul className="menu-links">
             <li>
               <a href="#work" onClick={(e) => handleSectionClick(e, 'work')}>
-                {t.nav?.work || (lang === 'fa' ? 'نمونه کارها' : 'Work')}
+                {t.nav.work}
               </a>
             </li>
             <li>
               <a href="#about" onClick={(e) => handleSectionClick(e, 'about')}>
-                {t.nav?.about || (lang === 'fa' ? 'درباره ما' : 'About')}
+                {t.nav.about}
               </a>
             </li>
             <li>
               <a href="#contact" onClick={(e) => handleSectionClick(e, 'contact')}>
-                {t.nav?.contact || (lang === 'fa' ? 'تماس' : 'Contact')}
+                {t.nav.contact}
               </a>
             </li>
           </ul>
@@ -168,26 +158,21 @@ export default function Navbar() {
 
           <div className="menu-language-section">
             <div className="lang-pills">
-              <button 
+              <button
                 type="button"
                 className={`lang-pill-btn ${lang === 'en' ? 'active' : ''}`} 
                 onClick={() => { setLang('en'); if (menuOpen) toggleMenu(); }}
+                aria-label={t.nav.languageEnglish}
               >
                 EN
               </button>
               <button 
                 type="button"
-                className={`lang-pill-btn ${lang === 'de' ? 'active' : ''}`} 
-                onClick={() => { setLang('de'); if (menuOpen) toggleMenu(); }}
-              >
-                DE
-              </button>
-              <button 
-                type="button"
                 className={`lang-pill-btn ${lang === 'fa' ? 'active' : ''}`} 
                 onClick={() => { setLang('fa'); if (menuOpen) toggleMenu(); }}
+                aria-label={t.nav.languagePersian}
               >
-                FAR
+                فا
               </button>
             </div>
           </div>

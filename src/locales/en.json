@@ -1,0 +1,136 @@
+{
+  "dir": "ltr",
+  "nav": {
+    "spatial": "Spatial",
+    "cinematic": "Cinematic",
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact",
+    "menuToggle": "Toggle navigation menu",
+    "languageEnglish": "English",
+    "languagePersian": "Persian",
+    "brandLogoAlt": "SIAWSH.CO logo"
+  },
+  "hero": {
+    "spatialAlt": "Spatial practice banner",
+    "cinematicAlt": "Cinematic practice banner",
+    "badgeSpatial": "Spatial Practice",
+    "badgeCinematic": "Cinematic Practice",
+    "titleSpatial": "Architectural precision and structural minimalism for physical environments.",
+    "titleCinematic": "Motion design, 3D visual direction, and kinetic identity systems.",
+    "locationLabel": "Location",
+    "locationValue": "Tehran & Remote",
+    "statusLabel": "Status",
+    "statusValue": "Available for commissions",
+    "disciplinesLabel": "Disciplines",
+    "disciplinesValue": "Spatial, Motion & Identity"
+  },
+  "works": {
+    "title": "Selected Works",
+    "selectedPractices": "Selected Practices",
+    "project": "Project",
+    "projects": "Projects"
+  },
+  "about": {
+    "title": "About SIAWSH",
+    "lead": "Bridging physical space, brand strategy, and digital motion.",
+    "paragraphOne": "SIAWSH is a multidisciplinary design studio led by Siavash Afsari, operating at the intersection of spatial design, brand strategy, and digital motion. The studio helps ambitious technology startups, architectural clients, and established brands translate complex ideas into clear, tactile, and high-impact visual systems.",
+    "paragraphTwo": "Rather than treating architecture, furniture, identity, and interface as separate disciplines, SIAWSH approaches creative work as a unified problem-solving framework. Every project bridges physical environment and digital execution to elevate spatial experiences, strengthen brand perception, and deliver measurable commercial value.",
+    "yearsValue": "10+",
+    "yearsLabel": "Years of multidisciplinary design",
+    "projectsValue": "40+",
+    "projectsLabel": "Commissions & projects",
+    "capabilitiesTitle": "Core Capabilities",
+    "processTitle": "The Process",
+    "processDescription": "Design is fundamentally about clarity, form, and function. By maintaining a collaborative and meticulous workflow, SIAWSH ensures that every spatial curve, material render, and pixel aligns directly with key client objectives—moving seamlessly from architectural blueprinting to final digital launch.",
+    "capabilities": [
+      {
+        "number": "01",
+        "title": "Spatial & Architectural Modeling",
+        "description": "Comprehensive architectural visualization, 3D spatial design, and detailed landscaping layouts."
+      },
+      {
+        "number": "02",
+        "title": "Furniture & Product Design",
+        "description": "Custom furniture concepts, industrial design blueprints, and high-fidelity 3D material rendering."
+      },
+      {
+        "number": "03",
+        "title": "Brand Strategy & Systems",
+        "description": "Visual identities, comprehensive style guides, logo systems, and creative art direction."
+      },
+      {
+        "number": "04",
+        "title": "3D & Digital Motion",
+        "description": "Cinematic render loops, product visualization, and logo animation utilizing Blender, Cinema 4D, and Adobe Creative Suite."
+      },
+      {
+        "number": "05",
+        "title": "UI/UX Design",
+        "description": "User-centric web and mobile interfaces engineered in Figma for seamless digital interactions."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Start a Project",
+    "descSpatial": "Have an architectural structure, interior, or furniture concept in mind?",
+    "descCinematic": "Looking for high-impact branding, graphics, or motion design?",
+    "disciplineLabel": "Select service",
+    "disciplines": {
+      "arch": "Architecture",
+      "interior": "Interior",
+      "furniture": "Furniture",
+      "motion": "Motion Design",
+      "branding": "Branding"
+    },
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "msgPlaceholder": "Tell us about your project...",
+    "btnSend": "Send inquiry",
+    "btnSending": "Sending...",
+    "successTitle": "Message sent successfully!",
+    "successDesc": "Thank you for reaching out to SIAWSH.",
+    "submitError": "Something went wrong. Please try again.",
+    "connectionError": "Could not send your message. Please check your connection."
+  },
+  "footer": {
+    "status": "Available for select spatial & cinematic projects.",
+    "connect": "Connect",
+    "discipline": "Disciplines",
+    "arch": "Architecture & Interior",
+    "furniture": "Object & Furniture",
+    "motion": "Motion & Visual Arts",
+    "branding": "Kinetic Branding",
+    "copyright": "© {year} SIAWSH.CO. All rights reserved.",
+    "backToTop": "Back to top"
+  },
+  "projectCard": {
+    "previewAlt": "Project preview"
+  },
+  "projectModal": {
+    "recognition": "Recognition: {recognition}",
+    "description": "A signature {category} project engineered by SIAWSH. Tailored with modern aesthetics, precision materials, and spatial harmony.",
+    "contextAlt": "Context view",
+    "mainAlt": "Main execution",
+    "detailAlt": "Detail"
+  },
+  "projectDetail": {
+    "notFound": "Project not found",
+    "backToPortfolio": "Back to portfolio",
+    "back": "Back",
+    "clientContext": "Client / Context",
+    "year": "Year",
+    "location": "Location",
+    "tools": "Software / Tools",
+    "deliverables": "Scope & Deliverables",
+    "conceptContext": "01 / Concept & Context",
+    "contextAlt": "Context view",
+    "executionStrategy": "02 / Execution & Strategy",
+    "mainAlt": "Main execution",
+    "recognition": "Recognition / Awards",
+    "directClientQuote": "Direct client quote",
+    "visualGallery": "03 / Visual Exhibition & Gallery",
+    "galleryItemAlt": "Gallery item {number}",
+    "relatedProjects": "Related Projects"
+  }
+}

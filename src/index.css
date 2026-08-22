@@ -770,9 +770,17 @@ textarea.form-input {
 /* -------------------------------------------------------------
    FARSI & RTL OVERRIDES
 ------------------------------------------------------------- */
-html[dir="rtl"] body {
+html[dir="rtl"] body,
+html[lang="fa"] body {
+  font-family: 'Vazirmatn', sans-serif;
+  line-height: 1.7;
   letter-spacing: normal;
   text-align: right;
+}
+
+html[dir="rtl"] .flex,
+html[dir="rtl"] .grid {
+  direction: rtl;
 }
 
 html[dir="rtl"] .hero-title {

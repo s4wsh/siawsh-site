@@ -5,14 +5,14 @@ export default function ContactForm() {
   const { mode, t } = useStudioTheme();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedDiscipline, setSelectedDiscipline] = useState('Architecture');
+  const [selectedDiscipline, setSelectedDiscipline] = useState('arch');
 
   const disciplines = [
-    { id: 'arch', label: t.contact?.disciplines?.arch || 'Architecture' },
-    { id: 'interior', label: t.contact?.disciplines?.interior || 'Interior' },
-    { id: 'furniture', label: t.contact?.disciplines?.furniture || 'Furniture' },
-    { id: 'motion', label: t.contact?.disciplines?.motion || 'Motion Design' },
-    { id: 'branding', label: t.contact?.disciplines?.branding || 'Branding' }
+    { id: 'arch', label: t.contact.disciplines.arch },
+    { id: 'interior', label: t.contact.disciplines.interior },
+    { id: 'furniture', label: t.contact.disciplines.furniture },
+    { id: 'motion', label: t.contact.disciplines.motion },
+    { id: 'branding', label: t.contact.disciplines.branding }
   ];
 
   const handleSubmit = async (e) => {
@@ -21,7 +21,7 @@ export default function ContactForm() {
 
     const formData = new FormData(e.target);
     formData.append("access_key", "f5778241-8463-452c-8e63-489e789530b3");
-    formData.append("selected_discipline", selectedDiscipline);
+    formData.append("selected_discipline", disciplines.find((item) => item.id === selectedDiscipline)?.label || '');
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -35,10 +35,10 @@ export default function ContactForm() {
         setSubmitted(true);
         e.target.reset();
       } else {
-        alert("Oops! Something went wrong. Please try again.");
+        alert(t.contact.submitError);
       }
     } catch (error) {
-      alert("Error submitting form. Please check your connection.");
+      alert(t.contact.connectionError);
     } finally {
       setLoading(false);
     }
@@ -65,14 +65,14 @@ export default function ContactForm() {
             <form className="contact-form" onSubmit={handleSubmit}>
               {/* Discipline Selection Buttons */}
               <div className="discipline-selector">
-                <label className="field-label">{t.contact?.disciplineLabel || "Select Service"}</label>
+                <label className="field-label">{t.contact.disciplineLabel}</label>
                 <div className="discipline-grid">
                   {disciplines.map((item) => (
                     <button
                       type="button"
                       key={item.id}
-                      className={`discipline-pill ${selectedDiscipline === item.label ? 'active' : ''}`}
-                      onClick={() => setSelectedDiscipline(item.label)}
+                      className={`discipline-pill ${selectedDiscipline === item.id ? 'active' : ''}`}
+                      onClick={() => setSelectedDiscipline(item.id)}
                     >
                       {item.label}
                     </button>

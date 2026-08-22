@@ -10,7 +10,7 @@ export function ThemeProvider({ children }) {
   });
 
   const [lang, setLang] = useState(() => {
-    return localStorage.getItem('app_lang') || 'en';
+    return localStorage.getItem('app_lang') === 'fa' ? 'fa' : 'en';
   });
 
   // Safe fallback translation object

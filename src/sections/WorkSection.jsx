@@ -11,9 +11,9 @@ export default function WorkSection({ onSelectProject }) {
   return (
     <section className="portfolio-section" id="work">
       <div className="section-header">
-        <h2>{t.works?.title || "Selected Works"}</h2>
+        <h2>{t.works.title}</h2>
         <span className="project-count">
-          {currentProjects.length} {t.works?.projectsCount || "Projects"}
+          {currentProjects.length} {t.works.projects}
         </span>
       </div>
 

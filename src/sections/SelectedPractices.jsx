@@ -5,7 +5,7 @@ import TunnelGrid from '../components/TunnelGrid.jsx';
 import ProjectModal from '../components/ProjectModal.jsx';
 
 export default function SelectedPractices() {
-  const { mode, isLight } = useStudioTheme();
+  const { mode, isLight, lang, t } = useStudioTheme();
   const [selectedProject, setSelectedProject] = useState(null);
 
   // Filter projects by current practice (spatial or cinematic)
@@ -23,11 +23,11 @@ export default function SelectedPractices() {
         <div className={`flex items-center justify-between border-b pb-6 ${
           isLight ? 'border-black/10' : 'border-white/10'
         }`}>
-          <h2 className="text-3xl font-light tracking-tight">Selected Practices</h2>
+          <h2 className="text-3xl font-light tracking-tight">{t.works.selectedPractices}</h2>
           <span className={`text-xs tracking-widest uppercase ${
             isLight ? 'text-black/50' : 'text-white/50'
           }`}>
-            {filteredProjects.length} {filteredProjects.length === 1 ? 'Project' : 'Projects'}
+            {new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US').format(filteredProjects.length)} {filteredProjects.length === 1 ? t.works.project : t.works.projects}
           </span>
         </div>
 

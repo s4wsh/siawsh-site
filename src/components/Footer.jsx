@@ -22,13 +22,13 @@ export default function Footer() {
             </a>
             <p className="footer-status">
               <span className="status-dot"></span>
-              {t.footer?.status || "Available for select spatial & cinematic projects."}
+              {t.footer.status}
             </p>
           </div>
 
           <div className="footer-links-group">
             <div className="footer-col">
-              <h4>{t.footer?.connect || "Connect"}</h4>
+              <h4>{t.footer.connect}</h4>
               <a 
                 href={instagramUrl} 
                 target="_blank" 
@@ -64,17 +64,17 @@ export default function Footer() {
             </div>
 
             <div className="footer-col">
-              <h4>{t.footer?.discipline || "Disciplines"}</h4>
-              <span>{mode === 'spatial' ? (t.footer?.arch || 'Architecture & Interior') : (t.footer?.motion || 'Motion & Visual Arts')}</span>
-              <span>{mode === 'spatial' ? (t.footer?.furniture || 'Object & Furniture') : (t.footer?.branding || 'Kinetic Branding')}</span>
+              <h4>{t.footer.discipline}</h4>
+              <span>{mode === 'spatial' ? t.footer.arch : t.footer.motion}</span>
+              <span>{mode === 'spatial' ? t.footer.furniture : t.footer.branding}</span>
             </div>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} SIAWSH.CO. All rights reserved.</p>
+          <p>{t.footer.copyright.replace('{year}', new Date().getFullYear())}</p>
           <button type="button" onClick={scrollToTop} className="back-to-top-btn">
-            ↑ {t.footer?.backToTop || "Back to top"}
+            ↑ {t.footer.backToTop}
           </button>
         </div>
       </div>

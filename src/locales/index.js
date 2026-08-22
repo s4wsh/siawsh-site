@@ -1,5 +1,4 @@
-import { en } from './en';
-import { de } from './de';
-import { fa } from './fa';
+import en from './en.json';
+import fa from './fa.json';
 
-export const translations = { en, de, fa };
+export const translations = { en, fa };

@@ -1,7 +1,9 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import { useStudioTheme } from '../context/ThemeContext.jsx';
 
 export default function Modal({ project, onClose }) {
+  const { t } = useStudioTheme();
   if (!project) return null;
 
   return (
@@ -33,7 +35,7 @@ export default function Modal({ project, onClose }) {
             </span>
             <h2 style={{ margin: '8px 0 12px 0', fontSize: '1.8rem' }}>{project.title}</h2>
             <p style={{ opacity: 0.8, lineHeight: '1.6' }}>
-              A signature {project.category.toLowerCase()} project engineered by SIAWSH. Tailored with modern aesthetics, precision materials, and spatial harmony.
+              {t.projectModal.description.replace('{category}', project.category.toLowerCase())}
             </p>
           </div>
         </div>

@@ -80,7 +80,7 @@ function LazyVideo({
 export default function ProjectDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isLight, setMode } = useStudioTheme();
+  const { isLight, setMode, t } = useStudioTheme();
 
   const project = projectsData.find((p) => p.id === id);
 
@@ -153,9 +153,9 @@ export default function ProjectDetail() {
   if (!project) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
-        <h1 className="text-3xl font-light mb-4">Project Not Found</h1>
+        <h1 className="text-3xl font-light mb-4">{t.projectDetail.notFound}</h1>
         <button onClick={() => navigate('/')} className="text-xs uppercase tracking-widest border-b pb-1">
-          ← Back to Portfolio
+          ← {t.projectDetail.backToPortfolio}
         </button>
       </div>
     );
@@ -221,7 +221,7 @@ export default function ProjectDetail() {
               onClick={() => navigate(-1)} 
               className="text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
             >
-              ← Back
+              ← {t.projectDetail.back}
             </button>
             <span className="text-xs uppercase tracking-widest opacity-40">{tagline}</span>
           </div>
@@ -267,31 +267,31 @@ export default function ProjectDetail() {
             <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 p-8 border ${isLight ? 'border-black/10 bg-neutral-50' : 'border-white/10 bg-[#111]'}`}>
               {specs.client && (
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">Client / Context</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.clientContext}</div>
                   <div className="text-xs md:text-sm font-medium mt-1">{specs.client}</div>
                 </div>
               )}
               {specs.year && (
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">Year</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.year}</div>
                   <div className="text-xs md:text-sm font-medium mt-1">{specs.year}</div>
                 </div>
               )}
               {specs.location && (
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">Location</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.location}</div>
                   <div className="text-xs md:text-sm font-medium mt-1">{specs.location}</div>
                 </div>
               )}
               {specs.tools && (
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">Software / Tools</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.tools}</div>
                   <div className="text-xs md:text-sm font-medium mt-1">{specs.tools}</div>
                 </div>
               )}
               {specs.deliverables && (
                 <div className="col-span-2 md:col-span-4 border-t pt-4 border-current/10">
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">Scope & Deliverables</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.deliverables}</div>
                   <div className="text-xs md:text-sm font-medium mt-1">{specs.deliverables}</div>
                 </div>
               )}
@@ -301,7 +301,7 @@ export default function ProjectDetail() {
           {/* 01 / Concept & Context */}
           {contextParagraph && (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start py-4">
-              <div className="md:col-span-4 text-xs uppercase tracking-widest opacity-40">01 / Concept & Context</div>
+              <div className="md:col-span-4 text-xs uppercase tracking-widest opacity-40">{t.projectDetail.conceptContext}</div>
               <div className="md:col-span-8 text-base md:text-xl font-light leading-relaxed border-l-2 pl-6 border-current/20">
                 {contextParagraph}
               </div>
@@ -310,14 +310,14 @@ export default function ProjectDetail() {
 
           {contextImage && (
             <div className="w-full overflow-hidden border border-current/10">
-              <img src={contextImage} alt="Context view" className="w-full object-cover" />
+              <img src={contextImage} alt={t.projectDetail.contextAlt} className="w-full object-cover" />
             </div>
           )}
 
           {/* 02 / Execution & Strategy */}
           {mainParagraph && (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start py-4">
-              <div className="md:col-span-4 text-xs uppercase tracking-widest opacity-40">02 / Execution & Strategy</div>
+              <div className="md:col-span-4 text-xs uppercase tracking-widest opacity-40">{t.projectDetail.executionStrategy}</div>
               <div className="md:col-span-8 text-base leading-relaxed opacity-80">
                 {mainParagraph}
               </div>
@@ -326,7 +326,7 @@ export default function ProjectDetail() {
 
           {mainImage && (
             <div className="w-full overflow-hidden border border-current/10">
-              <img src={mainImage} alt="Main execution" className="w-full object-cover" />
+              <img src={mainImage} alt={t.projectDetail.mainAlt} className="w-full object-cover" />
             </div>
           )}
 
@@ -335,13 +335,13 @@ export default function ProjectDetail() {
             <div className={`p-8 md:p-12 border ${isLight ? 'border-black/10 bg-neutral-50' : 'border-white/10 bg-[#111]'} space-y-6`}>
               {recognition && (
                 <div>
-                  <span className="text-[10px] font-semibold uppercase tracking-widest opacity-40 block mb-1">Recognition / Awards</span>
+                  <span className="text-[10px] font-semibold uppercase tracking-widest opacity-40 block mb-1">{t.projectDetail.recognition}</span>
                   <span className="text-sm md:text-base font-medium">{recognition}</span>
                 </div>
               )}
               {theySaidParagraph && (
                 <div className="border-t pt-6 border-current/10 space-y-2">
-                  <span className="text-[10px] font-semibold uppercase tracking-widest opacity-40 block">{theySaidTitle || "Direct Client Quote"}</span>
+                  <span className="text-[10px] font-semibold uppercase tracking-widest opacity-40 block">{theySaidTitle || t.projectDetail.directClientQuote}</span>
                   <blockquote className="text-base md:text-xl italic font-light leading-relaxed">
                     "{theySaidParagraph}"
                   </blockquote>
@@ -353,11 +353,11 @@ export default function ProjectDetail() {
           {/* Gallery Grid */}
           {totalGalleryItems > 0 && (
             <div className="space-y-8 pt-8">
-              <div className="text-xs uppercase tracking-widest opacity-40">03 / Visual Exhibition & Gallery</div>
+              <div className="text-xs uppercase tracking-widest opacity-40">{t.projectDetail.visualGallery}</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {theySaidImages?.map((img, idx) => (
                   <div key={idx} className="w-full overflow-hidden border border-current/10">
-                    <img src={img} alt={`Gallery item ${idx + 1}`} className="w-full object-cover" />
+                    <img src={img} alt={t.projectDetail.galleryItemAlt.replace('{number}', idx + 1)} className="w-full object-cover" />
                   </div>
                 ))}
                 {filteredTheySaidVideos?.map((vid, idx) => {
@@ -378,7 +378,7 @@ export default function ProjectDetail() {
           {/* Related Projects */}
           {relatedProjects.length > 0 && (
             <div className="border-t pt-16 border-current/10 space-y-8">
-              <div className="text-xs uppercase tracking-widest opacity-40">Related Projects</div>
+              <div className="text-xs uppercase tracking-widest opacity-40">{t.projectDetail.relatedProjects}</div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedProjects.map((rel) => (
                   <Link

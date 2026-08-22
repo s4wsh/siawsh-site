@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
 
 export default function ProjectModal({ project, onClose }) {
-  const { isLight } = useStudioTheme();
+  const { isLight, t } = useStudioTheme();
 
   // Handle ESC key press and body lock
   useEffect(() => {
@@ -86,17 +86,17 @@ export default function ProjectModal({ project, onClose }) {
             </div>
           )}
 
-          {contextImage && <img src={contextImage} alt="Context" className="w-full object-cover" />}
+          {contextImage && <img src={contextImage} alt={t.projectModal.contextAlt} className="w-full object-cover" />}
 
           {mainParagraph && <p className="text-sm md:text-base leading-relaxed text-neutral-400">{mainParagraph}</p>}
 
-          {mainImage && <img src={mainImage} alt="Main detail" className="w-full object-cover" />}
+          {mainImage && <img src={mainImage} alt={t.projectModal.mainAlt} className="w-full object-cover" />}
 
           {recognition && (
             <div className={`border-t border-b py-4 text-xs font-semibold uppercase tracking-widest ${
               isLight ? 'border-black/10 text-neutral-600' : 'border-white/10 text-neutral-400'
             }`}>
-              Recognition: {recognition}
+              {t.projectModal.recognition.replace('{recognition}', recognition)}
             </div>
           )}
 
@@ -112,7 +112,7 @@ export default function ProjectModal({ project, onClose }) {
           {theySaidImages && theySaidImages.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {theySaidImages.map((img, idx) => (
-                <img key={idx} src={img} alt="Detail" className="w-full object-cover" />
+                <img key={idx} src={img} alt={t.projectModal.detailAlt} className="w-full object-cover" />
               ))}
             </div>
           )}

@@ -11,13 +11,13 @@ export default function HeroSection() {
         {mode === 'spatial' ? (
           <img
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80"
-            alt="Spatial Practice Banner"
+            alt={t.hero.spatialAlt}
             className="h-full w-full object-cover"
           />
         ) : (
           <img
             src="/images/hero_cinematic.webp"
-            alt="Cinematic Practice Banner"
+            alt={t.hero.cinematicAlt}
             className="h-full w-full object-cover"
           />
         )}
@@ -35,18 +35,18 @@ export default function HeroSection() {
         
         {/* Badge / Practice Category */}
         <div>
-          <span className={`text-xs font-semibold uppercase tracking-widest ${
+          <span className={`text-xs md:text-sm font-semibold uppercase tracking-widest ${
             isLight ? 'text-black/70' : 'text-white/70'
           }`}>
-            {mode === 'spatial' ? t.hero?.badgeSpatial || 'Spatial Practice' : t.hero?.badgeCinematic || 'Cinematic Practice'}
+            {mode === 'spatial' ? t.hero.badgeSpatial : t.hero.badgeCinematic}
           </span>
         </div>
 
         {/* Main Title Statement */}
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-light leading-tight tracking-tight max-w-4xl">
           {mode === 'spatial' 
-            ? t.hero?.titleSpatial || 'Architectural precision and structural minimalism for physical environments.' 
-            : t.hero?.titleCinematic || 'Motion design, 3D visual direction, and kinetic identity systems.'
+            ? t.hero.titleSpatial
+            : t.hero.titleCinematic
           }
         </h1>
 
@@ -55,22 +55,27 @@ export default function HeroSection() {
           isLight ? 'border-black/20 text-black' : 'border-white/20 text-white'
         }`}>
           <div>
-            <div className={`text-[10px] font-semibold uppercase tracking-widest ${isLight ? 'text-black/50' : 'text-white/50'}`}>
-              Location
+            <div className={`text-xs md:text-sm font-semibold uppercase tracking-wider ${isLight ? 'text-black/60' : 'text-white/60'}`}>
+              {t.hero.locationLabel}
             </div>
-            <div className="text-sm font-medium mt-1">Tehran & Remote</div>
+            <div className="text-sm md:text-base font-medium mt-1">{t.hero.locationValue}</div>
           </div>
           <div>
-            <div className={`text-[10px] font-semibold uppercase tracking-widest ${isLight ? 'text-black/50' : 'text-white/50'}`}>
-              Status
+            <div className={`text-xs md:text-sm font-semibold uppercase tracking-wider ${isLight ? 'text-black/60' : 'text-white/60'}`}>
+              {t.hero.statusLabel}
             </div>
-            <div className="text-sm font-medium mt-1">Available for Commissions</div>
+            <div className="text-sm md:text-base font-medium mt-1">{t.hero.statusValue}</div>
           </div>
           <div>
-            <div className={`text-[10px] font-semibold uppercase tracking-widest ${isLight ? 'text-black/50' : 'text-white/50'}`}>
-              Disciplines
+            <div className={`text-xs md:text-sm font-semibold uppercase tracking-wider ${isLight ? 'text-black/60' : 'text-white/60'}`}>
+              {t.hero.disciplinesLabel}
             </div>
-            <div className="text-sm font-medium mt-1">Spatial, Motion & Identity</div>
+            <div className="text-sm md:text-base font-medium mt-1">
+              {mode === 'spatial'
+                ? (t.hero.disciplinesValueSpatial || t.hero.disciplinesValue)
+                : (t.hero.disciplinesValueCinematic || t.hero.disciplinesValue)
+              }
+            </div>
           </div>
         </div>
 

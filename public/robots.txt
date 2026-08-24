@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://siawsh.co/sitemap.xml
+Sitemap: https://www.siawsh.co/sitemap.xml

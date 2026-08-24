@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+
+
+
 /* Disable browser native smooth scroll interference */
 html, body {
   scroll-behavior: auto !important;

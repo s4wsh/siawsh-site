@@ -158,7 +158,7 @@ export const projectsData = [
 
     // Technical Specifications Matrix
     specs: {
-      client: "Confidential / Private Client (Almas Pedia)",
+      client: "Confidential / Private Client ",
       year: "2025",
       location: "Remote / Global",
       deliverables: "High-Poly 3D Asset Modeling, Procedural Material & Texture Engineering, Cinematic Studio Lighting Setups, Looped Portrait Motion Ad (9:16)",

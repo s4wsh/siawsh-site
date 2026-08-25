@@ -27,6 +27,10 @@ function GlobalLayout({ children }) {
 function HomePage() {
   const { isLight } = useStudioTheme();
 
+  useEffect(() => {
+    document.title = "SIAWSH — Spatial Architecture, 3D Motion & Design Studio";
+  }, []);
+
   return (
     <div className={`min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
       <Navbar />

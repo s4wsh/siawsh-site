@@ -65,15 +65,20 @@ export default function Navbar() {
     }
   };
 
-  // Smooth Section Jump Handler (#work, #about, #contact)
-  const handleSectionClick = (e, targetId) => {
+  // Smooth Section Jump Handler (#work, /about, #contact)
+  const handleSectionClick = (e, target) => {
     e.preventDefault();
     if (menuOpen) toggleMenu();
+
+    if (target === 'about') {
+      navigate('/about');
+      return;
+    }
 
     if (!isHomePage) {
       navigate('/');
       setTimeout(() => {
-        const element = document.getElementById(targetId);
+        const element = document.getElementById(target);
         if (element) {
           element.scrollIntoView();
         } else {
@@ -81,7 +86,7 @@ export default function Navbar() {
         }
       }, 150);
     } else {
-      const element = document.getElementById(targetId);
+      const element = document.getElementById(target);
       if (element) {
         element.scrollIntoView();
       }
@@ -143,7 +148,7 @@ export default function Navbar() {
               </a>
             </li>
             <li>
-              <a href="#about" onClick={(e) => handleSectionClick(e, 'about')}>
+              <a href="/about" onClick={(e) => handleSectionClick(e, 'about')}>
                 {t.nav.about}
               </a>
             </li>

@@ -9,6 +9,7 @@ import SelectedPractices from './sections/SelectedPractices.jsx';
 import AboutSection from './sections/AboutSection.jsx';
 import Loader from './components/Loader.jsx';
 import ProjectDetail from './pages/ProjectDetail.jsx';
+import AboutPage from './pages/AboutPage.jsx';
 import useSmoothScroll from './hooks/useSmoothScroll.js';
 import './index.css';
 
@@ -32,7 +33,7 @@ function HomePage() {
       <main className="pt-0">
         <HeroSection />
         <SelectedPractices />
-        <AboutSection />
+        <AboutSection teaser={true} />
         <ContactForm />
       </main>
       <Footer />
@@ -65,6 +66,7 @@ export default function App() {
           <GlobalLayout>
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
               <Route path="/work/:id" element={<ProjectDetail />} />
             </Routes>
           </GlobalLayout>

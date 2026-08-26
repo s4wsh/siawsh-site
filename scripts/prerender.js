@@ -1,3 +1,21 @@
+if (typeof globalThis.sessionStorage === 'undefined') {
+  globalThis.sessionStorage = {
+    getItem: () => null,
+    setItem: () => {},
+    removeItem: () => {},
+    clear: () => {},
+  }
+}
+
+if (typeof globalThis.localStorage === 'undefined') {
+  globalThis.localStorage = {
+    getItem: () => null,
+    setItem: () => {},
+    removeItem: () => {},
+    clear: () => {},
+  }
+}
+
 import fs from 'node:fs'
 import path from 'node:path'
 import React from 'react'

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import Loader from './components/Loader.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -18,13 +18,15 @@ function GlobalLayout({ children }) {
 
   // Force manual scroll restoration to prevent browser scroll memory overrides
   useEffect(() => {
-    if ('scrollRestoration' in window.history) {
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
   }, []);
 
   // Reset scroll to absolute top on EVERY route transition or content click
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     // 1. Native DOM resets
     window.scrollTo({
       top: 0,
@@ -45,18 +47,24 @@ function GlobalLayout({ children }) {
 
 export default function App() {
   const [showLoader, setShowLoader] = useState(() => {
-    return !sessionStorage.getItem('hasLoadedSession');
+    // Safe check for SSG server build environment
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('hasLoadedSession');
+    }
+    return false;
   });
 
   const handleLoaderFinish = () => {
-    sessionStorage.setItem('hasLoadedSession', 'true');
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('hasLoadedSession', 'true');
+    }
     setShowLoader(false);
   };
 
   return (
     <ThemeProvider>
       {showLoader && <Loader onFinish={handleLoaderFinish} />}
-      
+
       <div
         style={{
           opacity: showLoader ? 0 : 1,
@@ -64,19 +72,17 @@ export default function App() {
           pointerEvents: showLoader ? 'none' : 'auto',
         }}
       >
-        <BrowserRouter>
-          <GlobalLayout>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/work" element={<WorkPage />} />
-              <Route path="/work/:id" element={<ProjectDetail />} />
-              <Route path="/insights" element={<InsightsPage />} />
-              <Route path="/insights/:slug" element={<InsightDetail />} />
-              <Route path="/contact" element={<ContactPage />} />
-            </Routes>
-          </GlobalLayout>
-        </BrowserRouter>
+        <GlobalLayout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/work" element={<WorkPage />} />
+            <Route path="/work/:id" element={<ProjectDetail />} />
+            <Route path="/insights" element={<InsightsPage />} />
+            <Route path="/insights/:slug" element={<InsightDetail />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
+        </GlobalLayout>
       </div>
     </ThemeProvider>
   );

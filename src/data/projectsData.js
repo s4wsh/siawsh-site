@@ -19,7 +19,7 @@ export const projectsData = [
     ],
     schemaType: "CreativeWork",
 
-    // Hero Media
+    // Media
     heroImage: "/projects/croissanthouse/croissant_house_coffee_cup_and_fresh_croissant.webp",
 
     // Technical Specifications Matrix
@@ -71,7 +71,7 @@ export const projectsData = [
     ],
     schemaType: "CreativeWork",
 
-    // Hero Media
+    // Media
     heroImage: "/projects/SkinnyCow/skinny_cow_full_flavor_lineup_3d_render.webp",
 
     // Technical Specifications Matrix
@@ -126,13 +126,13 @@ export const projectsData = [
     ],
     schemaType: "CreativeWork",
 
-    // Hero Media
+    // Hero & Card Media
     heroImage: "/projects/almaspedia/almas_pedia_hero_emerald_studio_still.webp",
     heroVideo: "/projects/almaspedia/two-scene-cinematic.webm",
     cardVideo: "/projects/almaspedia/two-scene-cinematic.webm",
     video: "/projects/almaspedia/two-scene-cinematic.webm",
 
-    // Post-Hero Dual Video Grid Section
+    // Post-Hero Dual Video Frame Section
     hasPostHeroVideoGrid: true,
     postHeroVideoGrid: {
       layout: "dual-frames",
@@ -158,7 +158,7 @@ export const projectsData = [
 
     // Technical Specifications Matrix
     specs: {
-      client: "Confidential / Private Client ",
+      client: "Confidential / Private Client",
       year: "2025",
       location: "Remote / Global",
       deliverables: "High-Poly 3D Asset Modeling, Procedural Material & Texture Engineering, Cinematic Studio Lighting Setups, Looped Portrait Motion Ad (9:16)",
@@ -206,13 +206,13 @@ export const projectsData = [
     ],
     schemaType: "CreativeWork",
 
-    // Hero Media
+    // Hero & Card Media
     heroImage: "/projects/Caesar/magusa_billboard.JPG",
     heroVideo: "/projects/Caesar/reference_billboard.webm",
     cardVideo: "/projects/Caesar/reference_billboard.webm",
     video: "/projects/Caesar/reference_billboard.webm",
 
-    // Post-Hero Dual Video Section
+    // Post-Hero Dual Video Frame Section
     hasPostHeroVideoGrid: true,
     postHeroVideoGrid: {
       layout: "dual-frames",
@@ -274,7 +274,7 @@ export const projectsData = [
     tagline: "BRAND & PRODUCT PRESENTATION",
     aspectRatio: "rectangular",
     logo: null,
-    
+
     // SEO Metadata
     metaTitle: "BRAVE Bidding Platform | Pitch Deck & Motion Design - Studio Practice",
     metaDescription: "High-converting investor presentation deck, promotional video explainer, and digital platform UI/UX design developed for BRAVE subcontractor marketplace.",
@@ -313,7 +313,7 @@ export const projectsData = [
     recognition: "Featured ConTech B2B Design Case Study",
     theySaidTitle: "Direct Client Quote",
     theySaidParagraph: "The video explainer, pitch deck, and platform visual identity gave us the exact clarity required to demonstrate our platform's value to both contractors and investors immediately.",
-    
+
     // Gallery Assets
     theySaidImages: [
       "/projects/Brave/brave_ui_bidding_flow_wireframe.webp",
@@ -328,7 +328,7 @@ export const projectsData = [
     tagline: "CINEMATIC VISUALIZATION",
     aspectRatio: "portrait",
     logo: null,
-    
+
     // SEO Metadata
     metaTitle: "AURA Smart Speaker | 3D Commercial Visualization - Studio Practice",
     metaDescription: "Conceptual smart speaker identity and 3D product visualization created for Cyprus International University, featuring custom hardware geometry and renders.",
@@ -367,7 +367,7 @@ export const projectsData = [
     recognition: "Cyprus International University Project Portfolio Submission",
     theySaidTitle: "Direct Client Quote",
     theySaidParagraph: "AURA demonstrates how industrial product design and cinematic visualization converge—turning raw geometric ideas into a market-ready hardware brand identity.",
-    
+
     // Gallery Assets
     theySaidImages: [
       "/projects/aura/aura_material_fabric_grey.webp",

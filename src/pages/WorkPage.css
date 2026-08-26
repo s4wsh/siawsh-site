@@ -1,0 +1,32 @@
+.work-page-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  opacity: 1;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.filter-pill {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+
+.project-card {
+  will-change: transform;
+}
+
+.project-card .media-wrapper img,
+.project-card .media-wrapper video {
+  backface-visibility: hidden;
+}
+
+/* Opacity-only animation prevents creating a transform containing block that traps fixed navbar */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

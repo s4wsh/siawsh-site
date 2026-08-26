@@ -10,15 +10,36 @@ import AboutSection from './sections/AboutSection.jsx';
 import Loader from './components/Loader.jsx';
 import ProjectDetail from './pages/ProjectDetail.jsx';
 import AboutPage from './pages/AboutPage.jsx';
-import useSmoothScroll from './hooks/useSmoothScroll.js';
+import WorkPage from './pages/WorkPage.jsx';
+import useSmoothScroll, { lenisInstance } from './hooks/useSmoothScroll.js';
 import './index.css';
 
 function GlobalLayout({ children }) {
   useSmoothScroll();
   const { pathname } = useLocation();
 
+  // Force manual scroll restoration to prevent browser scroll memory overrides
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  // Reset scroll to absolute top on EVERY route transition or content click
+  useEffect(() => {
+    // 1. Native DOM resets
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant',
+    });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // 2. Lenis smooth-scroll engine reset
+    if (lenisInstance) {
+      lenisInstance.scrollTo(0, { immediate: true, force: true });
+    }
   }, [pathname]);
 
   return <>{children}</>;
@@ -71,6 +92,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/work" element={<WorkPage />} />
               <Route path="/work/:id" element={<ProjectDetail />} />
             </Routes>
           </GlobalLayout>

@@ -1,35 +1,64 @@
 import './Navbar.css';
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
+import { lenisInstance } from '../hooks/useSmoothScroll.js';
 
 export default function Navbar() {
   const { mode, setMode, lang, setLang, t } = useStudioTheme();
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
   const lastScrollY = useRef(0);
+  const ticking = useRef(false);
 
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
-  // Smooth scroll handler with threshold to prevent navbar jitter/jumping
+  // Helper function to force instant top scroll
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if (lenisInstance) {
+      lenisInstance.scrollTo(0, { immediate: true, force: true });
+    }
+  };
+
+  // Reset navbar state automatically when changing routes
   useEffect(() => {
-    const SCROLL_THRESHOLD = 15;
+    setHidden(false);
+    setMenuOpen(false);
+    lastScrollY.current = window.scrollY;
+  }, [location.pathname]);
 
-    const handleScroll = () => {
-      if (menuOpen) return;
+  // RequestAnimationFrame Throttle for Ultra-Smooth Hide/Show Behavior
+  useEffect(() => {
+    const SCROLL_THRESHOLD = 12;
 
+    const updateNavbarVisibility = () => {
       const currentScrollY = window.scrollY;
       const diff = currentScrollY - lastScrollY.current;
 
-      if (Math.abs(diff) > SCROLL_THRESHOLD) {
-        if (currentScrollY > 80 && diff > 0) {
+      if (currentScrollY <= 60) {
+        setHidden(false);
+      } else if (Math.abs(diff) > SCROLL_THRESHOLD) {
+        if (diff > 0 && !menuOpen) {
           setHidden(true);
-        } else {
+        } else if (diff < 0) {
           setHidden(false);
         }
         lastScrollY.current = currentScrollY;
+      }
+
+      ticking.current = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking.current) {
+        window.requestAnimationFrame(updateNavbarVisibility);
+        ticking.current = true;
       }
     };
 
@@ -46,31 +75,38 @@ export default function Navbar() {
   const handleLogoClick = (e) => {
     e.preventDefault();
     setMenuOpen(false);
+    scrollToTop();
     if (!isHomePage) {
       navigate('/');
-    } else {
-      window.scrollTo(0, 0);
     }
   };
 
   const handleModeSwitch = (targetMode) => {
     setMode(targetMode);
+    scrollToTop();
     if (!isHomePage) {
       navigate('/');
-    } else {
-      window.scrollTo(0, 0);
     }
   };
 
   const handleSectionClick = (e, target) => {
-    e.preventDefault();
     if (menuOpen) toggleMenu();
 
+    if (target === 'work') {
+      e.preventDefault();
+      scrollToTop();
+      navigate('/work');
+      return;
+    }
+
     if (target === 'about') {
+      e.preventDefault();
+      scrollToTop();
       navigate('/about');
       return;
     }
 
+    e.preventDefault();
     if (!isHomePage) {
       navigate('/');
       setTimeout(() => {
@@ -78,7 +114,7 @@ export default function Navbar() {
         if (element) {
           element.scrollIntoView();
         } else {
-          window.scrollTo(0, 0);
+          scrollToTop();
         }
       }, 150);
     } else {
@@ -139,14 +175,14 @@ export default function Navbar() {
         <div className="menu-content">
           <ul className="menu-links">
             <li>
-              <a href="#work" onClick={(e) => handleSectionClick(e, 'work')}>
+              <Link to="/work" onClick={(e) => handleSectionClick(e, 'work')}>
                 {t.nav.work}
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/about" onClick={(e) => handleSectionClick(e, 'about')}>
+              <Link to="/about" onClick={(e) => handleSectionClick(e, 'about')}>
                 {t.nav.about}
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#contact" onClick={(e) => handleSectionClick(e, 'contact')}>

@@ -9,28 +9,30 @@
   right: 0 !important;
   z-index: 1000 !important;
 
-  /* Enhanced contrast overlay + glassy shimmer */
-  background: 
-    linear-gradient(
-      115deg,
-      rgba(255, 255, 255, 0.25) 0%,
-      rgba(255, 255, 255, 0.08) 40%,
-      rgba(0, 0, 0, 0.15) 70%,
-      rgba(0, 0, 0, 0.35) 100%
-    ),
-    rgba(15, 18, 24, 0.45) !important; /* Tinted base guarantees contrast on any image */
+  /* Master Translucent Architectural Glass */
+  background: rgba(12, 14, 18, 0.38) !important;
+  backdrop-filter: blur(28px) saturate(190%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(105%) !important;
 
-  backdrop-filter: blur(28px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(180%) contrast(105%) !important;
-
+  /* Specular Highlight Borders */
   border: none !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 
+    0 12px 32px -4px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
+
+  /* GPU-Accelerated Hardware Motion */
+  will-change: transform, opacity !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition: 
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .navbar-glass.navbar-hidden {
-  transform: translateY(-100%) !important;
+  transform: translate3d(0, -100%, 0) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Brand Logo Container & SVG Image */
@@ -41,11 +43,11 @@
 }
 
 .navbar-logo-img {
-  height: 28px !important; /* Scaled cleanly for the navbar height */
+  height: 28px !important;
   width: auto !important;
   display: block !important;
   object-fit: contain !important;
-  filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.5)); /* Adds shadow for high contrast on light media */
+  filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.5));
 }
 
 /* Mode Switcher Container */
@@ -64,21 +66,20 @@
   background: none !important;
   border: none !important;
   outline: none !important;
-  color: #ffffff !important; /* Forces solid legibility */
+  color: #ffffff !important;
   padding: 8px 0 !important;
   cursor: pointer !important;
   font-size: 0.75rem !important;
   font-weight: 600 !important;
   letter-spacing: 2px !important;
   text-transform: uppercase !important;
-  opacity: 0.65 !important; /* Boosted base visibility */
+  opacity: 0.65 !important;
   position: relative !important;
   transition: opacity 0.3s ease !important;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Animated Expansion Underline Line Effect */
 .mode-line-btn::after {
   content: '';
   position: absolute;
@@ -129,7 +130,7 @@
 .hamburger-btn .bar {
   width: 100%;
   height: 1.5px;
-  background-color: #ffffff !important; /* High contrast white bars */
+  background-color: #ffffff !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
@@ -216,7 +217,6 @@
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Pure Text Language Pills */
 .menu-language-section {
   display: flex;
   justify-content: center;

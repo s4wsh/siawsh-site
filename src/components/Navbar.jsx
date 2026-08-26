@@ -106,6 +106,20 @@ export default function Navbar() {
       return;
     }
 
+    if (target === 'insights') {
+      e.preventDefault();
+      scrollToTop();
+      navigate('/insights');
+      return;
+    }
+
+    if (target === 'contact') {
+      e.preventDefault();
+      scrollToTop();
+      navigate('/contact');
+      return;
+    }
+
     e.preventDefault();
     if (!isHomePage) {
       navigate('/');
@@ -185,9 +199,14 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <a href="#contact" onClick={(e) => handleSectionClick(e, 'contact')}>
+              <Link to="/insights" onClick={(e) => handleSectionClick(e, 'insights')}>
+                INSIGHTS
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" onClick={(e) => handleSectionClick(e, 'contact')}>
                 {t.nav.contact}
-              </a>
+              </Link>
             </li>
           </ul>
 

@@ -11,6 +11,9 @@ import Loader from './components/Loader.jsx';
 import ProjectDetail from './pages/ProjectDetail.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import WorkPage from './pages/WorkPage.jsx';
+import InsightsPage from './pages/InsightsPage.jsx';
+import InsightDetail from './pages/InsightDetail.jsx';
+import ContactPage from './pages/ContactPage.jsx';
 import useSmoothScroll, { lenisInstance } from './hooks/useSmoothScroll.js';
 import './index.css';
 
@@ -94,6 +97,9 @@ export default function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/work" element={<WorkPage />} />
               <Route path="/work/:id" element={<ProjectDetail />} />
+              <Route path="/insights" element={<InsightsPage />} />
+              <Route path="/insights/:slug" element={<InsightDetail />} />
+              <Route path="/contact" element={<ContactPage />} />
             </Routes>
           </GlobalLayout>
         </BrowserRouter>

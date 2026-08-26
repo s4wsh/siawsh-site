@@ -1,14 +1,15 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
 import { projectsData } from '../data/projectsData.js';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
-import ShareButtons from '../components/ShareButtons.jsx';
+import SEO from '../components/SEO.jsx';
 import './WorkPage.css';
 
 function SmoothFloatCard({ project, isLight, index }) {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const [copied, setCopied] = useState(false);
   const animationDelay = `${(index % 2) * 0.75}s`;
 
   // Cursor movement tracking for card sheen overlay
@@ -19,6 +20,34 @@ function SmoothFloatCard({ project, isLight, index }) {
     setMousePos({ x, y });
   };
 
+  const handleShare = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const shareUrl = `${window.location.origin}/work/${project.id}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: project.title,
+          text: project.subtitle || project.tagline,
+          url: shareUrl,
+        });
+        return;
+      } catch (err) {
+        if (err.name !== 'AbortError') console.error('Share failed:', err);
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Copy failed:', err);
+    }
+  };
+
   const angle = Math.atan2(mousePos.y - 50, mousePos.x - 50) * (180 / Math.PI) + 90;
   const sheenColor = isLight
     ? `linear-gradient(${angle}deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) ${mousePos.x}%, rgba(0,0,0,0) 100%)`
@@ -27,7 +56,7 @@ function SmoothFloatCard({ project, isLight, index }) {
   return (
     <div
       onMouseMove={handleMouseMove}
-      className={`group relative block rounded-none backdrop-blur-sm border transition-all duration-500 overflow-hidden ${
+      className={`group relative flex flex-col justify-between h-full rounded-none backdrop-blur-sm border transition-all duration-500 overflow-hidden ${
         isLight
           ? 'border-black/10 bg-black/2 hover:border-black/30 text-black'
           : 'border-white/10 bg-white/2 hover:border-white/20 text-white'
@@ -44,7 +73,7 @@ function SmoothFloatCard({ project, isLight, index }) {
       />
 
       {/* Main Link Wrapper */}
-      <Link to={`/work/${project.id}`} className="block active:scale-[0.99] transition-transform duration-300">
+      <Link to={`/work/${project.id}`} className="flex-1 flex flex-col active:scale-[0.99] transition-transform duration-300">
         {/* Media Wrapper - Standardized to aspect-video (16:9) */}
         <div
           className={`media-wrapper aspect-video w-full overflow-hidden relative border-b ${
@@ -70,8 +99,8 @@ function SmoothFloatCard({ project, isLight, index }) {
           )}
         </div>
 
-        {/* Card Info */}
-        <div className="card-info p-6 flex items-start justify-between gap-4 min-h-25 relative z-20">
+        {/* Card Info — Unified height and padding structure across all cards */}
+        <div className="card-info p-6 flex-1 flex items-start justify-between gap-4 h-36 relative z-20">
           <div className="w-1/2 md:w-[58%]">
             <h3
               className={`text-base md:text-xl font-light tracking-tight leading-snug transition-colors ${
@@ -94,13 +123,38 @@ function SmoothFloatCard({ project, isLight, index }) {
         </div>
       </Link>
 
-      {/* Embedded Share Action Bar per Card - Ultra-compact button height spacing */}
-      <div className="px-6 py-1.5 relative z-30 border-t border-current/10">
-        <ShareButtons
-          title={project.title}
-          excerpt={project.subtitle || project.tagline}
-          isLight={isLight}
-        />
+      {/* Fixed-Height Bottom Share Bar */}
+      <div className={`h-12 px-6 relative z-30 border-t flex justify-end items-center ${
+        isLight ? 'border-black/10' : 'border-white/10'
+      }`}>
+        <button
+          type="button"
+          onClick={handleShare}
+          aria-label="Share project"
+          className={`p-2 rounded-none backdrop-blur-md transition-all duration-300 border ${
+            isLight
+              ? 'bg-black/2 hover:bg-black/5 text-black border-black/10 hover:border-black/30'
+              : 'bg-white/2 hover:bg-white/5 text-white border-white/10 hover:border-white/30'
+          }`}
+        >
+          {copied ? (
+            <span className="text-[10px] font-mono uppercase tracking-widest px-1">Copied</span>
+          ) : (
+            <svg
+              className="w-3.5 h-3.5 opacity-70 hover:opacity-100 transition-opacity"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="square"
+                strokeLinejoin="miter"
+                strokeWidth="1.5"
+                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+              />
+            </svg>
+          )}
+        </button>
       </div>
     </div>
   );
@@ -109,10 +163,6 @@ function SmoothFloatCard({ project, isLight, index }) {
 export default function WorkPage() {
   const { isLight, lang } = useStudioTheme();
   const [activeFilter, setActiveFilter] = useState('all');
-
-  useEffect(() => {
-    document.title = "Selected Works — SIAWSH Studio";
-  }, []);
 
   const filterCategories = [
     { id: 'all', labelEn: 'All Works', labelFa: 'همه آثار' },
@@ -130,6 +180,12 @@ export default function WorkPage() {
 
   return (
     <div className={`work-page-wrapper relative min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
+      <SEO 
+        title="Selected Works — SIAWSH Studio"
+        description="A curated index of spatial architecture, kinetic branding, 3D motion graphics, and experimental design case studies."
+        canonical="https://siawsh.co/work"
+      />
+
       <style>{`
         @keyframes ultraSmoothFloat {
           0% {
@@ -181,7 +237,7 @@ export default function WorkPage() {
           </div>
         </header>
 
-        <section className="work-grid grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <section className="work-grid grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {filteredProjects.map((project, index) => (
             <SmoothFloatCard key={project.id} project={project} isLight={isLight} index={index} />
           ))}

@@ -5,6 +5,7 @@ import { projectsData } from '../data/projectsData.js';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
 import ShareButtons from '../components/ShareButtons.jsx';
+import SEO from '../components/SEO.jsx';
 
 /**
  * Performance-Optimized Lazy Video Component
@@ -105,51 +106,10 @@ export default function ProjectDetail() {
       .slice(0, 3);
   }, [project]);
 
-  // Dynamic SEO Metadata & Scroll Reset
+  // Scroll Reset on Route Change
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    if (project) {
-      document.title = project.metaTitle || `${project.title} | Studio Practice`;
-
-      let metaDescription = document.querySelector('meta[name="description"]');
-      if (!metaDescription) {
-        metaDescription = document.createElement('meta');
-        metaDescription.name = 'description';
-        document.head.appendChild(metaDescription);
-      }
-      metaDescription.content = project.metaDescription || project.subtitle || '';
-
-      let metaKeywords = document.querySelector('meta[name="keywords"]');
-      if (!metaKeywords) {
-        metaKeywords = document.createElement('meta');
-        metaKeywords.name = 'keywords';
-        document.head.appendChild(metaKeywords);
-      }
-      metaKeywords.content = project.keywords ? project.keywords.join(', ') : '';
-
-      const schemaData = {
-        '@context': 'https://schema.org',
-        '@type': project.schemaType || 'CreativeWork',
-        name: project.title,
-        description: project.metaDescription || project.subtitle,
-        image: project.heroImage,
-        author: {
-          '@type': 'Organization',
-          name: 'Studio Practice',
-        },
-      };
-
-      let scriptTag = document.getElementById('json-ld-schema');
-      if (!scriptTag) {
-        scriptTag = document.createElement('script');
-        scriptTag.id = 'json-ld-schema';
-        scriptTag.type = 'application/ld+json';
-        document.head.appendChild(scriptTag);
-      }
-      scriptTag.text = JSON.stringify(schemaData);
-    }
-  }, [id, project]);
+  }, [id]);
 
   if (!project) {
     return (
@@ -180,7 +140,23 @@ export default function ProjectDetail() {
     hasPostHeroVideoGrid,
     postHeroVideoGrid,
     theySaidVideos,
+    metaTitle,
+    metaDescription,
+    keywords,
+    schemaType,
   } = project;
+
+  const schemaData = {
+    '@context': 'https://schema.org',
+    '@type': schemaType || 'CreativeWork',
+    name: title,
+    description: metaDescription || subtitle,
+    image: heroImage,
+    author: {
+      '@type': 'Organization',
+      name: 'Studio Practice',
+    },
+  };
 
   const heroVideoSrc = heroVideo || null;
 
@@ -211,6 +187,14 @@ export default function ProjectDetail() {
 
   return (
     <div className={`min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
+      <SEO 
+        title={metaTitle || `${title} | Studio Practice`}
+        description={metaDescription || subtitle || ''}
+        keywords={keywords}
+        canonical={`https://siawsh.co/work/${id}`}
+        schema={schemaData}
+      />
+
       <Navbar />
 
       <main className="pt-24 pb-20">

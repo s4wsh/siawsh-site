@@ -4,6 +4,7 @@ import { useStudioTheme } from '../context/ThemeContext.jsx';
 import { projectsData } from '../data/projectsData.js';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
+import ShareButtons from '../components/ShareButtons.jsx';
 
 /**
  * Performance-Optimized Lazy Video Component
@@ -69,7 +70,7 @@ function LazyVideo({
         }}
       />
       {label && (
-        <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1 text-[10px] uppercase tracking-widest text-white z-10">
+        <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-sm px-2 py-0.5 text-[9px] uppercase tracking-widest text-white z-10">
           {label}
         </div>
       )}
@@ -212,7 +213,7 @@ export default function ProjectDetail() {
     <div className={`min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
       <Navbar />
 
-      <main className="pt-20 pb-20">
+      <main className="pt-24 pb-20">
         <div className="mx-auto max-w-7xl px-6 md:px-12 space-y-16">
           
           {/* Header Navigation Bar */}
@@ -268,31 +269,31 @@ export default function ProjectDetail() {
               {specs.client && (
                 <div>
                   <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.clientContext}</div>
-                  <div className="text-xs md:text-sm font-medium mt-1">{specs.client}</div>
+                  <div className="text-sm md:text-base font-medium mt-1">{specs.client}</div>
                 </div>
               )}
               {specs.year && (
                 <div>
                   <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.year}</div>
-                  <div className="text-xs md:text-sm font-medium mt-1">{specs.year}</div>
+                  <div className="text-sm md:text-base font-medium mt-1">{specs.year}</div>
                 </div>
               )}
               {specs.location && (
                 <div>
                   <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.location}</div>
-                  <div className="text-xs md:text-sm font-medium mt-1">{specs.location}</div>
+                  <div className="text-sm md:text-base font-medium mt-1">{specs.location}</div>
                 </div>
               )}
               {specs.tools && (
                 <div>
                   <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.tools}</div>
-                  <div className="text-xs md:text-sm font-medium mt-1">{specs.tools}</div>
+                  <div className="text-sm md:text-base font-medium mt-1">{specs.tools}</div>
                 </div>
               )}
               {specs.deliverables && (
                 <div className="col-span-2 md:col-span-4 border-t pt-4 border-current/10">
                   <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.deliverables}</div>
-                  <div className="text-xs md:text-sm font-medium mt-1">{specs.deliverables}</div>
+                  <div className="text-sm md:text-base font-medium mt-1">{specs.deliverables}</div>
                 </div>
               )}
             </div>
@@ -302,7 +303,7 @@ export default function ProjectDetail() {
           {contextParagraph && (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start py-4">
               <div className="md:col-span-4 text-xs uppercase tracking-widest opacity-40">{t.projectDetail.conceptContext}</div>
-              <div className="md:col-span-8 text-base md:text-xl font-light leading-relaxed border-l-2 pl-6 border-current/20">
+              <div className="md:col-span-8 text-lg md:text-xl font-light leading-relaxed border-l-2 pl-6 border-current/20">
                 {contextParagraph}
               </div>
             </div>
@@ -318,7 +319,7 @@ export default function ProjectDetail() {
           {mainParagraph && (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start py-4">
               <div className="md:col-span-4 text-xs uppercase tracking-widest opacity-40">{t.projectDetail.executionStrategy}</div>
-              <div className="md:col-span-8 text-base leading-relaxed opacity-80">
+              <div className="md:col-span-8 text-base md:text-lg leading-relaxed opacity-80">
                 {mainParagraph}
               </div>
             </div>
@@ -375,16 +376,21 @@ export default function ProjectDetail() {
             </div>
           )}
 
+          {/* End-of-Page Share Buttons Section - Zero vertical padding (Tight against lines) */}
+          <div className="py-0 my-0 border-t border-b border-current/10 leading-none">
+            <ShareButtons title={title} excerpt={subtitle || tagline} isLight={isLight} />
+          </div>
+
           {/* Related Projects */}
           {relatedProjects.length > 0 && (
-            <div className="border-t pt-16 border-current/10 space-y-8">
+            <div className="pt-8 space-y-8">
               <div className="text-xs uppercase tracking-widest opacity-40">{t.projectDetail.relatedProjects}</div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedProjects.map((rel) => (
                   <Link
                     key={rel.id}
                     to={`/work/${rel.id}`}
-                    className="group block space-y-4 border border-current/10 p-4 transition-colors hover:border-current/30"
+                    className="group block space-y-3 border border-current/10 p-3 transition-colors hover:border-current/30"
                   >
                     <div className="aspect-video w-full overflow-hidden bg-neutral-900">
                       <img
@@ -394,8 +400,8 @@ export default function ProjectDetail() {
                       />
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium group-hover:underline">{rel.title}</h3>
-                      <p className="text-xs opacity-60 line-clamp-2 mt-1">{rel.subtitle}</p>
+                      <h3 className="text-sm font-medium group-hover:underline">{rel.title}</h3>
+                      <p className="text-[11px] opacity-60 line-clamp-2 mt-1">{rel.subtitle}</p>
                     </div>
                   </Link>
                 ))}

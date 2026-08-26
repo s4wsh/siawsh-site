@@ -105,8 +105,8 @@ export default function AboutSection({ teaser = false }) {
             onMouseMove={handleMouseMove}
             className={`group relative p-8 md:p-12 border rounded-none backdrop-blur-sm flex flex-col md:flex-row md:items-center justify-between gap-8 transition-all duration-500 overflow-hidden ${
               isLight
-                ? 'border-black/10 bg-black/[0.02] hover:border-black/30'
-                : 'border-white/10 bg-white/[0.02] hover:border-white/20'
+                ? 'border-black/10 bg-black/2 hover:border-black/30'
+                : 'border-white/10 bg-white/2 hover:border-white/20'
             }`}
           >
             <div
@@ -175,7 +175,7 @@ export default function AboutSection({ teaser = false }) {
 
         {/* Studio Stats */}
         <section aria-label="Studio Achievements" className="stats-grid grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className={`p-8 border rounded-none space-y-2 ${isLight ? 'border-black/10 bg-black/[0.01]' : 'border-white/10 bg-white/[0.02]'}`}>
+          <div className={`p-8 border rounded-none space-y-2 ${isLight ? 'border-black/10 bg-black/1' : 'border-white/10 bg-white/2'}`}>
             <span className="stat-number block text-4xl md:text-5xl font-light text-[#00f0ff]">
               10+
             </span>
@@ -184,7 +184,7 @@ export default function AboutSection({ teaser = false }) {
             </span>
           </div>
 
-          <div className={`p-8 border rounded-none space-y-2 ${isLight ? 'border-black/10 bg-black/[0.01]' : 'border-white/10 bg-white/[0.02]'}`}>
+          <div className={`p-8 border rounded-none space-y-2 ${isLight ? 'border-black/10 bg-black/1' : 'border-white/10 bg-white/2'}`}>
             <span className="stat-number block text-4xl md:text-5xl font-light text-[#00f0ff]">
               40+
             </span>
@@ -211,8 +211,8 @@ export default function AboutSection({ teaser = false }) {
                 key={cap.number} 
                 className={`p-8 border rounded-none space-y-4 flex flex-col justify-between transition-all duration-300 ${
                   isLight 
-                    ? 'border-black/10 bg-black/[0.01] hover:border-black/30' 
-                    : 'border-white/10 bg-white/[0.02] hover:border-white/20'
+                    ? 'border-black/10 bg-black/1 hover:border-black/30' 
+                    : 'border-white/10 bg-white/2 hover:border-white/20'
                 }`}
               >
                 <div className="space-y-3">
@@ -231,7 +231,7 @@ export default function AboutSection({ teaser = false }) {
         </section>
 
         {/* Tooling & Software Pipeline */}
-        <section className={`p-8 md:p-10 border rounded-none space-y-6 ${isLight ? 'border-black/10 bg-black/[0.01]' : 'border-white/10 bg-white/[0.02]'}`}>
+        <section className={`p-8 md:p-10 border rounded-none space-y-6 ${isLight ? 'border-black/10 bg-black/1' : 'border-white/10 bg-white/2'}`}>
           <div className="space-y-2">
             <span className="text-xs font-mono uppercase tracking-widest opacity-50 block">Production Pipeline</span>
             <h2 className="text-xl md:text-2xl font-light tracking-tight">Tooling & Software Ecosystem</h2>
@@ -255,7 +255,7 @@ export default function AboutSection({ teaser = false }) {
         {/* Dynamic Methodology & Process Block */}
         {isCinematic ? (
           /* Motion / Cinematic Process Breakdown */
-          <section className={`p-8 md:p-10 border rounded-none space-y-8 ${isLight ? 'border-black/10 bg-black/[0.01]' : 'border-white/10 bg-white/[0.02]'}`}>
+          <section className={`p-8 md:p-10 border rounded-none space-y-8 ${isLight ? 'border-black/10 bg-black/1' : 'border-white/10 bg-white/2'}`}>
             <div className="space-y-2">
               <span className="text-xs font-mono uppercase tracking-widest opacity-50 block">
                 Motion Pipeline
@@ -282,7 +282,7 @@ export default function AboutSection({ teaser = false }) {
           </section>
         ) : (
           /* Spatial Design Process Card */
-          <section className={`p-8 md:p-10 border rounded-none space-y-4 ${isLight ? 'border-black/10 bg-black/[0.01]' : 'border-white/10 bg-white/[0.02]'}`}>
+          <section className={`p-8 md:p-10 border rounded-none space-y-4 ${isLight ? 'border-black/10 bg-black/1' : 'border-white/10 bg-white/2'}`}>
             <span className="text-xs font-mono uppercase tracking-widest opacity-50 block">
               Architectural Methodology
             </span>

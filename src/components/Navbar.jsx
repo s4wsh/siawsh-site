@@ -95,6 +95,11 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Accessible to search engine crawlers, visually invisible on screen */}
+      <h1 className="sr-only">
+        SIAWSH — Spatial Architecture, 3D Motion & Design Studio
+      </h1>
+
       <nav className={`navbar-glass ${hidden ? 'navbar-hidden' : ''}`}>
         <div className="mx-auto max-w-7xl px-6 md:px-12 flex w-full items-center justify-between">
           {/* Brand SVG Logo */}

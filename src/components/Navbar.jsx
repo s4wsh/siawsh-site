@@ -15,7 +15,7 @@ export default function Navbar() {
 
   // Smooth scroll handler with threshold to prevent navbar jitter/jumping
   useEffect(() => {
-    const SCROLL_THRESHOLD = 15; // Minimum scroll delta before toggling navbar
+    const SCROLL_THRESHOLD = 15;
 
     const handleScroll = () => {
       if (menuOpen) return;
@@ -23,7 +23,6 @@ export default function Navbar() {
       const currentScrollY = window.scrollY;
       const diff = currentScrollY - lastScrollY.current;
 
-      // Only toggle if scroll distance exceeds threshold to stop rapid flickering
       if (Math.abs(diff) > SCROLL_THRESHOLD) {
         if (currentScrollY > 80 && diff > 0) {
           setHidden(true);
@@ -44,7 +43,6 @@ export default function Navbar() {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  // Logo Navigation Handler
   const handleLogoClick = (e) => {
     e.preventDefault();
     setMenuOpen(false);
@@ -55,7 +53,6 @@ export default function Navbar() {
     }
   };
 
-  // Spatial / Cinematic Mode Switch Handler
   const handleModeSwitch = (targetMode) => {
     setMode(targetMode);
     if (!isHomePage) {
@@ -65,7 +62,6 @@ export default function Navbar() {
     }
   };
 
-  // Smooth Section Jump Handler (#work, /about, #contact)
   const handleSectionClick = (e, target) => {
     e.preventDefault();
     if (menuOpen) toggleMenu();
@@ -95,11 +91,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Accessible to search engine crawlers, visually invisible on screen */}
-      <h1 className="sr-only">
-        SIAWSH — Spatial Architecture, 3D Motion & Design Studio
-      </h1>
-
       <nav className={`navbar-glass ${hidden ? 'navbar-hidden' : ''}`}>
         <div className="mx-auto max-w-7xl px-6 md:px-12 flex w-full items-center justify-between">
           {/* Brand SVG Logo */}

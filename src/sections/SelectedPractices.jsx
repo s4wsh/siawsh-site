@@ -14,7 +14,7 @@ export default function SelectedPractices() {
   );
 
   return (
-    <section className={`py-20 transition-colors duration-500 ${
+    <section className={`pt-12 pb-6 md:pt-16 md:pb-8 transition-colors duration-500 ${
       isLight ? 'bg-white text-black' : 'bg-black text-white'
     }`}>
       {/* Standardized max-width container wrapper */}

@@ -99,7 +99,7 @@ export default function AboutSection({ teaser = false }) {
   // Homepage Teaser Card
   if (teaser) {
     return (
-      <section className="about-teaser-section py-20" id="about">
+      <section className="about-teaser-section pt-6 pb-12 md:pt-8 md:pb-16" id="about">
         <div className="mx-auto max-w-7xl px-6 md:px-12 w-full">
           <div
             onMouseMove={handleMouseMove}

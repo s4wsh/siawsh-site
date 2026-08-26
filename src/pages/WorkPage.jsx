@@ -4,66 +4,105 @@ import { useStudioTheme } from '../context/ThemeContext.jsx';
 import { projectsData } from '../data/projectsData.js';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
+import ShareButtons from '../components/ShareButtons.jsx';
 import './WorkPage.css';
 
 function SmoothFloatCard({ project, isLight, index }) {
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const animationDelay = `${(index % 2) * 0.75}s`;
 
+  // Cursor movement tracking for card sheen overlay
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.min(Math.max(((e.clientX - rect.left) / rect.width) * 100, 0), 100);
+    const y = Math.min(Math.max(((e.clientY - rect.top) / rect.height) * 100, 0), 100);
+    setMousePos({ x, y });
+  };
+
+  const angle = Math.atan2(mousePos.y - 50, mousePos.x - 50) * (180 / Math.PI) + 90;
+  const sheenColor = isLight
+    ? `linear-gradient(${angle}deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) ${mousePos.x}%, rgba(0,0,0,0) 100%)`
+    : `linear-gradient(${angle}deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) ${mousePos.x}%, rgba(255,255,255,0) 100%)`;
+
   return (
-    <Link
-      to={`/work/${project.id}`}
-      className={`group relative block rounded-none transition-all duration-700 ease-out overflow-hidden border active:scale-[0.99] hover:shadow-2xl ${
+    <div
+      onMouseMove={handleMouseMove}
+      className={`group relative block rounded-none backdrop-blur-sm border transition-all duration-500 overflow-hidden ${
         isLight
-          ? 'bg-neutral-50 border-neutral-300 text-black hover:shadow-black/10'
-          : 'bg-black border-neutral-800 text-white hover:shadow-white/5'
+          ? 'border-black/10 bg-black/2 hover:border-black/30 text-black'
+          : 'border-white/10 bg-white/2 hover:border-white/20 text-white'
       }`}
       style={{
         animation: 'ultraSmoothFloat 6s ease-in-out infinite alternate',
         animationDelay: animationDelay,
       }}
     >
-      {/* Media Wrapper */}
-      <div className={`media-wrapper aspect-16/10 w-full overflow-hidden relative border-b ${
-        isLight ? 'bg-neutral-100 border-neutral-300' : 'bg-neutral-950 border-neutral-800'
-      }`}>
-        {project.cardVideo ? (
-          <video
-            src={project.cardVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-        ) : (
-          <img
-            src={project.heroImage}
-            alt={project.title}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-        )}
-      </div>
+      {/* Dynamic Cursor Sheen Overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out z-10"
+        style={{ background: sheenColor }}
+      />
 
-      {/* Card Info */}
-      <div className="card-info p-5 md:p-6 flex items-start justify-between gap-6 min-h-110px">
-        <div className="w-1/2 md:w-[58%]">
-          <h3 className={`text-base md:text-lg font-bold tracking-tight leading-snug transition-colors ${
-            isLight ? 'text-black group-hover:text-neutral-600' : 'text-white group-hover:text-neutral-300'
-          }`}>
-            {project.title}
-          </h3>
+      {/* Main Link Wrapper */}
+      <Link to={`/work/${project.id}`} className="block active:scale-[0.99] transition-transform duration-300">
+        {/* Media Wrapper - Standardized to aspect-video (16:9) */}
+        <div
+          className={`media-wrapper aspect-video w-full overflow-hidden relative border-b ${
+            isLight ? 'border-black/10 bg-black/5' : 'border-white/10 bg-white/5'
+          }`}
+        >
+          {project.cardVideo ? (
+            <video
+              src={project.cardVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <img
+              src={project.heroImage}
+              alt={project.title}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          )}
         </div>
 
-        <div className="w-1/2 md:w-[42%] text-right">
-          <p className={`text-[10px] md:text-[11px] font-mono uppercase tracking-wider leading-relaxed ${
-            isLight ? 'text-neutral-600' : 'text-neutral-400'
-          }`}>
-            {project.subtitle || project.specs?.deliverables || 'SELECTED PRACTICE'}
-          </p>
+        {/* Card Info */}
+        <div className="card-info p-6 flex items-start justify-between gap-4 min-h-25 relative z-20">
+          <div className="w-1/2 md:w-[58%]">
+            <h3
+              className={`text-base md:text-xl font-light tracking-tight leading-snug transition-colors ${
+                isLight ? 'text-black group-hover:opacity-75' : 'text-white group-hover:opacity-75'
+              }`}
+            >
+              {project.title}
+            </h3>
+          </div>
+
+          <div className="w-1/2 md:w-[42%] text-right">
+            <p
+              className={`text-[10px] md:text-[11px] font-mono uppercase tracking-widest leading-relaxed ${
+                isLight ? 'text-black/50' : 'text-white/50'
+              }`}
+            >
+              {project.subtitle || project.specs?.deliverables || 'SELECTED PRACTICE'}
+            </p>
+          </div>
         </div>
+      </Link>
+
+      {/* Embedded Share Action Bar per Card - Ultra-compact button height spacing */}
+      <div className="px-6 py-1.5 relative z-30 border-t border-current/10">
+        <ShareButtons
+          title={project.title}
+          excerpt={project.subtitle || project.tagline}
+          isLight={isLight}
+        />
       </div>
-    </Link>
+    </div>
   );
 }
 
@@ -107,33 +146,33 @@ export default function WorkPage() {
 
       <Navbar />
 
-      <main className="work-container pt-28 md:pt-36 pb-20 md:pb-28 px-6 md:px-12 max-w-7xl mx-auto">
-        <header className="work-header mb-10 md:mb-14">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+      <main className="work-container pt-32 md:pt-40 pb-16 md:pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <header className="work-header mb-12 md:mb-16">
+          <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-4">
             {lang === 'fa' ? 'آرشیو پروژه ها' : 'Selected Works'}
           </h1>
-          <p className={`max-w-xl text-sm md:text-base leading-relaxed ${isLight ? 'text-neutral-600' : 'text-neutral-400'}`}>
+          <p className={`max-w-xl text-sm md:text-base leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`}>
             {lang === 'fa'
               ? 'مجموعه پروژه‌های طراحی فضایی، موشن گرافیک سه‌بعدی و برندینگ.'
               : 'A curated index of spatial architecture, kinetic branding, and 3D motion design.'}
           </p>
 
-          <div className={`filter-bar flex flex-nowrap sm:flex-wrap gap-2 md:gap-3 mt-6 md:mt-8 border-b pb-5 overflow-x-auto no-scrollbar ${
-            isLight ? 'border-neutral-200' : 'border-neutral-800'
+          <div className={`filter-bar flex flex-nowrap sm:flex-wrap gap-2 md:gap-3 mt-6 md:mt-8 border-b pb-4 overflow-x-auto no-scrollbar ${
+            isLight ? 'border-black/10' : 'border-white/10'
           }`}>
             {filterCategories.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveFilter(cat.id)}
-                className={`filter-pill whitespace-nowrap text-[11px] md:text-xs uppercase tracking-widest px-4 md:px-5 py-2 rounded-none transition-all duration-300 border ${
+                className={`filter-pill whitespace-nowrap text-xs md:text-xs uppercase tracking-widest px-4 md:px-5 py-2 rounded-none transition-all duration-300 border ${
                   activeFilter === cat.id
                     ? isLight
-                      ? 'bg-black text-white font-bold border-black'
-                      : 'bg-white text-black font-bold border-white'
+                      ? 'bg-black text-white font-medium border-black'
+                      : 'bg-white text-black font-medium border-white'
                     : isLight
-                      ? 'bg-white hover:bg-neutral-100 text-neutral-600 border-neutral-300'
-                      : 'bg-black hover:bg-neutral-900 text-neutral-400 border-neutral-800'
+                      ? 'bg-black/2 hover:bg-black/5 text-black/70 border-black/10'
+                      : 'bg-white/2 hover:bg-white/5 text-white/70 border-white/10'
                 }`}
               >
                 {lang === 'fa' ? cat.labelFa : cat.labelEn}

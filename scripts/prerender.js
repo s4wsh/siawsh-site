@@ -1,11 +1,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { React } from 'react'
+import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { StaticRouter } from 'react-router-dom/server'
+import { StaticRouter } from 'react-router'
 import { HelmetProvider } from 'react-helmet-async'
 import { projectsData } from '../src/data/projectsData.js'
-import App from '../src/App.jsx' // Adjust path if your main App component is elsewhere
+import App from '../src/App.jsx'
 
 const DIST_DIR = path.resolve('dist')
 const INDEX_HTML_PATH = path.join(DIST_DIR, 'index.html')
@@ -28,7 +28,7 @@ async function prerender() {
 
     const helmetContext = {}
 
-    // Render App component to static markup
+    // Render App component to static markup using StaticRouter from 'react-router'
     const appHtml = renderToString(
       React.createElement(
         HelmetProvider,

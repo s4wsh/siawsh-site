@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.js",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -26,8 +26,10 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
     "autoprefixer": "^10.5.4",
+    "express": "^5.2.1",
     "oxlint": "^1.75.0",
     "postcss": "^8.5.25",
+    "puppeteer": "^24.43.1",
     "tailwindcss": "^4.3.3",
     "vite": "^8.2.0",
     "vite-plugin-sitemap": "^0.8.2"

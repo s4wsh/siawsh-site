@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && esbuild scripts/prerender.js --bundle --platform=node --format=esm --outdir=scripts/dist && node scripts/dist/prerender.js",
+    "build": "vite build && esbuild scripts/prerender.js --bundle --platform=node --format=esm --external:*.css --external:tailwindcss --outdir=scripts/dist && node scripts/dist/prerender.js",
     "lint": "oxlint",
     "preview": "vite preview"
   },

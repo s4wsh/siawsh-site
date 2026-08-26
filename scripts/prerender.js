@@ -1,53 +1,71 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import express from 'express'
-import puppeteer from 'puppeteer'
+import { React } from 'react'
+import { renderToString } from 'react-dom/server'
+import { StaticRouter } from 'react-router-dom/server'
+import { HelmetProvider } from 'react-helmet-async'
 import { projectsData } from '../src/data/projectsData.js'
+import App from '../src/App.jsx' // Adjust path if your main App component is elsewhere
 
-const PORT = 4567
 const DIST_DIR = path.resolve('dist')
+const INDEX_HTML_PATH = path.join(DIST_DIR, 'index.html')
 
 const staticRoutes = ['/', '/work', '/about', '/contact']
 const dynamicProjectRoutes = projectsData.map((p) => `/work/${p.id}`)
 const routes = [...staticRoutes, ...dynamicProjectRoutes]
 
 async function prerender() {
-  console.log('🚀 Starting post-build SSG prerendering...')
+  console.log('🚀 Starting native React SSG prerendering...')
 
-  // 1. Start local server serving the built `dist` folder
-  const app = express()
-  app.use(express.static(DIST_DIR))
+  if (!fs.existsSync(INDEX_HTML_PATH)) {
+    throw new Error('dist/index.html not found. Run vite build first.')
+  }
 
-  // Express 5 catch-all syntax for SPA fallback
-  app.get('/{*splat}', (req, res) => {
-    res.sendFile(path.join(DIST_DIR, 'index.html'))
-  })
-
-  const server = app.listen(PORT)
-
-  // 2. Launch Puppeteer
-  const browser = await puppeteer.launch({ headless: 'new' })
-  const page = await browser.newPage()
+  const template = fs.readFileSync(INDEX_HTML_PATH, 'utf-8')
 
   for (const route of routes) {
-    const url = `http://localhost:${PORT}${route}`
-    console.log(`📸 Prerendering: ${route}`)
+    console.log(`📄 Prerendering route: ${route}`)
 
-    await page.goto(url, { waitUntil: 'networkidle0' })
+    const helmetContext = {}
 
-    const html = await page.content()
+    // Render App component to static markup
+    const appHtml = renderToString(
+      React.createElement(
+        HelmetProvider,
+        { context: helmetContext },
+        React.createElement(
+          StaticRouter,
+          { location: route },
+          React.createElement(App)
+        )
+      )
+    )
 
-    // Map route to output path (e.g., /work -> dist/work/index.html)
+    const { helmet } = helmetContext
+
+    // Inject rendered React HTML and dynamic Helmet head tags into index.html template
+    let html = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`)
+
+    if (helmet) {
+      const headTags = [
+        helmet.title?.toString(),
+        helmet.meta?.toString(),
+        helmet.link?.toString(),
+      ]
+        .filter(Boolean)
+        .join('\n')
+
+      html = html.replace('</head>', `${headTags}\n</head>`)
+    }
+
+    // Determine target output path
     const relativePath = route === '/' ? 'index.html' : `${route.slice(1)}/index.html`
     const filePath = path.join(DIST_DIR, relativePath)
 
-    // Ensure directory exists
     fs.mkdirSync(path.dirname(filePath), { recursive: true })
     fs.writeFileSync(filePath, html, 'utf-8')
   }
 
-  await browser.close()
-  server.close()
   console.log('✅ All routes successfully prerendered!')
 }
 

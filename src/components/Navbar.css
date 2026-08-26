@@ -1,26 +1,26 @@
-:root {
-  --transition-speed: 0.4s;
-}
-
-/* Spatial Theme - Architecture & Furniture */
+:root,
 [data-theme='spatial'] {
   --bg-color: #f7f7f5;
-  --bg-color-glass: rgba(247, 247, 245, 0.75);
+  --bg-color-glass: rgba(240, 238, 233, 0.45);
   --text-color: #1a1a1a;
   --accent-color: #8c7b6c;
   --card-bg: #ffffff;
-  --border-color: rgba(0, 0, 0, 0.1);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --glass-border-top: rgba(255, 255, 255, 0.7);
+  --glass-reflection: inset 0 1px 0 0 rgba(255, 255, 255, 0.6), 0 8px 32px 0 rgba(0, 0, 0, 0.04);
   --font-family: 'Helvetica Neue', Arial, sans-serif;
+  --transition-speed: 0.4s;
 }
 
-/* Cinematic Theme - Graphics & Motion */
 [data-theme='cinematic'] {
   --bg-color: #0b0b0d;
-  --bg-color-glass: rgba(11, 11, 13, 0.75);
+  --bg-color-glass: rgba(11, 11, 13, 0.55);
   --text-color: #f0f0f3;
   --accent-color: #00f0ff;
   --card-bg: #16161a;
-  --border-color: rgba(255, 255, 255, 0.1);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --glass-border-top: rgba(255, 255, 255, 0.15);
+  --glass-reflection: inset 0 1px 0 0 rgba(255, 255, 255, 0.12), 0 12px 40px 0 rgba(0, 0, 0, 0.5);
   --font-family: 'Inter', sans-serif;
 }
 
@@ -33,7 +33,7 @@ body {
   transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
-/* Glassmorphism Navigation Bar */
+/* Realistic Glassmorphism Navigation Bar */
 .navbar-glass {
   position: fixed;
   top: 0;
@@ -45,11 +45,13 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 16px 0;
-  border-bottom: 1px solid var(--border-color);
   background-color: var(--bg-color-glass);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  backdrop-filter: blur(16px) saturate(180%);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color var(--transition-speed), background-color var(--transition-speed);
+  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid var(--glass-border-top);
+  box-shadow: var(--glass-reflection);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color var(--transition-speed), background-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 .navbar-hidden {
@@ -99,20 +101,27 @@ body {
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
-  padding: 6px;
+  padding: 8px;
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
 }
 
 .hamburger-btn .bar {
   display: block;
   width: 22px;
-  height: 1.5px;
-  background-color: var(--text-color);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  height: 2px;
+  background-color: currentColor;
+  color: var(--text-color);
+  border-radius: 1px;
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
 }
 
 .hamburger-btn.open .bar:nth-child(1) {
-  transform: translateY(6.5px) rotate(45deg);
+  transform: translateY(7px) rotate(45deg);
 }
 
 .hamburger-btn.open .bar:nth-child(2) {
@@ -120,7 +129,7 @@ body {
 }
 
 .hamburger-btn.open .bar:nth-child(3) {
-  transform: translateY(-6.5px) rotate(-45deg);
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* Glass Slide-out Menu Overlay */
@@ -129,8 +138,8 @@ body {
   inset: 0;
   z-index: 90;
   background-color: var(--bg-color-glass);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  backdrop-filter: blur(28px) saturate(150%);
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -15,20 +15,27 @@ export default function Loader({ onFinish }) {
   };
 
   useEffect(() => {
-    // Attempt programmatic playback to bypass strict browser restrictions
-    if (videoRef.current) {
-      videoRef.current.play().catch((err) => {
-        console.warn("Autoplay prevented or failed:", err);
-        handleComplete();
-      });
-    }
+    let animationFrameId;
+
+    // Ensure DOM paint is complete before calling play() on the video element
+    animationFrameId = requestAnimationFrame(() => {
+      if (videoRef.current) {
+        videoRef.current.play().catch((err) => {
+          console.warn("Autoplay prevented or failed:", err);
+          handleComplete();
+        });
+      }
+    });
 
     // Safety fallback: guaranteed exit after 3.5 seconds
     const fallbackTimer = setTimeout(() => {
       handleComplete();
     }, 3500);
 
-    return () => clearTimeout(fallbackTimer);
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      clearTimeout(fallbackTimer);
+    };
   }, []);
 
   return (

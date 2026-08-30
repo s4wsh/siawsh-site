@@ -46,13 +46,17 @@ function GlobalLayout({ children }) {
 }
 
 export default function App() {
-  const [showLoader, setShowLoader] = useState(() => {
-    // Safe check for SSG server build environment
+  const [showLoader, setShowLoader] = useState(false);
+
+  useEffect(() => {
+    // Check session storage post-mount to guarantee reliable DOM execution
     if (typeof window !== 'undefined') {
-      return !sessionStorage.getItem('hasLoadedSession');
+      const hasLoaded = sessionStorage.getItem('hasLoadedSession');
+      if (!hasLoaded) {
+        setShowLoader(true);
+      }
     }
-    return false;
-  });
+  }, []);
 
   const handleLoaderFinish = () => {
     if (typeof window !== 'undefined') {

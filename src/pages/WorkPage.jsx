@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
 import { projectsData } from '../data/projectsData.js';
 import Navbar from '../components/Navbar.jsx';
@@ -12,7 +12,6 @@ function SmoothFloatCard({ project, isLight, index }) {
   const [copied, setCopied] = useState(false);
   const animationDelay = `${(index % 2) * 0.75}s`;
 
-  // Cursor movement tracking for card sheen overlay
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = Math.min(Math.max(((e.clientX - rect.left) / rect.width) * 100, 0), 100);
@@ -66,15 +65,12 @@ function SmoothFloatCard({ project, isLight, index }) {
         animationDelay: animationDelay,
       }}
     >
-      {/* Dynamic Cursor Sheen Overlay */}
       <div
         className="pointer-events-none absolute inset-0 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out z-10"
         style={{ background: sheenColor }}
       />
 
-      {/* Main Link Wrapper */}
       <Link to={`/work/${project.id}`} className="flex-1 flex flex-col active:scale-[0.99] transition-transform duration-300">
-        {/* Media Wrapper - Standardized to aspect-video (16:9) */}
         <div
           className={`media-wrapper aspect-video w-full overflow-hidden relative border-b ${
             isLight ? 'border-black/10 bg-black/5' : 'border-white/10 bg-white/5'
@@ -99,7 +95,6 @@ function SmoothFloatCard({ project, isLight, index }) {
           )}
         </div>
 
-        {/* Card Info — Unified height and padding structure across all cards */}
         <div className="card-info p-6 flex-1 flex items-start justify-between gap-4 h-36 relative z-20">
           <div className="w-1/2 md:w-[58%]">
             <h3
@@ -123,7 +118,6 @@ function SmoothFloatCard({ project, isLight, index }) {
         </div>
       </Link>
 
-      {/* Fixed-Height Bottom Share Bar */}
       <div className={`h-12 px-6 relative z-30 border-t flex justify-end items-center ${
         isLight ? 'border-black/10' : 'border-white/10'
       }`}>
@@ -162,7 +156,10 @@ function SmoothFloatCard({ project, isLight, index }) {
 
 export default function WorkPage() {
   const { isLight, lang } = useStudioTheme();
-  const [activeFilter, setActiveFilter] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  // Read active filter directly from URL query param if present (?category=spatial or ?category=cinematic)
+  const activeFilter = searchParams.get('category') || 'all';
 
   const filterCategories = [
     { id: 'all', labelEn: 'All Works', labelFa: 'همه آثار' },
@@ -171,11 +168,26 @@ export default function WorkPage() {
     { id: 'branding', labelEn: 'Kinetic Branding', labelFa: 'برندینگ حرکتی' },
   ];
 
+  const handleFilterChange = (categoryId) => {
+    if (categoryId === 'all') {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category: categoryId });
+    }
+  };
+
   const filteredProjects = useMemo(() => {
-    if (activeFilter === 'all') return projectsData;
-    return projectsData.filter((project) =>
-      project.categoryType?.includes(activeFilter)
-    );
+    // Determine priority category based on active filter or URL parameter
+    const priorityCategory = activeFilter === 'all' ? 'spatial' : activeFilter;
+
+    return [...projectsData].sort((a, b) => {
+      const aIsPriority = a.categoryType?.includes(priorityCategory);
+      const bIsPriority = b.categoryType?.includes(priorityCategory);
+
+      if (aIsPriority && !bIsPriority) return -1;
+      if (!aIsPriority && bIsPriority) return 1;
+      return 0;
+    });
   }, [activeFilter]);
 
   return (
@@ -220,7 +232,7 @@ export default function WorkPage() {
               <button
                 key={cat.id}
                 type="button"
-                onClick={() => setActiveFilter(cat.id)}
+                onClick={() => handleFilterChange(cat.id)}
                 className={`filter-pill whitespace-nowrap text-xs md:text-xs uppercase tracking-widest px-4 md:px-5 py-2 rounded-none transition-all duration-300 border ${
                   activeFilter === cat.id
                     ? isLight

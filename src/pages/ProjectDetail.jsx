@@ -23,6 +23,9 @@ function LazyVideo({
   const videoRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
 
+  // Target specifically IMG_6722.webm for start-at-8s and loop behavior
+  const isTargetWebm = typeof src === 'string' && src.includes('IMG_6722.webm');
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -40,12 +43,31 @@ function LazyVideo({
 
   useEffect(() => {
     if (!videoRef.current) return;
+
     if (isInView) {
+      // Set start time to 8 seconds only for IMG_6722.webm
+      if (isTargetWebm && videoRef.current.currentTime < 8) {
+        videoRef.current.currentTime = 8;
+      }
       videoRef.current.play().catch(() => {});
     } else {
       videoRef.current.pause();
     }
-  }, [isInView]);
+  }, [isInView, isTargetWebm]);
+
+  // Handle loop reset for IMG_6722.webm when reaching the end or if reset occurs
+  const handleTimeUpdate = () => {
+    if (!videoRef.current || !isTargetWebm) return;
+    if (videoRef.current.currentTime < 8) {
+      videoRef.current.currentTime = 8;
+    }
+  };
+
+  const handleEnded = () => {
+    if (!videoRef.current || !isTargetWebm) return;
+    videoRef.current.currentTime = 8;
+    videoRef.current.play().catch(() => {});
+  };
 
   // Convert "16/9" string to inline style if needed
   const styleAspectRatio = aspectRatio.includes('/') ? aspectRatio.replace('/', ' / ') : aspectRatio;
@@ -59,10 +81,12 @@ function LazyVideo({
       <video
         ref={videoRef}
         src={src}
-        loop
+        loop={!isTargetWebm}
         muted
         playsInline
         preload="metadata"
+        onTimeUpdate={handleTimeUpdate}
+        onEnded={handleEnded}
         className="h-full w-full"
         style={{ 
           objectFit,
@@ -131,6 +155,7 @@ export default function ProjectDetail() {
     specs,
     contextParagraph,
     contextImage,
+    contextVideo,
     mainParagraph,
     mainImage,
     recognition,
@@ -184,6 +209,10 @@ export default function ProjectDetail() {
 
   // Calculate total gallery assets count
   const totalGalleryItems = (theySaidImages?.length || 0) + filteredTheySaidVideos.length;
+
+  // Detect if context asset is a video format
+  const isContextVideo = contextVideo || (typeof contextImage === 'string' && (contextImage.endsWith('.webm') || contextImage.endsWith('.mp4')));
+  const contextMediaSrc = contextVideo || contextImage;
 
   return (
     <div className={`min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
@@ -293,9 +322,17 @@ export default function ProjectDetail() {
             </div>
           )}
 
-          {contextImage && (
+          {contextMediaSrc && (
             <div className="w-full overflow-hidden border border-current/10">
-              <img src={contextImage} alt={t.projectDetail.contextAlt} className="w-full object-cover" />
+              {isContextVideo ? (
+                <LazyVideo 
+                  src={contextMediaSrc} 
+                  aspectRatio="16/9" 
+                  objectFit="cover" 
+                />
+              ) : (
+                <img src={contextMediaSrc} alt={t.projectDetail.contextAlt} className="w-full object-cover" />
+              )}
             </div>
           )}
 

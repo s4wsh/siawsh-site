@@ -638,5 +638,115 @@ export const projectsData = [
       "/projects/Lucky_homes/lucky's costum homes-04.jpg",
       "/projects/Lucky_homes/lucky's costum homes-07.jpg"
     ]
-  }
+  },
+  {
+    id: "puzzle-travel-salvador-dali-mural",
+    title: "Salvador Dalí Geometric Wall Mural",
+    subtitle: "Hand-painted Salvador Dalí mural artwork designed for the outdoor lounge and terrace environment at Puzzle Travel in Northern Cyprus.",
+    categoryType: ["spatial"],
+    tagline: "GEOMETRIC PORTRAIT MURAL & SPATIAL INTEGRATION",
+    aspectRatio: "rectangular",
+    logo: null,
+
+    // SEO Metadata
+    metaTitle: "Salvador Dalí Geometric Wall Mural | Puzzle Travel Cyprus (2021)",
+    metaDescription: "Custom geometric portrait mural of Salvador Dalí created for Puzzle Travel in Northern Cyprus, featuring vibrant color blocking and architectural lounge integration.",
+    keywords: [
+      "Salvador Dali mural design",
+      "Puzzle Travel Cyprus wall art",
+      "geometric portrait mural",
+      "spatial lounge mural art"
+    ],
+    schemaType: "CreativeWork",
+
+    // Hero & Card Media
+    heroImage: "/projects/salvador-mural/01-mural-salvador.webp",
+    
+
+    // Technical Specifications Matrix
+    specs: {
+      client: "Puzzle Travel",
+      year: "2021",
+      location: "Northern Cyprus",
+      deliverables: "Concept Art & Layout, Grid Mapping, Color Palette Selection, Multi-Layered Acrylic Paint Application, Time-Lapse Video Documentation, Final Lounge Styling & Lighting Integration",
+      tools: "Acrylic Paint, Grid Mapping, Vector Line Work, Architectural Spotlights"
+    },
+
+    // Section 01: Concept & Context
+    contextParagraph: "Puzzle Travel needed a captivating artistic focal point for their terrace lounge area in Northern Cyprus. The goal was to transform a plain white structural wall into an inspiring visual feature that harmonized with the warm wooden furniture, yellow accents, and natural greenery.",
+    contextImage: "/projects/salvador-mural/IMG_6722.webm",
+    contextVideo: "/projects/salvador-mural/IMG_6722.webm",
+
+    // Section 02: Execution & Strategy
+    mainParagraph: "The iconic face of Salvador Dalí was stylized into a geometric faceted portrait. Precision linework and color blocking were mapped across the wall, pairing rich olive, mustard, teal, red, and terracotta tones with sharp black contours to echo the surrounding interior decor under ambient architectural lighting.",
+    mainImage: "/projects/salvador-mural/daylight-mural-salvador.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Featured Environmental Graphic & Spatial Mural Case Study",
+    theySaidTitle: "Project Outcome & Reflection",
+    theySaidParagraph: "Delivered an artistic landmark wall installation for Puzzle Travel, turning an everyday patio wall into a recognizable brand asset and engaging guest space.",
+
+    // Gallery Assets
+   theySaidImages: [
+      "/projects/salvador-mural/lasttouch-mural-salvador.webp",
+      "/projects/salvador-mural/inprogress-mural-salvador.webp"
+    ],
+    theySaidVideos: []
+  },
+  {
+    id: "cubist-jazz-ensemble-wall-mural-la-terrazza",
+    title: "Cubist Jazz Ensemble Wall Mural",
+    subtitle: "A monumental hand-painted wall installation depicting a stylized jazz ensemble, integrated into the 8th-floor rooftop restaurant atmosphere at La Terrazza Hotel in Famagusta.",
+    categoryType: ["spatial"],
+    tagline: "ACOUSTIC JAZZ CUBISM & ARCHITECTURAL SCALE",
+    aspectRatio: "rectangular",
+    logo: null,
+
+    // SEO Metadata
+    metaTitle: "Cubist Jazz Ensemble Wall Mural | La Terrazza Hotel Cyprus (2021)",
+    metaDescription: "Custom 3.5m x 4m hand-painted cubist jazz mural executed over 17 days for the 8th-floor restaurant at La Terrazza Hotel in Famagusta, Northern Cyprus.",
+    keywords: [
+      "cubist jazz mural artwork",
+      "La Terrazza Hotel Famagusta restaurant mural",
+      "custom large scale hotel wall painting",
+      "acoustic jazz ensemble wall art"
+    ],
+    schemaType: "CreativeWork",
+
+    // Hero & Card Media
+    heroImage: "/projects/restaurant-laterrazahotel/cover-image-mural-restaurant-laterrazahotel.webp",
+
+    // Technical Specifications Matrix
+    specs: {
+      client: "La Terrazza Hotel (8th Floor Restaurant)",
+      year: "2021",
+      location: "Famagusta, Northern Cyprus",
+      deliverables: "Conceptual Layout, Scaffold Structural Mapping, Background Textured Layering, Multi-Figure Anatomic Cubism, Brushwork Refinement, Time-Lapse Video Documentation (3 Videos)",
+      tools: "Acrylic & Emulsion Paint, Scaffolding, Precision Contour Brushes, Architectural Grid Mapping"
+    },
+
+    // Section 01: Concept & Context
+    contextParagraph: "The 8th-floor restaurant space at La Terrazza Hotel required an artistic anchor to elevate the dining experience and echo the sophisticated rooftop ambience. The installation had to cover a large 14m² vertical surface visible through architectural glass partitions without overwhelming the floor layout.",
+    contextImage: "/projects/restaurant-laterrazahotel/IMG_6344.webm",
+    contextVideo: "/projects/restaurant-laterrazahotel/IMG_6344.webm",
+
+    // Section 02: Execution & Strategy
+    mainParagraph: "Over 17 working days, a four-piece jazz band (upright bass, saxophone, drums, conductor/percussion) was constructed using sweeping geometric planes and layered earth tones. Working on scaffolding, the canvas was mapped with foundational line art, layered with warm sepia brushwork for background depth, and finished with sharp black and vibrant red accents.",
+    mainImage: "/projects/restaurant-laterrazahotel/inprogress-mural-restaurant-latterazahotel.webp",
+
+    // Section 04: Impact & Recognition
+    recognition: "Featured Environmental Graphic & Spatial Mural Case Study",
+    theySaidTitle: "Project Outcome & Reflection",
+    theySaidParagraph: "Transformed the 8th-floor restaurant wall into a centerpiece visual experience, seamlessly matching the hotel's upscale evening aesthetic.",
+
+    // Gallery Assets
+    theySaidImages: [
+      "/projects/restaurant-laterrazahotel/siawsh-in-the-scene.webp"
+    ],
+    theySaidVideos: [
+      "/projects/restaurant-laterrazahotel/IMG_1353.webm",
+      "/projects/restaurant-laterrazahotel/IMG_1536.webm"
+    ]
+  },
+
 ];

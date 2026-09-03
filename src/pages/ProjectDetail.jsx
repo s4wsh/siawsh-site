@@ -41,13 +41,13 @@ function LazyVideo({
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
+    useEffect(() => {
     if (!videoRef.current) return;
 
     if (isInView) {
-      // Set start time to 8 seconds only for IMG_6722.webm
-      if (isTargetWebm && videoRef.current.currentTime < 8) {
-        videoRef.current.currentTime = 8;
+      // Set start time to 13 seconds only for IMG_6722.webm
+      if (isTargetWebm && videoRef.current.currentTime < 13) {
+        videoRef.current.currentTime = 13;
       }
       videoRef.current.play().catch(() => {});
     } else {

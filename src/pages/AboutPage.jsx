@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
@@ -7,6 +7,76 @@ export default function AboutSection() {
   const canvasRef = useRef(null);
   const { isLight, lang } = useStudioTheme();
   const isEn = lang === 'en';
+
+  // Pointer & Smooth Interactive Light Tracking State
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const [smoothMousePos, setSmoothMousePos] = useState({ x: 50, y: 50 });
+  const [activeCardIndex, setActiveCardIndex] = useState(null);
+
+  // Gentle LERP Loop for Fluid & Slow Light Tracking
+  useEffect(() => {
+    let animationFrameId;
+    const lerpFactor = 0.035;
+
+    const animatePointer = () => {
+      setSmoothMousePos((prev) => {
+        const dx = mousePos.x - prev.x;
+        const dy = mousePos.y - prev.y;
+
+        if (Math.abs(dx) < 0.001 && Math.abs(dy) < 0.001) {
+          return mousePos;
+        }
+
+        return {
+          x: prev.x + dx * lerpFactor,
+          y: prev.y + dy * lerpFactor,
+        };
+      });
+
+      animationFrameId = requestAnimationFrame(animatePointer);
+    };
+
+    animationFrameId = requestAnimationFrame(animatePointer);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [mousePos]);
+
+  // Pointer Position Handlers (Desktop Mouse & Touch Screen)
+  const updatePointerPosition = (clientX, clientY, currentTarget) => {
+    const rect = currentTarget.getBoundingClientRect();
+    const x = Math.min(Math.max(((clientX - rect.left) / rect.width) * 100, 0), 100);
+    const y = Math.min(Math.max(((clientY - rect.top) / rect.height) * 100, 0), 100);
+    setMousePos({ x, y });
+  };
+
+  const handlePointerMove = (e, index) => {
+    setActiveCardIndex(index);
+    updatePointerPosition(e.clientX, e.clientY, e.currentTarget);
+  };
+
+  const handleTouchStartMove = (e, index) => {
+    setActiveCardIndex(index);
+    if (e.touches && e.touches[0]) {
+      updatePointerPosition(e.touches[0].clientX, e.touches[0].clientY, e.currentTarget);
+    }
+  };
+
+  const handlePointerLeave = () => {
+    setActiveCardIndex(null);
+  };
+
+  // Dynamic Wand Stroke Border Gradient Angle
+  const wandAngle = Math.atan2(smoothMousePos.y - 50, smoothMousePos.x - 50) * (180 / Math.PI) + 180;
+
+  // Very thin, subtle stroke styling
+  const getWandStrokeStyle = (isCardActive) => ({
+    background: isCardActive
+      ? `conic-gradient(from ${wandAngle}deg at ${smoothMousePos.x}% ${smoothMousePos.y}%, #00f0ff 0deg, #ff5500 120deg, #00ff66 240deg, #00f0ff 360deg)`
+      : `conic-gradient(from 0deg at 50% 50%, #00f0ff 0deg, #ff5500 120deg, #00ff66 240deg, #00f0ff 360deg)`,
+    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+    WebkitMaskComposite: 'xor',
+    maskComposite: 'exclude',
+    padding: '1px', // Extremely thin stroke line
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -196,45 +266,89 @@ export default function AboutSection() {
               {isEn ? 'STUDIO SCALE & GLOBAL REACH' : 'مقیاس و تجربه استودیو'}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className={cardContainerClass}>
-                <div className="flex justify-between items-start mb-3">
-                  <span className={`text-3xl md:text-4xl font-normal tracking-tight leading-none ${
-                    isLight ? 'text-cyan-600' : 'text-cyan-400'
-                  }`}>
-                    {isEn ? '10+ Years' : '۱۰+ سال'}
-                  </span>
-                  <span className={`text-xs uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>
-                    {isEn ? 'Experience' : 'سابقه'}
-                  </span>
-                </div>
-                <p className={`text-sm font-normal leading-relaxed ${
-                  isLight ? 'text-black/70' : 'text-white/70'
-                }`}>
-                  {isEn 
+              {[
+                {
+                  value: isEn ? '10+ Years' : '۱۰+ سال',
+                  label: isEn ? 'Experience' : 'سابقه',
+                  desc: isEn 
                     ? 'Multidisciplinary design leadership across digital media, CGI, and spatial architecture.' 
-                    : 'تجربه فعالیت تخصصی و چندرشته‌ای در دیزاین و هنرهای بصری'}
-                </p>
-              </div>
-
-              <div className={cardContainerClass}>
-                <div className="flex justify-between items-start mb-3">
-                  <span className={`text-3xl md:text-4xl font-normal tracking-tight leading-none ${
-                    isLight ? 'text-cyan-600' : 'text-cyan-400'
-                  }`}>
-                    {isEn ? '40+ Projects' : '۴۰+ پروژه'}
-                  </span>
-                  <span className={`text-xs uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>
-                    {isEn ? 'Delivered' : 'تحویل داده شده'}
-                  </span>
-                </div>
-                <p className={`text-sm font-normal leading-relaxed ${
-                  isLight ? 'text-black/70' : 'text-white/70'
-                }`}>
-                  {isEn 
+                    : 'تجربه فعالیت تخصصی و چندرشته‌ای در دیزاین و هنرهای بصری',
+                },
+                {
+                  value: isEn ? '40+ Projects' : '۴۰+ پروژه',
+                  label: isEn ? 'Delivered' : 'تحویل داده شده',
+                  desc: isEn 
                     ? 'High-profile international commissions delivered across Europe, Cyprus, and global markets.' 
-                    : 'سفارش اختصاصی و پروژه بین‌المللی تحویل داده‌شده'}
-                </p>
-              </div>
+                    : 'سفارش اختصاصی و پروژه بین‌المللی تحویل داده‌شده',
+                },
+              ].map((metric, idx) => {
+                const cardId = `metric-${idx}`;
+                const isCardActive = activeCardIndex === cardId;
+                return (
+                  <div
+                    key={idx}
+                    onMouseMove={(e) => handlePointerMove(e, cardId)}
+                    onMouseLeave={handlePointerLeave}
+                    onTouchStart={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchMove={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchEnd={handlePointerLeave}
+                    className={cardContainerClass}
+                  >
+                    {/* Volumetric Architectural Light Cone Beam */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ease-out z-0 ${
+                        isCardActive ? 'opacity-40' : 'opacity-0 group-hover:opacity-20'
+                      }`}
+                      style={{
+                        background: isEn
+                          ? `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(225deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                          : `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                      }}
+                    />
+
+                    {/* Very Thin 3D Dynamic Wand Border Stroke */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-700 z-10 ${
+                        isCardActive ? 'opacity-75' : 'opacity-20 sm:opacity-0 sm:group-hover:opacity-60'
+                      }`}
+                      style={getWandStrokeStyle(isCardActive)}
+                    />
+
+                    {/* Wand Stardust Particle Trail */}
+                    <div 
+                      className={`pointer-events-none absolute inset-0 transition-opacity duration-700 z-0 overflow-hidden ${
+                        isCardActive ? 'opacity-100' : 'opacity-30 sm:opacity-0 sm:group-hover:opacity-100'
+                      }`}
+                      style={{
+                        backgroundImage: `
+                          radial-gradient(1.5px 1.5px at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255,255,255,0.95) 100%, transparent),
+                          radial-gradient(2px 2px at ${Math.min(smoothMousePos.x + 6, 100)}% ${Math.max(smoothMousePos.y - 10, 0)}%, rgba(0,240,255,0.9) 100%, transparent),
+                          radial-gradient(1.5px 1.5px at ${Math.max(smoothMousePos.x - 8, 0)}% ${Math.min(smoothMousePos.y + 8, 100)}%, rgba(255,85,0,0.85) 100%, transparent),
+                          radial-gradient(1px 1px at ${Math.min(smoothMousePos.x + 12, 100)}% ${Math.min(smoothMousePos.y + 12, 100)}%, rgba(0,255,102,0.8) 100%, transparent)
+                        `
+                      }}
+                    />
+
+                    <div className="relative z-20">
+                      <div className="flex justify-between items-start mb-3">
+                        <span className={`text-3xl md:text-4xl font-normal tracking-tight leading-none ${
+                          isLight ? 'text-cyan-600' : 'text-cyan-400'
+                        }`}>
+                          {metric.value}
+                        </span>
+                        <span className={`text-xs uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>
+                          {metric.label}
+                        </span>
+                      </div>
+                      <p className={`text-sm font-normal leading-relaxed ${
+                        isLight ? 'text-black/70' : 'text-white/70'
+                      }`}>
+                        {metric.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -335,46 +449,93 @@ export default function AboutSection() {
                   desc: 'طراحی رابط‌های کاربری تعاملی و شوکیس‌های سه‌بعدی وب در Figma، مهندسی‌شده برای پیاده‌سازی با فریم‌ورک‌های مدرن وب.',
                   outcomes: ['طراحی UI وب‌سایت', 'مدل‌های ۳D تعاملی', 'نمونه اولیه (Prototype)'],
                 },
-              ]).map((item, index) => (
-                <div key={index} className={`flex flex-col justify-between ${cardContainerClass}`}>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className={`text-sm font-medium ${isLight ? 'text-cyan-600' : 'text-cyan-400'}`}>
-                        {item.num}
-                      </span>
-                      <span className={`text-xs uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>
-                        {item.category}
-                      </span>
-                    </div>
+              ]).map((item, index) => {
+                const cardId = `cap-${index}`;
+                const isCardActive = activeCardIndex === cardId;
+                return (
+                  <div 
+                    key={index} 
+                    onMouseMove={(e) => handlePointerMove(e, cardId)}
+                    onMouseLeave={handlePointerLeave}
+                    onTouchStart={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchMove={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchEnd={handlePointerLeave}
+                    className={`flex flex-col justify-between ${cardContainerClass}`}
+                  >
+                    {/* Volumetric Architectural Light Cone Beam */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ease-out z-0 ${
+                        isCardActive ? 'opacity-40' : 'opacity-0 group-hover:opacity-20'
+                      }`}
+                      style={{
+                        background: isEn
+                          ? `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(225deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                          : `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                      }}
+                    />
 
-                    <h4 className="text-lg font-semibold leading-snug group-hover:text-cyan-500 transition-colors duration-300">
-                      {item.title}
-                    </h4>
+                    {/* Very Thin 3D Dynamic Wand Border Stroke */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-700 z-10 ${
+                        isCardActive ? 'opacity-75' : 'opacity-20 sm:opacity-0 sm:group-hover:opacity-60'
+                      }`}
+                      style={getWandStrokeStyle(isCardActive)}
+                    />
 
-                    <p className={`text-sm font-normal leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`}>
-                      {item.desc}
-                    </p>
-                  </div>
+                    {/* Wand Stardust Particle Trail */}
+                    <div 
+                      className={`pointer-events-none absolute inset-0 transition-opacity duration-700 z-0 overflow-hidden ${
+                        isCardActive ? 'opacity-100' : 'opacity-30 sm:opacity-0 sm:group-hover:opacity-100'
+                      }`}
+                      style={{
+                        backgroundImage: `
+                          radial-gradient(1.5px 1.5px at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255,255,255,0.95) 100%, transparent),
+                          radial-gradient(2px 2px at ${Math.min(smoothMousePos.x + 6, 100)}% ${Math.max(smoothMousePos.y - 10, 0)}%, rgba(0,240,255,0.9) 100%, transparent),
+                          radial-gradient(1.5px 1.5px at ${Math.max(smoothMousePos.x - 8, 0)}% ${Math.min(smoothMousePos.y + 8, 100)}%, rgba(255,85,0,0.85) 100%, transparent),
+                          radial-gradient(1px 1px at ${Math.min(smoothMousePos.x + 12, 100)}% ${Math.min(smoothMousePos.y + 12, 100)}%, rgba(0,255,102,0.8) 100%, transparent)
+                        `
+                      }}
+                    />
 
-                  <div className={`mt-6 pt-4 border-t ${borderSubClass}`}>
-                    <span className={`text-xs font-medium block mb-2 ${isLight ? 'text-black/50' : 'text-white/50'}`}>
-                      {isEn ? 'Deliverables:' : 'خروجی‌ها:'}
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {item.outcomes.map((outcome, i) => (
-                        <span 
-                          key={i} 
-                          className={`text-xs px-2 py-0.5 rounded ${
-                            isLight ? 'bg-black/5 text-black/80' : 'bg-white/10 text-white/80'
-                          }`}
-                        >
-                          {outcome}
+                    <div className="relative z-20 space-y-4">
+                      <div className="flex justify-between items-center">
+                        <span className={`text-sm font-medium ${isLight ? 'text-cyan-600' : 'text-cyan-400'}`}>
+                          {item.num}
                         </span>
-                      ))}
+                        <span className={`text-xs uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>
+                          {item.category}
+                        </span>
+                      </div>
+
+                      <h4 className="text-lg font-semibold leading-snug group-hover:text-cyan-500 transition-colors duration-300">
+                        {item.title}
+                      </h4>
+
+                      <p className={`text-sm font-normal leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`}>
+                        {item.desc}
+                      </p>
+                    </div>
+
+                    <div className={`relative z-20 mt-6 pt-4 border-t ${borderSubClass}`}>
+                      <span className={`text-xs font-medium block mb-2 ${isLight ? 'text-black/50' : 'text-white/50'}`}>
+                        {isEn ? 'Deliverables:' : 'خروجی‌ها:'}
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {item.outcomes.map((outcome, i) => (
+                          <span 
+                            key={i} 
+                            className={`text-xs px-2 py-0.5 rounded ${
+                              isLight ? 'bg-black/5 text-black/80' : 'bg-white/10 text-white/80'
+                            }`}
+                          >
+                            {outcome}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -404,25 +565,74 @@ export default function AboutSection() {
                   title: isEn ? 'Web Engineering & Frontend' : 'طراحی وب‌سایت و فرانت‌اند',
                   tools: 'React / Vite / Tailwind CSS / Lenis (Smooth Scroll) / Vercel',
                 },
-              ].map((item, index) => (
-                <div key={index} className={cardContainerClass}>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className={`text-xs uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>
-                      {item.category}
-                    </span>
+              ].map((item, index) => {
+                const cardId = `tool-${index}`;
+                const isCardActive = activeCardIndex === cardId;
+                return (
+                  <div 
+                    key={index} 
+                    onMouseMove={(e) => handlePointerMove(e, cardId)}
+                    onMouseLeave={handlePointerLeave}
+                    onTouchStart={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchMove={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchEnd={handlePointerLeave}
+                    className={cardContainerClass}
+                  >
+                    {/* Volumetric Architectural Light Cone Beam */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ease-out z-0 ${
+                        isCardActive ? 'opacity-40' : 'opacity-0 group-hover:opacity-20'
+                      }`}
+                      style={{
+                        background: isEn
+                          ? `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(225deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                          : `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                      }}
+                    />
+
+                    {/* Very Thin 3D Dynamic Wand Border Stroke */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-700 z-10 ${
+                        isCardActive ? 'opacity-75' : 'opacity-20 sm:opacity-0 sm:group-hover:opacity-60'
+                      }`}
+                      style={getWandStrokeStyle(isCardActive)}
+                    />
+
+                    {/* Wand Stardust Particle Trail */}
+                    <div 
+                      className={`pointer-events-none absolute inset-0 transition-opacity duration-700 z-0 overflow-hidden ${
+                        isCardActive ? 'opacity-100' : 'opacity-30 sm:opacity-0 sm:group-hover:opacity-100'
+                      }`}
+                      style={{
+                        backgroundImage: `
+                          radial-gradient(1.5px 1.5px at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255,255,255,0.95) 100%, transparent),
+                          radial-gradient(2px 2px at ${Math.min(smoothMousePos.x + 6, 100)}% ${Math.max(smoothMousePos.y - 10, 0)}%, rgba(0,240,255,0.9) 100%, transparent),
+                          radial-gradient(1.5px 1.5px at ${Math.max(smoothMousePos.x - 8, 0)}% ${Math.min(smoothMousePos.y + 8, 100)}%, rgba(255,85,0,0.85) 100%, transparent),
+                          radial-gradient(1px 1px at ${Math.min(smoothMousePos.x + 12, 100)}% ${Math.min(smoothMousePos.y + 12, 100)}%, rgba(0,255,102,0.8) 100%, transparent)
+                        `
+                      }}
+                    />
+
+                    <div className="relative z-20">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className={`text-xs uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>
+                          {item.category}
+                        </span>
+                      </div>
+                      <h4 className={`text-base font-medium mb-3 ${
+                        isEn ? 'font-sans' : "font-['Vazirmatn','Vazir',sans-serif]"
+                      } ${
+                        isLight ? 'text-black/90' : 'text-white/90'
+                      }`}>
+                        {item.title}
+                      </h4>
+                      <p className={`text-sm font-normal leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`} dir="ltr">
+                        {item.tools}
+                      </p>
+                    </div>
                   </div>
-                  <h4 className={`text-base font-medium mb-3 ${
-                    isEn ? 'font-sans' : "font-['Vazirmatn','Vazir',sans-serif]"
-                  } ${
-                    isLight ? 'text-black/90' : 'text-white/90'
-                  }`}>
-                    {item.title}
-                  </h4>
-                  <p className={`text-sm font-normal leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`} dir="ltr">
-                    {item.tools}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -433,80 +643,127 @@ export default function AboutSection() {
             } ${
               isLight ? 'text-black/70' : 'text-white/70'
             }`}>
-              {isEn ? 'CREATIVE PIPELINE' : 'فرایند خلق اثر (از ایده‌پردازی تا رندر و تولید نهایی)'}
+              {isEn ? 'CREATIVE PIPELINE' : 'فرایند خلق اثر (از ایده‌پردازی تا رندر و تولیدنهایی)'}
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {(isEn ? [
                 {
                   num: '01',
-                  phase: 'Phase 1',
+                  phase: '',
                   title: 'Discovery, Concept & Storyboarding',
                   desc: 'Visual research, narrative design, concept drafting, dynamic storyboards, and spatial/motion pacing to define the creative vision.',
                 },
                 {
                   num: '02',
-                  phase: 'Phase 2',
+                  phase: '',
                   title: '3D Blockout & Animatic Build',
                   desc: 'Structural 3D drafting in Blender, camera direction, timing alignment, and animatic previews for client sign-off.',
                 },
                 {
                   num: '03',
-                  phase: 'Phase 3',
+                  phase: '',
                   title: 'PBR Materials, Lighting & Simulation',
                   desc: 'Physically-Based Rendering (PBR) texturing, cinematic lighting setups, cloth/particle simulations, and test renders.',
                 },
                 {
                   num: '04',
-                  phase: 'Phase 4',
+                  phase: '',
                   title: 'Grading, Audio Mastering & Final Export',
                   desc: 'High-resolution CGI rendering, node-based color grading in DaVinci Resolve, spatial sound design in Adobe Audition, and optimized multi-platform deployment.',
                 },
               ] : [
                 {
                   num: '۰۱',
-                  phase: 'مرحله ۱',
+                  phase: '',
                   title: 'ایده، اسکچ و استوری‌بورد',
                   desc: 'بررسی اولیه تصویری، ترسیم خطی طرح‌ها، استوری‌بورد پویا و تدوین ریتم حرکت یا فضا برای مشخص‌کردن مسیر خلاقانه.',
                 },
                 {
                   num: '۰۲',
-                  phase: 'مرحله ۲',
+                  phase: '',
                   title: 'مدلسازی اولیه و پیش‌نمایش حرکتی',
                   desc: 'مدلسازی ساختاری اولیه در Blender، زمان‌بندی انیمیشن، تنظیم مسیر دوربین و ساخت نمونه اولیه سریع برای تایید نهایی.',
                 },
                 {
                   num: '۰۳',
-                  phase: 'مرحله ۳',
+                  phase: '',
                   title: 'متریال، نور و شبیه‌سازی',
                   desc: 'تنظیم متریال‌های واقعی مبتنی بر فیزیک (PBR)، نورپردازی محیطی و سینماتیک، شبیه‌سازی فیزیکی پارچه و ذرات، و رندر آزمایشی باکیفیت.',
                 },
                 {
                   num: '۰۴',
-                  phase: 'مرحله ۴',
+                  phase: '',
                   title: 'اصلاح رنگ، صدا و تحویل نهایی',
                   desc: 'رندر نهایی CGI/VFX، تصحیح رنگ گره‌محور (Node-based) در DaVinci Resolve، طراحی و تنظیم صدا در Adobe Audition و خروجی دیجیتال یا سینمایی بهینه‌شده.',
                 },
-              ]).map((step, index) => (
-                <div key={index} className={`flex flex-col justify-between ${cardContainerClass}`}>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className={`text-sm font-semibold ${isLight ? 'text-cyan-600' : 'text-cyan-400'}`}>
-                        {step.num}
-                      </span>
-                      <span className={`text-xs uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>
-                        {step.phase}
-                      </span>
+              ]).map((step, index) => {
+                const cardId = `pipeline-${index}`;
+                const isCardActive = activeCardIndex === cardId;
+                return (
+                  <div 
+                    key={index} 
+                    onMouseMove={(e) => handlePointerMove(e, cardId)}
+                    onMouseLeave={handlePointerLeave}
+                    onTouchStart={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchMove={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchEnd={handlePointerLeave}
+                    className={`flex flex-col justify-between ${cardContainerClass}`}
+                  >
+                    {/* Volumetric Architectural Light Cone Beam */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ease-out z-0 ${
+                        isCardActive ? 'opacity-40' : 'opacity-0 group-hover:opacity-20'
+                      }`}
+                      style={{
+                        background: isEn
+                          ? `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(225deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                          : `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                      }}
+                    />
+
+                    {/* Very Thin 3D Dynamic Wand Border Stroke */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-700 z-10 ${
+                        isCardActive ? 'opacity-75' : 'opacity-20 sm:opacity-0 sm:group-hover:opacity-60'
+                      }`}
+                      style={getWandStrokeStyle(isCardActive)}
+                    />
+
+                    {/* Wand Stardust Particle Trail */}
+                    <div 
+                      className={`pointer-events-none absolute inset-0 transition-opacity duration-700 z-0 overflow-hidden ${
+                        isCardActive ? 'opacity-100' : 'opacity-30 sm:opacity-0 sm:group-hover:opacity-100'
+                      }`}
+                      style={{
+                        backgroundImage: `
+                          radial-gradient(1.5px 1.5px at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255,255,255,0.95) 100%, transparent),
+                          radial-gradient(2px 2px at ${Math.min(smoothMousePos.x + 6, 100)}% ${Math.max(smoothMousePos.y - 10, 0)}%, rgba(0,240,255,0.9) 100%, transparent),
+                          radial-gradient(1.5px 1.5px at ${Math.max(smoothMousePos.x - 8, 0)}% ${Math.min(smoothMousePos.y + 8, 100)}%, rgba(255,85,0,0.85) 100%, transparent),
+                          radial-gradient(1px 1px at ${Math.min(smoothMousePos.x + 12, 100)}% ${Math.min(smoothMousePos.y + 12, 100)}%, rgba(0,255,102,0.8) 100%, transparent)
+                        `
+                      }}
+                    />
+
+                    <div className="relative z-20 space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className={`text-sm font-semibold ${isLight ? 'text-cyan-600' : 'text-cyan-400'}`}>
+                          {step.num}
+                        </span>
+                        <span className={`text-xs uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>
+                          {step.phase}
+                        </span>
+                      </div>
+                      <h5 className="text-base font-semibold leading-snug group-hover:text-cyan-500 transition-colors duration-300">
+                        {step.title}
+                      </h5>
+                      <p className={`text-sm font-normal leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`}>
+                        {step.desc}
+                      </p>
                     </div>
-                    <h5 className="text-base font-semibold leading-snug group-hover:text-cyan-500 transition-colors duration-300">
-                      {step.title}
-                    </h5>
-                    <p className={`text-sm font-normal leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`}>
-                      {step.desc}
-                    </p>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

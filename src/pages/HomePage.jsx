@@ -45,7 +45,7 @@ export default function HomePage() {
         canonical="https://siawsh.co"
       />
       <Navbar />
-      <main className="pt-0 flex flex-col gap-8 md:gap-12">
+      <main className="pt-0 flex flex-col gap-2 md:gap-4">
         <HeroSection />
         <div id="selected-practices">
           <SelectedPractices />

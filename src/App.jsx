@@ -105,12 +105,31 @@ export default function App() {
             <Route path="/home" element={<HomePage isPersian={false} />} />
             <Route path="/fa" element={<HomePage isPersian={true} />} />
             <Route path="/fa/home" element={<HomePage isPersian={true} />} />
+            
+            {/* English Discipline Pages & Dedicated Route Handlers */}
+            <Route path="/logo-motion" element={<WorkPage filter="logo-motion" />} />
+            <Route path="/disciplines/:id" element={<WorkPage />} />
+
+            {/* Farsi Discipline Pages & Dedicated Route Handlers */}
+            <Route path="/fa/logo-motion" element={<WorkPage filter="logo-motion" isPersian={true} />} />
+            <Route path="/fa/about" element={<AboutPage isPersian={true} />} />
+            <Route path="/fa/work" element={<WorkPage isPersian={true} />} />
+            <Route path="/fa/work/:id" element={<ProjectDetail isPersian={true} />} />
+            <Route path="/fa/insights" element={<InsightsPage isPersian={true} />} />
+            <Route path="/fa/insights/:slug" element={<InsightDetail isPersian={true} />} />
+            <Route path="/fa/contact" element={<ContactPage isPersian={true} />} />
+            <Route path="/fa/disciplines/:id" element={<WorkPage isPersian={true} />} />
+
+            {/* Standard Studio Routes */}
             <Route path="/about" element={<AboutPage />} />
             <Route path="/work" element={<WorkPage />} />
             <Route path="/work/:id" element={<ProjectDetail />} />
             <Route path="/insights" element={<InsightsPage />} />
             <Route path="/insights/:slug" element={<InsightDetail />} />
             <Route path="/contact" element={<ContactPage />} />
+
+            {/* Catch-all Fallback Route */}
+            <Route path="*" element={<RootGateway />} />
           </Routes>
         </GlobalLayout>
       </div>

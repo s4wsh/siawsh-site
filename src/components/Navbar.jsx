@@ -14,9 +14,14 @@ export default function Navbar() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
 
-  // Helper function to force instant top scroll
+  const isHomePage = location.pathname === '/' || 
+                     location.pathname === '/home' || 
+                     location.pathname === '/fa' || 
+                     location.pathname === '/fa/home';
+
+  const homePath = lang === 'fa' ? '/fa/home' : '/home';
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     document.documentElement.scrollTop = 0;
@@ -26,14 +31,12 @@ export default function Navbar() {
     }
   };
 
-  // Reset navbar state automatically when changing routes
   useEffect(() => {
     setHidden(false);
     setMenuOpen(false);
     lastScrollY.current = window.scrollY;
   }, [location.pathname]);
 
-  // RequestAnimationFrame Throttle for Ultra-Smooth Hide/Show Behavior
   useEffect(() => {
     const SCROLL_THRESHOLD = 12;
 
@@ -77,15 +80,16 @@ export default function Navbar() {
     setMenuOpen(false);
     scrollToTop();
     if (!isHomePage) {
-      navigate('/');
+      navigate(homePath);
     }
   };
 
   const handleModeSwitch = (targetMode) => {
     setMode(targetMode);
+    sessionStorage.setItem('preferredDiscipline', targetMode);
     scrollToTop();
     if (!isHomePage) {
-      navigate('/');
+      navigate(homePath);
     }
   };
 
@@ -122,7 +126,7 @@ export default function Navbar() {
 
     e.preventDefault();
     if (!isHomePage) {
-      navigate('/');
+      navigate(homePath);
       setTimeout(() => {
         const element = document.getElementById(target);
         if (element) {
@@ -139,94 +143,296 @@ export default function Navbar() {
     }
   };
 
+  const handleLangSwitch = (targetLang) => {
+    setLang(targetLang);
+    if (menuOpen) toggleMenu();
+    if (isHomePage) {
+      navigate(targetLang === 'fa' ? '/fa/home' : '/home');
+    }
+  };
+
+  const isLight = mode === 'spatial';
+  const isFa = lang === 'fa';
+
+  const navbarFontStyle = {
+    fontFamily: isFa ? 'Vazirmatn, sans-serif' : 'inherit',
+  };
+
+  /* Robust labels that fallback seamlessly if t object property is undefined */
+  const spatialLabel = isFa ? 'معماری' : (t?.nav?.spatial || 'SPATIAL');
+  const cinematicLabel = isFa ? 'سینماتیک' : (t?.nav?.cinematic || 'CINEMATIC');
+  const workLabel = isFa ? (t?.nav?.work || 'پروژه‌ها') : (t?.nav?.work || 'WORK');
+  const aboutLabel = isFa ? (t?.nav?.about || 'درباره استودیو') : (t?.nav?.about || 'ABOUT');
+  const insightsLabel = isFa ? 'مقالات و دیدگاه‌ها' : (t?.nav?.insights || 'INSIGHTS');
+  const contactLabel = isFa ? (t?.nav?.contact || 'سفارش پروژه و مشاوره') : (t?.nav?.contact || 'CONTACT');
+
   return (
     <>
-      <nav className={`navbar-glass ${hidden ? 'navbar-hidden' : ''}`}>
-        <div className="mx-auto max-w-7xl px-6 md:px-12 flex w-full items-center justify-between">
-          {/* Brand SVG Logo */}
-          <div className="nav-brand">
-            <a href="#hero" className="logo" onClick={handleLogoClick}>
-              <img src="/favicon.svg" alt={t.nav.brandLogoAlt} className="navbar-logo-img" />
+      {/* ─── REAL PHYSICAL GLASS NAVBAR ─── */}
+      <nav
+        className={`navbar-glass ${hidden ? 'navbar-hidden' : ''} fixed top-0 left-0 right-0 z-50 transition-all duration-300`}
+        style={{
+          ...navbarFontStyle,
+          /* Optical blur tuned for glass clarity + background legibility */
+          backdropFilter: 'blur(16px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+          /* Transparent background allow underlying content to pass through */
+          background: isLight
+            ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(240, 240, 245, 0.38) 100%)'
+            : 'linear-gradient(180deg, rgba(18, 18, 22, 0.55) 0%, rgba(8, 8, 12, 0.42) 100%)',
+          borderBottom: isLight
+            ? '1px solid rgba(255, 255, 255, 0.6)'
+            : '1px solid rgba(255, 255, 255, 0.12)',
+          /* Physical glass edge highlights & bevel reflections */
+          boxShadow: isLight
+            ? `inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+               inset 0 -1px 0 0 rgba(0, 0, 0, 0.04),
+               0 8px 32px 0 rgba(0, 0, 0, 0.06)`
+            : `inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+               inset 0 -1px 0 0 rgba(0, 0, 0, 0.6),
+               0 12px 40px 0 rgba(0, 0, 0, 0.5)`,
+        }}
+        dir={isFa ? 'rtl' : 'ltr'}
+      >
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 md:px-12 flex w-full items-center justify-between h-14 sm:h-16">
+
+          {/* Brand Logo */}
+          <div className="nav-brand flex items-center shrink-0">
+            <a href="#hero" className="logo flex items-center" onClick={handleLogoClick}>
+              <img
+                src="/favicon.svg"
+                alt={t?.nav?.brandLogoAlt || 'Studio Logo'}
+                className="navbar-logo-img h-7 sm:h-8 w-auto object-contain transition-all duration-300"
+                style={{
+                  filter: isLight
+                    ? 'drop-shadow(0 1px 2px rgba(255,255,255,0.9))'
+                    : 'drop-shadow(0 2px 8px rgba(0,0,0,0.8))',
+                }}
+              />
             </a>
           </div>
 
-          {/* Pure Line Switcher */}
-          <div className="glass-switcher-container">
+          {/* ─── FRAMELESS MODE SWITCHER ─── */}
+          <div className="flex items-center gap-4 sm:gap-6">
+            {/* Spatial */}
             <button
               type="button"
-              className={`mode-line-btn ${mode === 'spatial' ? 'active' : ''}`}
               onClick={() => handleModeSwitch('spatial')}
+              className={`relative bg-transparent border-none cursor-pointer transition-all duration-200 ${
+                isFa
+                  ? 'text-[13.5px] sm:text-[15px] font-bold tracking-normal'
+                  : 'text-[11px] sm:text-[12px] font-extrabold tracking-[0.08em] uppercase'
+              }`}
+              style={{
+                ...navbarFontStyle,
+                color: mode === 'spatial'
+                  ? (isLight ? '#000' : '#fff')
+                  : (isLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)'),
+                padding: '2px 2px',
+                textShadow: isLight 
+                  ? '0 1px 2px rgba(255,255,255,0.8)' 
+                  : '0 1px 3px rgba(0,0,0,0.8)',
+              }}
             >
-              {t.nav.spatial}
+              {spatialLabel}
+              {mode === 'spatial' && (
+                <span
+                  className="absolute left-0 right-0 h-0.5 transition-all duration-200"
+                  style={{
+                    bottom: isFa ? '-3px' : '-2px',
+                    background: isLight ? '#000' : '#fff',
+                    boxShadow: isLight
+                      ? '0 0 4px rgba(0,0,0,0.3)'
+                      : '0 0 6px rgba(255,255,255,0.6)',
+                  }}
+                />
+              )}
             </button>
+
+            {/* Divider */}
+            <span
+              className="select-none font-normal"
+              style={{
+                fontSize: isFa ? '13px' : '11px',
+                color: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)',
+              }}
+            >
+              /
+            </span>
+
+            {/* Cinematic */}
             <button
               type="button"
-              className={`mode-line-btn ${mode === 'cinematic' ? 'active' : ''}`}
               onClick={() => handleModeSwitch('cinematic')}
+              className={`relative bg-transparent border-none cursor-pointer transition-all duration-200 ${
+                isFa
+                  ? 'text-[13.5px] sm:text-[15px] font-bold tracking-normal'
+                  : 'text-[11px] sm:text-[12px] font-extrabold tracking-[0.08em] uppercase'
+              }`}
+              style={{
+                ...navbarFontStyle,
+                color: mode === 'cinematic'
+                  ? (isLight ? '#000' : '#fff')
+                  : (isLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)'),
+                padding: '2px 2px',
+                textShadow: isLight 
+                  ? '0 1px 2px rgba(255,255,255,0.8)' 
+                  : '0 1px 3px rgba(0,0,0,0.8)',
+              }}
             >
-              {t.nav.cinematic}
+              {cinematicLabel}
+              {mode === 'cinematic' && (
+                <span
+                  className="absolute left-0 right-0 h-0.5 transition-all duration-200"
+                  style={{
+                    bottom: isFa ? '-3px' : '-2px',
+                    background: isLight ? '#000' : '#fff',
+                    boxShadow: isLight
+                      ? '0 0 4px rgba(0,0,0,0.3)'
+                      : '0 0 6px rgba(255,255,255,0.6)',
+                  }}
+                />
+              )}
             </button>
           </div>
 
-          {/* Three-Line Menu Toggle Icon */}
-          <div className="nav-right-actions">
-            <button 
-              className={`hamburger-btn ${menuOpen ? 'open' : ''}`} 
+          {/* Hamburger Icon */}
+          <div className="nav-right-actions flex items-center shrink-0">
+            <button
+              className={`hamburger-btn flex flex-col justify-center items-end gap-[4.5px] p-1.5 bg-transparent border-none cursor-pointer ${menuOpen ? 'open' : ''}`}
               onClick={toggleMenu}
-              aria-label={t.nav.menuToggle}
+              aria-label={t?.nav?.menuToggle || 'Toggle Menu'}
               type="button"
             >
-              <span className="bar"></span>
-              <span className="bar"></span>
-              <span className="bar"></span>
+              <span
+                className="bar w-5 h-[1.5px] transition-all duration-300"
+                style={{ background: isLight ? '#000' : '#fff' }}
+              />
+              <span
+                className="bar w-5 h-[1.5px] transition-all duration-300"
+                style={{ background: isLight ? '#000' : '#fff' }}
+              />
+              <span
+                className="bar w-5 h-[1.5px] transition-all duration-300"
+                style={{ background: isLight ? '#000' : '#fff' }}
+              />
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Full Glass Slide-out Menu Overlay */}
-      <div className={`glass-menu-overlay ${menuOpen ? 'active' : ''}`}>
+      {/* ─── REAL GLASS MENU OVERLAY ─── */}
+      <div
+        className={`glass-menu-overlay ${menuOpen ? 'active' : ''} transition-all duration-300`}
+        style={{
+          ...navbarFontStyle,
+          backdropFilter: 'blur(28px) saturate(190%)',
+          WebkitBackdropFilter: 'blur(28px) saturate(190%)',
+          background: isLight
+            ? 'rgba(255, 255, 255, 0.78)'
+            : 'rgba(12, 12, 16, 0.82)',
+          boxShadow: isLight
+            ? 'inset 0 1px 0 0 rgba(255, 255, 255, 0.9)'
+            : 'inset 0 1px 0 0 rgba(255, 255, 255, 0.18)',
+        }}
+        dir={isFa ? 'rtl' : 'ltr'}
+      >
         <div className="menu-content">
           <ul className="menu-links">
             <li>
-              <Link to="/work" onClick={(e) => handleSectionClick(e, 'work')}>
-                {t.nav.work}
+              <Link
+                to="/work"
+                onClick={(e) => handleSectionClick(e, 'work')}
+                className="text-2xl sm:text-3xl font-extrabold transition-colors duration-200"
+                style={{
+                  ...navbarFontStyle,
+                  color: isLight ? '#000' : '#fff',
+                }}
+              >
+                {workLabel}
               </Link>
             </li>
             <li>
-              <Link to="/about" onClick={(e) => handleSectionClick(e, 'about')}>
-                {t.nav.about}
+              <Link
+                to="/about"
+                onClick={(e) => handleSectionClick(e, 'about')}
+                className="text-2xl sm:text-3xl font-extrabold transition-colors duration-200"
+                style={{
+                  ...navbarFontStyle,
+                  color: isLight ? '#000' : '#fff',
+                }}
+              >
+                {aboutLabel}
               </Link>
             </li>
             <li>
-              <Link to="/insights" onClick={(e) => handleSectionClick(e, 'insights')}>
-                INSIGHTS
+              <Link
+                to="/insights"
+                onClick={(e) => handleSectionClick(e, 'insights')}
+                className="text-2xl sm:text-3xl font-extrabold transition-colors duration-200"
+                style={{
+                  ...navbarFontStyle,
+                  color: isLight ? '#000' : '#fff',
+                }}
+              >
+                {insightsLabel}
               </Link>
             </li>
             <li>
-              <Link to="/contact" onClick={(e) => handleSectionClick(e, 'contact')}>
-                {t.nav.contact}
+              <Link
+                to="/contact"
+                onClick={(e) => handleSectionClick(e, 'contact')}
+                className="text-2xl sm:text-3xl font-extrabold transition-colors duration-200"
+                style={{
+                  ...navbarFontStyle,
+                  color: isLight ? '#000' : '#fff',
+                }}
+              >
+                {contactLabel}
               </Link>
             </li>
           </ul>
 
-          <div className="menu-divider" />
+          <div
+            className="menu-divider my-6 border-b"
+            style={{
+              borderColor: isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.12)',
+            }}
+          />
 
           <div className="menu-language-section">
-            <div className="lang-pills">
+            <div className="lang-pills flex items-center justify-center gap-5">
               <button
                 type="button"
-                className={`lang-pill-btn ${lang === 'en' ? 'active' : ''}`} 
-                onClick={() => { setLang('en'); if (menuOpen) toggleMenu(); }}
-                aria-label={t.nav.languageEnglish}
+                className="lang-pill-btn bg-transparent border-none text-base font-extrabold transition-all duration-200"
+                style={{
+                  ...navbarFontStyle,
+                  color: lang === 'en'
+                    ? (isLight ? '#000' : '#fff')
+                    : (isLight ? 'rgba(0,0,0,0.45)' : 'rgba(255,255,255,0.45)'),
+                }}
+                onClick={() => handleLangSwitch('en')}
+                aria-label={t?.nav?.languageEnglish || 'English'}
               >
                 EN
               </button>
-              <button 
+              <span
+                className="text-sm font-light"
+                style={{ color: isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.3)' }}
+              >
+                /
+              </span>
+              <button
                 type="button"
-                className={`lang-pill-btn ${lang === 'fa' ? 'active' : ''}`} 
-                onClick={() => { setLang('fa'); if (menuOpen) toggleMenu(); }}
-                aria-label={t.nav.languagePersian}
+                className="lang-pill-btn bg-transparent border-none text-base font-extrabold transition-all duration-200"
+                style={{
+                  ...navbarFontStyle,
+                  color: lang === 'fa'
+                    ? (isLight ? '#000' : '#fff')
+                    : (isLight ? 'rgba(0,0,0,0.45)' : 'rgba(255,255,255,0.45)'),
+                }}
+                onClick={() => handleLangSwitch('fa')}
+                aria-label={t?.nav?.languagePersian || 'Persian'}
               >
                 فا
               </button>

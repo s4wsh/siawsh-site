@@ -13,12 +13,12 @@ export default function Footer() {
     : 'https://www.instagram.com/siafsari/';
 
   return (
-    <footer className="site-footer">
+    <footer className="site-footer bg-transparent">
       <div className="mx-auto max-w-7xl px-6 md:px-12 w-full footer-content">
         <div className="footer-top">
           <div className="footer-brand">
             <a href="#hero" className="logo">
-              SIAWSH<span>.CO</span>
+              {t.footer.brandName || 'SIAWSH.CO'}
             </a>
             <p className="footer-status">
               <span className="status-dot"></span>

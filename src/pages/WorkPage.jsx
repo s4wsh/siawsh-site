@@ -8,6 +8,7 @@ import SEO from '../components/SEO.jsx';
 import './WorkPage.css';
 
 function SmoothFloatCard({ project, isLight, index }) {
+  const { lang } = useStudioTheme();
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [copied, setCopied] = useState(false);
   const animationDelay = `${(index % 2) * 0.75}s`;
@@ -132,7 +133,9 @@ function SmoothFloatCard({ project, isLight, index }) {
           }`}
         >
           {copied ? (
-            <span className="text-[10px] font-mono uppercase tracking-widest px-1">Copied</span>
+            <span className="text-[10px] font-mono uppercase tracking-widest px-1">
+              {lang === 'fa' ? 'کپی شد' : 'Copied'}
+            </span>
           ) : (
             <svg
               className="w-3.5 h-3.5 opacity-70 hover:opacity-100 transition-opacity"
@@ -158,14 +161,15 @@ export default function WorkPage() {
   const { isLight, lang } = useStudioTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   
-  // Read active filter directly from URL query param if present (?category=spatial or ?category=cinematic)
+  // Read active filter directly from URL query param if present (?category=spatial or ?category=murals)
   const activeFilter = searchParams.get('category') || 'all';
 
   const filterCategories = [
-    { id: 'all', labelEn: 'All Works', labelFa: 'همه آثار' },
-    { id: 'spatial', labelEn: 'Spatial Design', labelFa: 'طراحی فضایی' },
-    { id: 'cinematic', labelEn: '3D Motion', labelFa: 'موشن سه‌بعدی' },
-    { id: 'branding', labelEn: 'Kinetic Branding', labelFa: 'برندینگ حرکتی' },
+    { id: 'all', labelEn: 'All Works', labelFa: 'همه پروژه‌ها' },
+    { id: 'spatial', labelEn: 'Spatial Design', labelFa: 'طراحی معماری' },
+    { id: 'murals', labelEn: 'Murals & Wall Art', labelFa: 'دیوارنگاری و نقاشی دیواری' },
+    { id: 'cinematic', labelEn: '3D Motion', labelFa: 'موشن گرافیک سه‌بعدی' },
+    { id: 'branding', labelEn: 'Kinetic Branding', labelFa: 'برندینگ و هویت بصری' },
   ];
 
   const handleFilterChange = (categoryId) => {
@@ -194,7 +198,7 @@ export default function WorkPage() {
     <div className={`work-page-wrapper relative min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
       <SEO 
         title="Selected Works — SIAWSH Studio"
-        description="A curated index of spatial architecture, kinetic branding, 3D motion graphics, and experimental design case studies."
+        description="A curated index of spatial architecture, murals, kinetic branding, 3D motion graphics, and experimental design case studies."
         canonical="https://siawsh.co/work"
       />
 
@@ -217,12 +221,12 @@ export default function WorkPage() {
       <main className="work-container pt-32 md:pt-40 pb-16 md:pb-24 px-6 md:px-12 max-w-7xl mx-auto">
         <header className="work-header mb-12 md:mb-16">
           <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-4">
-            {lang === 'fa' ? 'آرشیو پروژه ها' : 'Selected Works'}
+            {lang === 'fa' ? 'نمونه‌کارها و پروژه‌ها' : 'Selected Works'}
           </h1>
           <p className={`max-w-xl text-sm md:text-base leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`}>
             {lang === 'fa'
-              ? 'مجموعه پروژه‌های طراحی فضایی، موشن گرافیک سه‌بعدی و برندینگ.'
-              : 'A curated index of spatial architecture, kinetic branding, and 3D motion design.'}
+              ? 'مجموعه نمونه‌کارهای طراحی معماری، دیوارنگاری، موشن گرافیک سه‌بعدی و هویت بصری استودیو.'
+              : 'A curated index of spatial architecture, murals & wall art, kinetic branding, and 3D motion design.'}
           </p>
 
           <div className={`filter-bar flex flex-nowrap sm:flex-wrap gap-2 md:gap-3 mt-6 md:mt-8 border-b pb-4 overflow-x-auto no-scrollbar ${

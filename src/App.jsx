@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext.jsx';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { ThemeProvider, useStudioTheme } from './context/ThemeContext.jsx';
 import Loader from './components/Loader.jsx';
 import HomePage from './pages/HomePage.jsx';
 import ProjectDetail from './pages/ProjectDetail.jsx';
@@ -9,8 +9,26 @@ import WorkPage from './pages/WorkPage.jsx';
 import InsightsPage from './pages/InsightsPage.jsx';
 import InsightDetail from './pages/InsightDetail.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+import DisciplineGateway from './components/DisciplineGateway.jsx';
 import useSmoothScroll, { lenisInstance } from './hooks/useSmoothScroll.js';
 import './index.css';
+
+// Handler for root path detection & redirect based on browser language or local preference
+function RootGateway() {
+  const navigate = useNavigate();
+  const { lang } = useStudioTheme();
+
+  useEffect(() => {
+    // Navigate based on resolved language context
+    if (lang === 'fa') {
+      navigate('/fa/gateway', { replace: true });
+    } else {
+      navigate('/gateway', { replace: true });
+    }
+  }, [lang, navigate]);
+
+  return null;
+}
 
 function GlobalLayout({ children }) {
   useSmoothScroll();
@@ -78,7 +96,15 @@ export default function App() {
       >
         <GlobalLayout>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            {/* Starter Gateway Path Handler */}
+            <Route path="/" element={<RootGateway />} />
+            <Route path="/gateway" element={<DisciplineGateway isPersian={false} />} />
+            <Route path="/fa/gateway" element={<DisciplineGateway isPersian={true} />} />
+
+            {/* Studio Main Routes */}
+            <Route path="/home" element={<HomePage isPersian={false} />} />
+            <Route path="/fa" element={<HomePage isPersian={true} />} />
+            <Route path="/fa/home" element={<HomePage isPersian={true} />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/work" element={<WorkPage />} />
             <Route path="/work/:id" element={<ProjectDetail />} />

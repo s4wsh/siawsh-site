@@ -80,6 +80,23 @@ body {
   min-height: 100vh;
 }
 
+/* Spatial home only: a soft skylight that settles into the base page tone. */
+.spatial-home-skylight {
+  background: linear-gradient(
+    to bottom,
+    #f0f4f8 0%,
+    #e2e8f0 30%,
+    #fafafa 65%,
+    #f8fafc 100%
+  );
+}
+
+/* Let the spatial hero image dissolve into the skylight instead of ending abruptly. */
+.hero-background-media--spatial {
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 65%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 65%, rgba(0, 0, 0, 0) 100%);
+}
+
 /* PASTE THE REST OF YOUR ORIGINAL 782-LINE CSS BELOW THIS LINE */:root {
   --transition-speed: 0.35s;
   --radius-lg: 0px;
@@ -869,4 +886,43 @@ html[dir="rtl"] .form-input {
   .portfolio-bento-grid { grid-template-columns: 1fr; gap: 20px; }
   .footer-top { flex-direction: column; gap: 30px; }
   .footer-links-group { gap: 30px; flex-direction: column; }
+/* ─── ATMOSPHERIC CLOUD BACKDROP ANIMATIONS ─── */
+@keyframes cloudPulse1 {
+  0%, 100% {
+    transform: translate(-50%, 0%) scale(1);
+  }
+  50% {
+    transform: translate(-48%, 3%) scale(1.08);
+  }
+}
+
+@keyframes cloudPulse2 {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  50% {
+    transform: translate(3%, -4%) scale(1.05);
+  }
+}
+
+@keyframes cloudPulse3 {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  50% {
+    transform: translate(-3%, -3%) scale(1.07);
+  }
+}
+
+.animate-cloud-pulse-1 {
+  animation: cloudPulse1 18s ease-in-out infinite;
+}
+
+.animate-cloud-pulse-2 {
+  animation: cloudPulse2 22s ease-in-out infinite;
+}
+
+.animate-cloud-pulse-3 {
+  animation: cloudPulse3 26s ease-in-out infinite;
+}
 }

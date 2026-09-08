@@ -15,7 +15,7 @@ export default function SelectedPractices() {
 
   return (
     <section className={`pt-12 pb-6 md:pt-16 md:pb-8 transition-colors duration-500 ${
-      isLight ? 'bg-white text-black' : 'bg-black text-white'
+      isLight ? 'bg-transparent text-black' : 'bg-black text-white'
     }`}>
       {/* Standardized max-width container wrapper */}
       <div className="mx-auto max-w-7xl px-6 md:px-12 w-full">

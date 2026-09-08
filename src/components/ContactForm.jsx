@@ -10,14 +10,13 @@ export default function ContactForm() {
   const [detectedTag, setDetectedTag] = useState(null);
 
   const disciplines = [
-    { id: 'arch', label: t.contact?.disciplines?.arch || 'Architecture', keywords: ['arch', 'building', 'facade', 'structure', 'site', 'house', 'cad', 'spatial'] },
-    { id: 'interior', label: t.contact?.disciplines?.interior || 'Interior', keywords: ['interior', 'room', 'clinic', 'office', 'salon', 'layout', 'mural'] },
-    { id: 'furniture', label: t.contact?.disciplines?.furniture || 'Furniture', keywords: ['furniture', 'chair', 'table', 'wood', 'product', 'industrial', 'object'] },
-    { id: 'motion', label: t.contact?.disciplines?.motion || 'Motion Design', keywords: ['motion', 'cgi', '3d', 'animation', 'render', 'video', 'blender', 'after effects', 'loop'] },
-    { id: 'branding', label: t.contact?.disciplines?.branding || 'Branding', keywords: ['brand', 'identity', 'logo', 'typography', 'kinetic', 'deck', 'guidelines'] }
+    { id: 'arch', label: t.contact?.disciplines?.arch || 'طراحی معماری و دکوراسیون داخلی', keywords: ['arch', 'building', 'facade', 'structure', 'site', 'house', 'cad', 'spatial', 'معماری', 'ساختمان', 'نما'] },
+    { id: 'interior', label: t.contact?.disciplines?.interior || 'معماری داخلی تجاری / مسکونی', keywords: ['interior', 'room', 'clinic', 'office', 'salon', 'layout', 'mural', 'داخلی', 'مطب', 'دفتر', 'دیوارنگاری'] },
+    { id: 'furniture', label: t.contact?.disciplines?.furniture || 'طراحی و ساخت مبلمان سفارشی', keywords: ['furniture', 'chair', 'table', 'wood', 'product', 'industrial', 'object', 'مبلمان', 'صندلی', 'میز', 'چوب'] },
+    { id: 'motion', label: t.contact?.disciplines?.motion || 'مووشن گرافیک سه‌بعدی و CGI', keywords: ['motion', 'cgi', '3d', 'animation', 'render', 'video', 'blender', 'after effects', 'loop', 'مووشن', 'انیمیشن', 'رندر'] },
+    { id: 'branding', label: t.contact?.disciplines?.branding || 'طراحی هویت بصری و برندسازی', keywords: ['brand', 'identity', 'logo', 'typography', 'kinetic', 'deck', 'guidelines', 'برند', 'لوگو', 'هویت بصری'] }
   ];
 
-  // AI-like Auto-Detection based on message input
   useEffect(() => {
     const text = formData.message.toLowerCase();
     if (!text || text.length < 5) {
@@ -68,49 +67,53 @@ export default function ContactForm() {
       if (data.success) {
         setSubmitted(true);
       } else {
-        alert(t.contact?.submitError || 'Submission failed. Please try again.');
+        alert(t.contact?.submitError || 'خطا در ارسال پیام. لطفاً دوباره تلاش کنید.');
       }
     } catch (error) {
-      alert(t.contact?.connectionError || 'Connection error.');
+      alert(t.contact?.connectionError || 'خطا در ارتباط با سرور.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section className="contact-section py-8 md:py-12 relative overflow-hidden" id="contact">
+    <section 
+      className="contact-section py-8 md:py-12 relative overflow-hidden font-inherit" 
+      style={{ fontFamily: "Vazirmatn, var(--font-sans), system-ui, sans-serif" }} 
+      id="contact"
+    >
       <div className="mx-auto max-w-7xl px-6 md:px-12 w-full">
         
-        {/* Container Header with Status Telemetry */}
+        {/* Container Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 pb-4 border-b border-white/10 gap-2">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="h-1.5 w-1.5 rounded-full bg-[#00f0ff] animate-pulse" />
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#00f0ff]">
-                SYSTEM.INTERFACE // TRANSMISSION PROTOCOL
+              <span className="text-[10px] tracking-widest text-[#00f0ff] uppercase">
+                پروتکل ارتباطی // سیستم ثبت سفارش
               </span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-light tracking-tight">{t.contact?.title || 'Start a Project'}</h2>
+            <h2 className="text-2xl md:text-3xl font-light tracking-tight">{t.contact?.title || 'شروع همکاری و مشاوره پروژه'}</h2>
           </div>
-          <p className="text-xs font-mono opacity-50 uppercase tracking-widest">
-            {mode === 'spatial' ? '[ SPATIAL ARCHITECTURE ]' : '[ CINEMATIC & MOTION ]'}
+          <p className="text-xs opacity-50 tracking-widest">
+            {mode === 'spatial' ? '[ معماری و طراحی فضا ]' : '[ مووشن گرافیک و سینماتیک ]'}
           </p>
         </div>
 
         {submitted ? (
-          /* Futuristic Success Screen */
+          /* Success Screen */
           <div className={`p-8 border rounded-none relative overflow-hidden ${
             isLight ? 'border-black/20 bg-black/5' : 'border-[#00f0ff]/30 bg-[#00f0ff]/5'
           }`}>
             <div className="space-y-3">
-              <span className="text-xs font-mono text-[#00f0ff] tracking-widest uppercase block">
-                [ TRANSMISSION_SUCCESSFUL ]
+              <span className="text-xs text-[#00f0ff] tracking-widest block">
+                [ پیام با موفقیت ثبت شد ]
               </span>
               <h3 className="text-2xl font-light tracking-tight">
-                {t.contact?.successTitle || 'Inquiry Encrypted & Dispatched'}
+                {t.contact?.successTitle || 'اطلاعات پروژه شما دریافت شد'}
               </h3>
               <p className="text-sm opacity-70 max-w-xl leading-relaxed">
-                {t.contact?.successDesc || 'Thank you for initiating contact. Your project specs have been logged and routed directly to the studio lead. Expect a direct response within 24 hours.'}
+                {t.contact?.successDesc || 'با تشکر از ارتباط شما. مشخصات پروژه ثبت گردید و جهت بررسی به مدیر استودیو ارجاع داده شد. به‌زودی با شما تماس خواهیم گرفت.'}
               </p>
               <button
                 type="button"
@@ -118,13 +121,14 @@ export default function ContactForm() {
                   setSubmitted(false);
                   setFormData({ name: '', email: '', message: '' });
                 }}
-                className={`mt-4 px-6 py-2.5 text-xs font-mono uppercase tracking-wider border rounded-none transition-all duration-300 ${
+                className={`mt-4 px-6 py-2.5 text-xs tracking-wider border rounded-none transition-all duration-300 ${
                   isLight
                     ? 'border-black bg-black text-white hover:bg-transparent hover:text-black'
                     : 'border-[#00f0ff] text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black'
                 }`}
+                style={{ fontFamily: 'inherit' }}
               >
-                Send Another Transmission →
+                ارسال پیام جدید ←
               </button>
             </div>
           </div>
@@ -134,16 +138,17 @@ export default function ContactForm() {
             {/* Discipline Selector */}
             <div className="discipline-selector space-y-2">
               <div className="flex items-center justify-between">
-                <label className="field-label text-[11px] font-mono uppercase tracking-widest opacity-60">
-                  {t.contact?.disciplineLabel || 'Select Primary Discipline'}
+                <label className="field-label text-[11px] tracking-widest opacity-60">
+                  {t.contact?.disciplineLabel || 'حوزه خدمات مورد نیاز'}
                 </label>
                 {detectedTag && detectedTag !== selectedDiscipline && (
                   <button
                     type="button"
                     onClick={() => handleApplyDetected(detectedTag)}
-                    className="text-[10px] font-mono text-[#00f0ff] underline hover:opacity-80 transition-opacity uppercase tracking-wider"
+                    className="text-[10px] text-[#00f0ff] underline hover:opacity-80 transition-opacity tracking-wider"
+                    style={{ fontFamily: 'inherit' }}
                   >
-                    ✦ Auto-detected: Switch to {disciplines.find(d => d.id === detectedTag)?.label}?
+                    ✦ پیشنهاد هوشمند: تغییر به {disciplines.find(d => d.id === detectedTag)?.label}؟
                   </button>
                 )}
               </div>
@@ -157,7 +162,8 @@ export default function ContactForm() {
                     <button
                       type="button"
                       key={item.id}
-                      className={`relative px-4 py-2.5 text-xs uppercase tracking-wider font-mono border rounded-none transition-all duration-300 ${
+                      style={{ fontFamily: 'inherit' }}
+                      className={`relative px-4 py-2.5 text-xs tracking-wider border rounded-none transition-all duration-300 ${
                         isActive
                           ? isLight
                             ? 'bg-black text-white border-black shadow-md'
@@ -171,14 +177,14 @@ export default function ContactForm() {
                       onClick={() => setSelectedDiscipline(item.id)}
                     >
                       {item.label}
-                      {isActive && <span className="ml-2 text-[10px] font-bold">✓</span>}
+                      {isActive && <span className="mr-2 text-[10px] font-bold">✓</span>}
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Form Inputs Grid */}
+            {/* Inputs Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="form-group relative">
                 <input 
@@ -186,9 +192,10 @@ export default function ContactForm() {
                   name="name" 
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder={t.contact?.namePlaceholder || 'Name / Organization'} 
+                  placeholder={t.contact?.namePlaceholder || 'نام و نام خانوادگی'} 
                   required 
-                  className={`w-full px-4 py-3 rounded-none border text-xs font-mono transition-all duration-200 focus:outline-none ${
+                  style={{ fontFamily: 'inherit' }}
+                  className={`w-full px-4 py-3 rounded-none border text-xs transition-all duration-200 focus:outline-none ${
                     isLight 
                       ? 'bg-black/5 border-black/15 text-black placeholder:text-black/40 focus:border-black' 
                       : 'bg-white/5 border-white/15 text-white placeholder:text-white/40 focus:border-[#00f0ff]'
@@ -202,9 +209,10 @@ export default function ContactForm() {
                   name="email" 
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder={t.contact?.emailPlaceholder || 'Direct Email Address'} 
+                  placeholder={t.contact?.emailPlaceholder || 'آدرس ایمیل یا شماره تماس'} 
                   required 
-                  className={`w-full px-4 py-3 rounded-none border text-xs font-mono transition-all duration-200 focus:outline-none ${
+                  style={{ fontFamily: 'inherit' }}
+                  className={`w-full px-4 py-3 rounded-none border text-xs transition-all duration-200 focus:outline-none ${
                     isLight 
                       ? 'bg-black/5 border-black/15 text-black placeholder:text-black/40 focus:border-black' 
                       : 'bg-white/5 border-white/15 text-white placeholder:text-white/40 focus:border-[#00f0ff]'
@@ -219,45 +227,46 @@ export default function ContactForm() {
                 name="message" 
                 value={formData.message}
                 onChange={handleInputChange}
-                placeholder={t.contact?.msgPlaceholder || 'Describe your vision, scope, spatial dimensions, or motion deliverables...'} 
+                placeholder={t.contact?.msgPlaceholder || 'توضیحی کوتاه درباره مشخصات پروژه (شامل متراژ، کاربرد، زمان‌بندی مدنظر یا بودجه احتمالی) بنویسید...'} 
                 rows="5" 
                 required 
-                className={`w-full p-4 rounded-none border text-xs font-mono transition-all duration-200 focus:outline-none resize-y ${
+                style={{ fontFamily: 'inherit' }}
+                className={`w-full p-4 rounded-none border text-xs transition-all duration-200 focus:outline-none resize-y ${
                   isLight 
                     ? 'bg-black/5 border-black/15 text-black placeholder:text-black/40 focus:border-black' 
                     : 'bg-white/5 border-white/15 text-white placeholder:text-white/40 focus:border-[#00f0ff]'
                 }`}
               ></textarea>
               
-              {/* Character Telemetry */}
-              <div className="flex justify-between items-center mt-1 px-1 text-[10px] font-mono opacity-40">
-                <span>PAYLOAD_SIZE: {formData.message.length} CHARS</span>
-                <span>STATUS: {formData.message.length > 20 ? 'READY_FOR_DISPATCH' : 'INPUT_REQUIRED'}</span>
+              <div className="flex justify-between items-center mt-1 px-1 text-[10px] opacity-40">
+                <span>تعداد کاراکتر: {formData.message.length}</span>
+                <span>وضعیت: {formData.message.length > 20 ? 'آماده برای ارسال' : 'نیازمند تکمیل اطلاعات'}</span>
               </div>
             </div>
 
-            {/* Real-Time Live Command Summary */}
+            {/* Live Command Summary */}
             {(formData.name || formData.email || formData.message) && (
-              <div className={`p-3 border rounded-none font-mono text-[11px] space-y-1 ${
+              <div className={`p-3 border rounded-none text-[11px] space-y-1 ${
                 isLight ? 'border-black/10 bg-black/5 text-black/70' : 'border-white/10 bg-white/5 text-white/70'
               }`}>
-                <div className="flex items-center justify-between text-[10px] opacity-50 uppercase border-b border-white/10 pb-1">
-                  <span>TELEMETRY_PREVIEW</span>
-                  <span>CONFIDENTIAL</span>
+                <div className="flex items-center justify-between text-[10px] opacity-50 border-b border-white/10 pb-1">
+                  <span>پیش‌نمایش اطلاعات ثبت‌شده</span>
+                  <span>محرمانه</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
-                  <div><span className="opacity-40">CLIENT:</span> {formData.name || '—'}</div>
-                  <div><span className="opacity-40">TARGET:</span> {disciplines.find(d => d.id === selectedDiscipline)?.label}</div>
-                  <div><span className="opacity-40">CONTACT:</span> {formData.email || '—'}</div>
+                  <div><span className="opacity-40">نام:</span> {formData.name || '—'}</div>
+                  <div><span className="opacity-40">حوزه:</span> {disciplines.find(d => d.id === selectedDiscipline)?.label}</div>
+                  <div><span className="opacity-40">ارتباط:</span> {formData.email || '—'}</div>
                 </div>
               </div>
             )}
 
-            {/* Action Submit Button */}
+            {/* Main Submit Button */}
             <button 
               type="submit" 
               disabled={loading}
-              className={`w-full py-4 rounded-none border text-xs uppercase tracking-widest font-mono transition-all duration-300 relative overflow-hidden group ${
+              style={{ fontFamily: 'inherit' }}
+              className={`w-full py-4 rounded-none border text-xs tracking-widest transition-all duration-300 relative overflow-hidden group ${
                 isLight
                   ? 'border-black bg-black text-white hover:bg-transparent hover:text-black'
                   : 'border-white bg-white text-black hover:bg-[#00f0ff] hover:border-[#00f0ff] hover:text-black'
@@ -267,12 +276,12 @@ export default function ContactForm() {
                 {loading ? (
                   <>
                     <span className="inline-block animate-spin">⚡</span>
-                    <span>ENCRYPTING & DISPATCHING...</span>
+                    <span>در حال رمزنگاری و ارسال...</span>
                   </>
                 ) : (
                   <>
-                    <span>INITIATE TRANSMISSION</span>
-                    <span className="transition-transform group-hover:translate-x-1">→</span>
+                    <span>ارسال پیام / شروع همکاری</span>
+                    <span className="transition-transform group-hover:-translate-x-1">←</span>
                   </>
                 )}
               </span>

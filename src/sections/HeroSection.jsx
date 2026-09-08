@@ -7,7 +7,9 @@ export default function HeroSection() {
   return (
     <header className="relative flex min-h-[85vh] w-full flex-col justify-end pb-0 pt-36" id="hero">
       {/* Background Media with full visibility and subtle contrast overlay */}
-      <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
+      <div className={`absolute inset-0 z-0 h-full w-full overflow-hidden ${
+        mode === 'spatial' ? 'hero-background-media--spatial' : ''
+      }`}>
         {mode === 'spatial' ? (
           <img
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80"
@@ -42,8 +44,8 @@ export default function HeroSection() {
           </span>
         </div>
 
-        {/* Main Title Statement */}
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-light leading-tight tracking-tight max-w-4xl">
+        {/* Main Title Statement scaled down proportionally for Persian typography (1.618 ratio adjustment) */}
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-light leading-tight tracking-tight max-w-4xl">
           {mode === 'spatial' 
             ? t.hero.titleSpatial
             : t.hero.titleCinematic

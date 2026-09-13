@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
 
 export default function ContactSection() {
-  const { mode, t, isLight } = useStudioTheme();
+  const { lang, t, isLight } = useStudioTheme();
+  const isFa = lang === 'fa';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,8 +27,25 @@ export default function ContactSection() {
     }, 1200);
   };
 
+  // Localized string resolution with clean fallbacks
+  const contactTitle = isFa 
+    ? (t?.contact?.titleFa || t?.contact?.title || "ارتباط با استودیو") 
+    : (t?.contact?.title || "CONTACT & INQUIRIES");
+
+  const contactTagline = isFa 
+    ? "ثبت سفارش و مشاوره اختصاصی" 
+    : "GET IN TOUCH";
+
+  const contactSubtitle = isFa 
+    ? (t?.contact?.subtitleFa || t?.contact?.subtitle || "جهت دریافت مشاوره تخصصی، استعلام قیمت یا شروع همکاری در پروژه‌های معماری، موشن‌گرافیک و دیزاین با ما در ارتباط باشید.") 
+    : (t?.contact?.subtitle || "Start a conversation regarding spatial projects, CGI motion graphics, custom furniture, or brand identities.");
+
   return (
-    <section id="contact" className={`py-24 transition-colors duration-500 ${isLight ? 'bg-neutral-50 text-neutral-900' : 'bg-neutral-950 text-neutral-100'}`}>
+    <section 
+      id="contact" 
+      dir={isFa ? 'rtl' : 'ltr'} 
+      className={`py-24 transition-colors duration-500 ${isLight ? 'bg-neutral-50 text-neutral-900' : 'bg-neutral-950 text-neutral-100'}`}
+    >
       <div className="mx-auto max-w-7xl px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
@@ -34,21 +53,21 @@ export default function ContactSection() {
           <div className="lg:col-span-5 space-y-8">
             <div>
               <span className="text-xs uppercase tracking-widest font-semibold opacity-60">
-                {t.contact.title}
+                {contactTagline}
               </span>
               <h2 className="text-3xl md:text-4xl font-light leading-tight mt-3">
-                {t.contact.title}
+                {contactTitle}
               </h2>
             </div>
 
             <p className="text-sm md:text-base opacity-80 leading-relaxed">
-              {t.contact.subtitle}
+              {contactSubtitle}
             </p>
 
             <div className="pt-6 border-t border-neutral-300 dark:border-neutral-800 space-y-6 text-sm">
               <div>
-                <span className="block font-semibold opacity-60 uppercase text-xs">
-                  {t.contact.emailLabel || "ایمیل مستقیم"}
+                <span className="block font-semibold opacity-60 uppercase text-xs mb-1">
+                  {isFa ? "ایمیل مستقیم" : (t?.contact?.emailLabel || "DIRECT EMAIL")}
                 </span>
                 <a 
                   href="mailto:contact@siawsh.co" 
@@ -59,11 +78,11 @@ export default function ContactSection() {
               </div>
 
               <div>
-                <span className="block font-semibold opacity-60 uppercase text-xs">
-                  {t.contact.locationLabel || "موقعیت استودیو"}
+                <span className="block font-semibold opacity-60 uppercase text-xs mb-1">
+                  {isFa ? "موقعیت استودیو" : (t?.contact?.locationLabel || "STUDIO LOCATION")}
                 </span>
                 <span className="text-base font-medium">
-                  {t.contact.locationValue || "تهران، ایران / امکان همکاری بین‌المللی"}
+                  {isFa ? "تهران، ایران / امکان همکاری بین‌المللی" : (t?.contact?.locationValue || "Tehran, Iran / International Commissions")}
                 </span>
               </div>
             </div>
@@ -75,7 +94,7 @@ export default function ContactSection() {
               
               <div>
                 <label className="block text-xs uppercase font-semibold tracking-wider mb-2 opacity-80">
-                  {t.contact.disciplineLabel}
+                  {isFa ? "زمینه همکاری / حوزه پروژه" : (t?.contact?.disciplineLabel || "Project Discipline")}
                 </label>
                 <select
                   name="discipline"
@@ -87,11 +106,11 @@ export default function ContactSection() {
                       : 'bg-neutral-900 border-neutral-800 focus:border-white text-neutral-100'
                   }`}
                 >
-                  <option value="arch">{t.contact.disciplines.arch}</option>
-                  <option value="interior">{t.contact.disciplines.interior}</option>
-                  <option value="furniture">{t.contact.disciplines.furniture}</option>
-                  <option value="motion">{t.contact.disciplines.motion}</option>
-                  <option value="branding">{t.contact.disciplines.branding}</option>
+                  <option value="arch">{t?.contact?.disciplines?.arch || (isFa ? "طراحی معماری و فضا" : "Spatial Architecture")}</option>
+                  <option value="interior">{t?.contact?.disciplines?.interior || (isFa ? "طراحی داخلی" : "Interior Design")}</option>
+                  <option value="furniture">{t?.contact?.disciplines?.furniture || (isFa ? "طراحی مبلمان اختصاصی" : "Custom Furniture")}</option>
+                  <option value="motion">{t?.contact?.disciplines?.motion || (isFa ? "موشن گرافیک سه بعدی و CGI" : "3D Motion & CGI")}</option>
+                  <option value="branding">{t?.contact?.disciplines?.branding || (isFa ? "هویت بصری و برندینگ" : "Brand Identity")}</option>
                 </select>
               </div>
 
@@ -101,7 +120,7 @@ export default function ContactSection() {
                     type="text"
                     name="name"
                     required
-                    placeholder={t.contact.namePlaceholder}
+                    placeholder={isFa ? "نام و نام خانوادگی" : (t?.contact?.namePlaceholder || "Your Name")}
                     value={formData.name}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 rounded-none border text-sm focus:outline-none transition-colors ${
@@ -113,10 +132,10 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <input
-                    type="text"
+                    type="email"
                     name="email"
                     required
-                    placeholder={t.contact.emailPlaceholder}
+                    placeholder={isFa ? "نشانی ایمیل" : (t?.contact?.emailPlaceholder || "Your Email")}
                     value={formData.email}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 rounded-none border text-sm focus:outline-none transition-colors ${
@@ -133,7 +152,7 @@ export default function ContactSection() {
                   name="message"
                   rows={5}
                   required
-                  placeholder={t.contact.msgPlaceholder}
+                  placeholder={isFa ? "توضیحات پروژه یا پیام شما..." : (t?.contact?.msgPlaceholder || "Tell us about your project...")}
                   value={formData.message}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 rounded-none border text-sm focus:outline-none transition-colors ${
@@ -153,13 +172,19 @@ export default function ContactSection() {
                     : 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200'
                 }`}
               >
-                {status === 'sending' ? t.contact.btnSending : t.contact.btnSend}
+                {status === 'sending' 
+                  ? (isFa ? "در حال ارسال..." : (t?.contact?.btnSending || "SENDING...")) 
+                  : (isFa ? "ارسال پیام" : (t?.contact?.btnSend || "SEND MESSAGE"))}
               </button>
 
               {status === 'success' && (
                 <div className="p-4 border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm">
-                  <p className="font-semibold">{t.contact.successTitle}</p>
-                  <p className="text-xs mt-1 opacity-90">{t.contact.successDesc}</p>
+                  <p className="font-semibold">
+                    {isFa ? "پیام شما با موفقیت دریافت شد" : (t?.contact?.successTitle || "Message Sent Successfully")}
+                  </p>
+                  <p className="text-xs mt-1 opacity-90">
+                    {isFa ? "کارشناسان استودیو به‌زودی با شما تماس خواهند گرفت." : (t?.contact?.successDesc || "We will get back to you shortly.")}
+                  </p>
                 </div>
               )}
             </form>

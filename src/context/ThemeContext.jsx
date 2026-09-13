@@ -43,7 +43,17 @@ export function ThemeProvider({ children }) {
     localStorage.setItem('app_lang', lang);
   }, [mode, lang, t]);
 
-  // 4. Memoized context value
+  // 4. Helper function to retrieve Farsi or English fields dynamically
+  const getLocalized = (obj, field) => {
+    if (!obj) return '';
+    if (lang === 'fa') {
+      const faKey = `${field}Fa`;
+      if (obj[faKey]) return obj[faKey];
+    }
+    return obj[field] || '';
+  };
+
+  // 5. Memoized context value
   const value = useMemo(() => {
     const isLight = mode === 'spatial';
     return {
@@ -55,6 +65,7 @@ export function ThemeProvider({ children }) {
       lang,
       setLang,
       t,
+      getLocalized,
     };
   }, [mode, lang, t]);
 

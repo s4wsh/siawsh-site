@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
 
 export default function ContactForm() {
-  const { mode, t, isLight } = useStudioTheme();
+  const { mode, t, isLight, lang } = useStudioTheme();
+  const isFa = lang === 'fa';
+
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedDiscipline, setSelectedDiscipline] = useState('arch');
@@ -10,11 +12,41 @@ export default function ContactForm() {
   const [detectedTag, setDetectedTag] = useState(null);
 
   const disciplines = [
-    { id: 'arch', label: t.contact?.disciplines?.arch || 'طراحی معماری و دکوراسیون داخلی', keywords: ['arch', 'building', 'facade', 'structure', 'site', 'house', 'cad', 'spatial', 'معماری', 'ساختمان', 'نما'] },
-    { id: 'interior', label: t.contact?.disciplines?.interior || 'معماری داخلی تجاری / مسکونی', keywords: ['interior', 'room', 'clinic', 'office', 'salon', 'layout', 'mural', 'داخلی', 'مطب', 'دفتر', 'دیوارنگاری'] },
-    { id: 'furniture', label: t.contact?.disciplines?.furniture || 'طراحی و ساخت مبلمان سفارشی', keywords: ['furniture', 'chair', 'table', 'wood', 'product', 'industrial', 'object', 'مبلمان', 'صندلی', 'میز', 'چوب'] },
-    { id: 'motion', label: t.contact?.disciplines?.motion || 'مووشن گرافیک سه‌بعدی و CGI', keywords: ['motion', 'cgi', '3d', 'animation', 'render', 'video', 'blender', 'after effects', 'loop', 'مووشن', 'انیمیشن', 'رندر'] },
-    { id: 'branding', label: t.contact?.disciplines?.branding || 'طراحی هویت بصری و برندسازی', keywords: ['brand', 'identity', 'logo', 'typography', 'kinetic', 'deck', 'guidelines', 'برند', 'لوگو', 'هویت بصری'] }
+    { 
+      id: 'arch', 
+      label: isFa 
+        ? (t?.contact?.disciplines?.arch || 'طراحی معماری و دکوراسیون داخلی') 
+        : (t?.contact?.disciplines?.arch || 'Architectural & Interior Design'), 
+      keywords: ['arch', 'building', 'facade', 'structure', 'site', 'house', 'cad', 'spatial', 'معماری', 'ساختمان', 'نما'] 
+    },
+    { 
+      id: 'interior', 
+      label: isFa 
+        ? (t?.contact?.disciplines?.interior || 'معماری داخلی تجاری / مسکونی') 
+        : (t?.contact?.disciplines?.interior || 'Commercial / Residential Interior'), 
+      keywords: ['interior', 'room', 'clinic', 'office', 'salon', 'layout', 'mural', 'داخلی', 'مطب', 'دفتر', 'دیوارنگاری'] 
+    },
+    { 
+      id: 'furniture', 
+      label: isFa 
+        ? (t?.contact?.disciplines?.furniture || 'طراحی و ساخت مبلمان سفارشی') 
+        : (t?.contact?.disciplines?.furniture || 'Custom Bespoke Furniture'), 
+      keywords: ['furniture', 'chair', 'table', 'wood', 'product', 'industrial', 'object', 'مبلمان', 'صندلی', 'میز', 'چوب'] 
+    },
+    { 
+      id: 'motion', 
+      label: isFa 
+        ? (t?.contact?.disciplines?.motion || 'مووشن گرافیک سه‌بعدی و CGI') 
+        : (t?.contact?.disciplines?.motion || '3D Motion Design & CGI'), 
+      keywords: ['motion', 'cgi', '3d', 'animation', 'render', 'video', 'blender', 'after effects', 'loop', 'مووشن', 'انیمیشن', 'رندر'] 
+    },
+    { 
+      id: 'branding', 
+      label: isFa 
+        ? (t?.contact?.disciplines?.branding || 'طراحی هویت بصری و برندسازی') 
+        : (t?.contact?.disciplines?.branding || 'Brand Identity & Strategy'), 
+      keywords: ['brand', 'identity', 'logo', 'typography', 'kinetic', 'deck', 'guidelines', 'برند', 'لوگو', 'هویت بصری'] 
+    }
   ];
 
   useEffect(() => {
@@ -67,10 +99,10 @@ export default function ContactForm() {
       if (data.success) {
         setSubmitted(true);
       } else {
-        alert(t.contact?.submitError || 'خطا در ارسال پیام. لطفاً دوباره تلاش کنید.');
+        alert(t?.contact?.submitError || (isFa ? 'خطا در ارسال پیام. لطفاً دوباره تلاش کنید.' : 'Failed to submit inquiry. Please try again.'));
       }
     } catch (error) {
-      alert(t.contact?.connectionError || 'خطا در ارتباط با سرور.');
+      alert(t?.contact?.connectionError || (isFa ? 'خطا در ارتباط با سرور.' : 'Server connection error.'));
     } finally {
       setLoading(false);
     }
@@ -79,8 +111,9 @@ export default function ContactForm() {
   return (
     <section 
       className="contact-section py-8 md:py-12 relative overflow-hidden font-inherit" 
-      style={{ fontFamily: "Vazirmatn, var(--font-sans), system-ui, sans-serif" }} 
+      style={{ fontFamily: isFa ? "Vazirmatn, var(--font-sans), system-ui, sans-serif" : "var(--font-sans), system-ui, sans-serif" }} 
       id="contact"
+      dir={isFa ? 'rtl' : 'ltr'}
     >
       <div className="mx-auto max-w-7xl px-6 md:px-12 w-full">
         
@@ -90,13 +123,18 @@ export default function ContactForm() {
             <div className="flex items-center gap-2 mb-1">
               <span className="h-1.5 w-1.5 rounded-full bg-[#00f0ff] animate-pulse" />
               <span className="text-[10px] tracking-widest text-[#00f0ff] uppercase">
-                پروتکل ارتباطی // سیستم ثبت سفارش
+                {isFa ? "پروتکل ارتباطی // سیستم ثبت سفارش" : "COMMUNICATION PROTOCOL // INITIATE COLLABORATION"}
               </span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-light tracking-tight">{t.contact?.title || 'شروع همکاری و مشاوره پروژه'}</h2>
+            <h2 className="text-2xl md:text-3xl font-light tracking-tight">
+              {t?.contact?.title || (isFa ? 'شروع همکاری و مشاوره پروژه' : 'Start a Project')}
+            </h2>
           </div>
           <p className="text-xs opacity-50 tracking-widest">
-            {mode === 'spatial' ? '[ معماری و طراحی فضا ]' : '[ مووشن گرافیک و سینماتیک ]'}
+            {isFa 
+              ? (mode === 'spatial' ? '[ معماری و طراحی فضا ]' : '[ مووشن گرافیک و سینماتیک ]')
+              : (mode === 'spatial' ? '[ SPATIAL ARCHITECTURE ]' : '[ 3D MOTION & CINEMATIC ]')
+            }
           </p>
         </div>
 
@@ -107,13 +145,15 @@ export default function ContactForm() {
           }`}>
             <div className="space-y-3">
               <span className="text-xs text-[#00f0ff] tracking-widest block">
-                [ پیام با موفقیت ثبت شد ]
+                {isFa ? "[ پیام با موفقیت ثبت شد ]" : "[ MESSAGE SUBMITTED SUCCESSFULLY ]"}
               </span>
               <h3 className="text-2xl font-light tracking-tight">
-                {t.contact?.successTitle || 'اطلاعات پروژه شما دریافت شد'}
+                {t?.contact?.successTitle || (isFa ? 'اطلاعات پروژه شما دریافت شد' : 'Project Information Received')}
               </h3>
               <p className="text-sm opacity-70 max-w-xl leading-relaxed">
-                {t.contact?.successDesc || 'با تشکر از ارتباط شما. مشخصات پروژه ثبت گردید و جهت بررسی به مدیر استودیو ارجاع داده شد. به‌زودی با شما تماس خواهیم گرفت.'}
+                {t?.contact?.successDesc || (isFa 
+                  ? 'با تشکر از ارتباط شما. مشخصات پروژه ثبت گردید و جهت بررسی به مدیر استودیو ارجاع داده شد. به‌زودی با شما تماس خواهیم گرفت.' 
+                  : 'Thank you for reaching out. Your project details have been recorded and assigned for review. We will contact you shortly.')}
               </p>
               <button
                 type="button"
@@ -128,7 +168,7 @@ export default function ContactForm() {
                 }`}
                 style={{ fontFamily: 'inherit' }}
               >
-                ارسال پیام جدید ←
+                {isFa ? "ارسال پیام جدید ←" : "Send New Inquiry →"}
               </button>
             </div>
           </div>
@@ -139,7 +179,7 @@ export default function ContactForm() {
             <div className="discipline-selector space-y-2">
               <div className="flex items-center justify-between">
                 <label className="field-label text-[11px] tracking-widest opacity-60">
-                  {t.contact?.disciplineLabel || 'حوزه خدمات مورد نیاز'}
+                  {t?.contact?.disciplineLabel || (isFa ? 'حوزه خدمات مورد نیاز' : 'Required Service Discipline')}
                 </label>
                 {detectedTag && detectedTag !== selectedDiscipline && (
                   <button
@@ -148,7 +188,9 @@ export default function ContactForm() {
                     className="text-[10px] text-[#00f0ff] underline hover:opacity-80 transition-opacity tracking-wider"
                     style={{ fontFamily: 'inherit' }}
                   >
-                    ✦ پیشنهاد هوشمند: تغییر به {disciplines.find(d => d.id === detectedTag)?.label}؟
+                    {isFa 
+                      ? `✦ پیشنهاد هوشمند: تغییر به ${disciplines.find(d => d.id === detectedTag)?.label}؟`
+                      : `✦ Smart suggestion: Switch to ${disciplines.find(d => d.id === detectedTag)?.label}?`}
                   </button>
                 )}
               </div>
@@ -177,7 +219,7 @@ export default function ContactForm() {
                       onClick={() => setSelectedDiscipline(item.id)}
                     >
                       {item.label}
-                      {isActive && <span className="mr-2 text-[10px] font-bold">✓</span>}
+                      {isActive && <span className={isFa ? "mr-2 text-[10px] font-bold" : "ml-2 text-[10px] font-bold"}>✓</span>}
                     </button>
                   );
                 })}
@@ -192,7 +234,7 @@ export default function ContactForm() {
                   name="name" 
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder={t.contact?.namePlaceholder || 'نام و نام خانوادگی'} 
+                  placeholder={t?.contact?.namePlaceholder || (isFa ? 'نام و نام خانوادگی' : 'Your name')} 
                   required 
                   style={{ fontFamily: 'inherit' }}
                   className={`w-full px-4 py-3 rounded-none border text-xs transition-all duration-200 focus:outline-none ${
@@ -209,7 +251,7 @@ export default function ContactForm() {
                   name="email" 
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder={t.contact?.emailPlaceholder || 'آدرس ایمیل یا شماره تماس'} 
+                  placeholder={t?.contact?.emailPlaceholder || (isFa ? 'آدرس ایمیل یا شماره تماس' : 'Your email')} 
                   required 
                   style={{ fontFamily: 'inherit' }}
                   className={`w-full px-4 py-3 rounded-none border text-xs transition-all duration-200 focus:outline-none ${
@@ -227,7 +269,7 @@ export default function ContactForm() {
                 name="message" 
                 value={formData.message}
                 onChange={handleInputChange}
-                placeholder={t.contact?.msgPlaceholder || 'توضیحی کوتاه درباره مشخصات پروژه (شامل متراژ، کاربرد، زمان‌بندی مدنظر یا بودجه احتمالی) بنویسید...'} 
+                placeholder={t?.contact?.msgPlaceholder || (isFa ? 'توضیحی کوتاه درباره مشخصات پروژه (شامل متراژ، کاربرد، زمان‌بندی مدنظر یا بودجه احتمالی) بنویسید...' : 'Tell us about your project...')} 
                 rows="5" 
                 required 
                 style={{ fontFamily: 'inherit' }}
@@ -239,8 +281,12 @@ export default function ContactForm() {
               ></textarea>
               
               <div className="flex justify-between items-center mt-1 px-1 text-[10px] opacity-40">
-                <span>تعداد کاراکتر: {formData.message.length}</span>
-                <span>وضعیت: {formData.message.length > 20 ? 'آماده برای ارسال' : 'نیازمند تکمیل اطلاعات'}</span>
+                <span>{isFa ? `تعداد کاراکتر: ${formData.message.length}` : `Character count: ${formData.message.length}`}</span>
+                <span>
+                  {isFa 
+                    ? `وضعیت: ${formData.message.length > 20 ? 'آماده برای ارسال' : 'نیازمند تکمیل اطلاعات'}`
+                    : `Status: ${formData.message.length > 20 ? 'Ready to submit' : 'Required details missing'}`}
+                </span>
               </div>
             </div>
 
@@ -250,13 +296,13 @@ export default function ContactForm() {
                 isLight ? 'border-black/10 bg-black/5 text-black/70' : 'border-white/10 bg-white/5 text-white/70'
               }`}>
                 <div className="flex items-center justify-between text-[10px] opacity-50 border-b border-white/10 pb-1">
-                  <span>پیش‌نمایش اطلاعات ثبت‌شده</span>
-                  <span>محرمانه</span>
+                  <span>{isFa ? "پیش‌نمایش اطلاعات ثبت‌شده" : "LIVE INQUIRY SUMMARY"}</span>
+                  <span>{isFa ? "محرمانه" : "CONFIDENTIAL"}</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
-                  <div><span className="opacity-40">نام:</span> {formData.name || '—'}</div>
-                  <div><span className="opacity-40">حوزه:</span> {disciplines.find(d => d.id === selectedDiscipline)?.label}</div>
-                  <div><span className="opacity-40">ارتباط:</span> {formData.email || '—'}</div>
+                  <div><span className="opacity-40">{isFa ? "نام:" : "Name:"}</span> {formData.name || '—'}</div>
+                  <div><span className="opacity-40">{isFa ? "حوزه:" : "Discipline:"}</span> {disciplines.find(d => d.id === selectedDiscipline)?.label}</div>
+                  <div><span className="opacity-40">{isFa ? "ارتباط:" : "Contact:"}</span> {formData.email || '—'}</div>
                 </div>
               </div>
             )}
@@ -276,12 +322,14 @@ export default function ContactForm() {
                 {loading ? (
                   <>
                     <span className="inline-block animate-spin">⚡</span>
-                    <span>در حال رمزنگاری و ارسال...</span>
+                    <span>{isFa ? "در حال رمزنگاری و ارسال..." : "ENCRYPTING & SENDING..."}</span>
                   </>
                 ) : (
                   <>
-                    <span>ارسال پیام / شروع همکاری</span>
-                    <span className="transition-transform group-hover:-translate-x-1">←</span>
+                    <span>{isFa ? "ارسال پیام / شروع همکاری" : "SUBMIT INQUIRY / START COLLABORATION"}</span>
+                    <span className={`transition-transform ${isFa ? "group-hover:-translate-x-1" : "group-hover:translate-x-1"}`}>
+                      {isFa ? "←" : "→"}
+                    </span>
                   </>
                 )}
               </span>

@@ -3,22 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
 
 export default function ProjectCard({ project }) {
-  const { isLight, t, language } = useStudioTheme();
+  const { isLight, t, lang } = useStudioTheme();
   const navigate = useNavigate();
   const videoRef = useRef(null);
 
   if (!project) return null;
 
-  const { id, title, tagline, heroImage, heroVideo, aspectRatio } = project;
+  const { id, title, titleFa, tagline, taglineFa, heroImage, heroVideo, aspectRatio } = project;
 
-  // Determine active language and safely pull translated string or fallback to raw JS value
-  const activeTitle = language === 'fa' && t?.projects?.[id]?.title 
-    ? t.projects[id].title 
-    : title;
-
-  const activeTagline = language === 'fa' && t?.projects?.[id]?.tagline 
-    ? t.projects[id].tagline 
-    : tagline;
+  // Determine active language and safely pull direct Fa properties or fallback to raw JS value
+  const isFa = lang === 'fa';
+  const activeTitle = isFa ? (titleFa || t?.projects?.[id]?.title || title) : title;
+  const activeTagline = isFa ? (taglineFa || t?.projects?.[id]?.tagline || tagline) : tagline;
 
   let computedRatio = '16 / 10';
   if (aspectRatio === 'square') computedRatio = '1 / 1';
@@ -35,7 +31,7 @@ export default function ProjectCard({ project }) {
   return (
     <div 
       onClick={() => navigate(`/work/${id}`)}
-      dir={language === 'fa' ? 'rtl' : 'ltr'}
+      dir={isFa ? 'rtl' : 'ltr'}
       className="group relative cursor-pointer overflow-hidden rounded-none transition-all duration-500 hover:-translate-y-2"
       style={{
         backdropFilter: 'blur(16px) saturate(180%)',
@@ -92,14 +88,17 @@ export default function ProjectCard({ project }) {
         )}
       </div>
 
+      {/* Card Information Footer - Formatted for LTR and RTL */}
       <div 
-        className="flex items-center justify-between border-t p-4 rounded-none transition-colors"
+        className="flex flex-col gap-1.5 border-t p-4 rounded-none transition-colors"
         style={{
           borderColor: isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)',
         }}
       >
         <h3 
-          className={`text-base font-medium tracking-tight ${isLight ? 'text-neutral-900' : 'text-white/90'}`}
+          className={`line-clamp-2 text-base font-semibold leading-snug tracking-tight ${
+            isLight ? 'text-neutral-900' : 'text-white/90'
+          }`}
           style={{
             textShadow: isLight 
               ? '0 1px 2px rgba(255,255,255,0.8)' 
@@ -110,7 +109,9 @@ export default function ProjectCard({ project }) {
         </h3>
         {activeTagline && (
           <span 
-            className={`text-[10px] font-semibold uppercase tracking-widest ${isLight ? 'text-neutral-600' : 'text-neutral-400'}`}
+            className={`line-clamp-1 text-[11px] font-medium uppercase tracking-wider ${
+              isLight ? 'text-neutral-600' : 'text-neutral-400'
+            }`}
             style={{
               textShadow: isLight 
                 ? '0 1px 2px rgba(255,255,255,0.8)' 

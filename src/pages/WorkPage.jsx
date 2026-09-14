@@ -9,9 +9,19 @@ import './WorkPage.css';
 
 function SmoothFloatCard({ project, isLight, index }) {
   const { lang } = useStudioTheme();
+  const isFa = lang === 'fa';
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [copied, setCopied] = useState(false);
   const animationDelay = `${(index % 2) * 0.75}s`;
+
+  // Strict language-based text selection
+  const title = isFa 
+    ? (project.titleFa || project.title) 
+    : project.title;
+
+  const description = isFa
+    ? (project.subtitleFa || project.contextParagraphFa || project.specsFa?.deliverables)
+    : (project.subtitle || project.contextParagraph || project.specs?.deliverables || project.tagline);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -29,8 +39,8 @@ function SmoothFloatCard({ project, isLight, index }) {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: project.title,
-          text: project.subtitle || project.tagline,
+          title: title,
+          text: description,
           url: shareUrl,
         });
         return;
@@ -56,6 +66,7 @@ function SmoothFloatCard({ project, isLight, index }) {
   return (
     <div
       onMouseMove={handleMouseMove}
+      dir={isFa ? 'rtl' : 'ltr'}
       className={`group relative flex flex-col justify-between h-full rounded-none backdrop-blur-sm border transition-all duration-500 overflow-hidden ${
         isLight
           ? 'border-black/10 bg-black/2 hover:border-black/30 text-black'
@@ -89,37 +100,40 @@ function SmoothFloatCard({ project, isLight, index }) {
           ) : (
             <img
               src={project.heroImage}
-              alt={project.title}
+              alt={title}
               loading="lazy"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           )}
         </div>
 
-        <div className="card-info p-6 flex-1 flex items-start justify-between gap-4 h-36 relative z-20">
-          <div className="w-1/2 md:w-[58%]">
+        {/* Card Info Section */}
+        <div className="card-info p-6 flex-1 flex flex-col justify-between gap-3 relative z-20">
+          <div>
             <h3
-              className={`text-base md:text-xl font-light tracking-tight leading-snug transition-colors ${
-                isLight ? 'text-black group-hover:opacity-75' : 'text-white group-hover:opacity-75'
-              }`}
+              className={`text-lg md:text-xl font-light tracking-tight leading-snug transition-colors ${
+                isFa ? "font-['Vazirmatn',sans-serif]" : "font-sans"
+              } ${isLight ? 'text-black group-hover:opacity-75' : 'text-white group-hover:opacity-75'}`}
             >
-              {project.title}
+              {title}
             </h3>
-          </div>
 
-          <div className="w-1/2 md:w-[42%] text-right">
-            <p
-              className={`text-[10px] md:text-[11px] font-mono uppercase tracking-widest leading-relaxed ${
-                isLight ? 'text-black/50' : 'text-white/50'
-              }`}
-            >
-              {project.subtitle || project.specs?.deliverables || 'SELECTED PRACTICE'}
-            </p>
+            {description && (
+              <p
+                className={`mt-2 text-xs md:text-sm leading-relaxed line-clamp-3 ${
+                  isFa 
+                    ? "font-['Vazirmatn',sans-serif] opacity-80" 
+                    : "font-sans opacity-70"
+                } ${isLight ? 'text-black/70' : 'text-white/70'}`}
+              >
+                {description}
+              </p>
+            )}
           </div>
         </div>
       </Link>
 
-      <div className={`h-12 px-6 relative z-30 border-t flex justify-end items-center ${
+      <div className={`h-12 px-6 relative z-30 border-t flex ${isFa ? 'justify-start' : 'justify-end'} items-center ${
         isLight ? 'border-black/10' : 'border-white/10'
       }`}>
         <button
@@ -133,8 +147,10 @@ function SmoothFloatCard({ project, isLight, index }) {
           }`}
         >
           {copied ? (
-            <span className="text-[10px] font-mono uppercase tracking-widest px-1">
-              {lang === 'fa' ? 'کپی شد' : 'Copied'}
+            <span className={`text-[10px] uppercase tracking-widest px-1 ${
+              isFa ? "font-['Vazirmatn',sans-serif]" : "font-mono"
+            }`}>
+              {isFa ? 'کپی شد' : 'Copied'}
             </span>
           ) : (
             <svg
@@ -159,9 +175,9 @@ function SmoothFloatCard({ project, isLight, index }) {
 
 export default function WorkPage() {
   const { isLight, lang } = useStudioTheme();
+  const isFa = lang === 'fa';
   const [searchParams, setSearchParams] = useSearchParams();
   
-  // Read active filter directly from URL query param if present (?category=spatial or ?category=murals)
   const activeFilter = searchParams.get('category') || 'all';
 
   const filterCategories = [
@@ -181,7 +197,6 @@ export default function WorkPage() {
   };
 
   const filteredProjects = useMemo(() => {
-    // Determine priority category based on active filter or URL parameter
     const priorityCategory = activeFilter === 'all' ? 'spatial' : activeFilter;
 
     return [...projectsData].sort((a, b) => {
@@ -195,10 +210,10 @@ export default function WorkPage() {
   }, [activeFilter]);
 
   return (
-    <div className={`work-page-wrapper relative min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
+    <div dir={isFa ? 'rtl' : 'ltr'} className={`work-page-wrapper relative min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
       <SEO 
-        title="Selected Works — SIAWSH Studio"
-        description="A curated index of spatial architecture, murals, kinetic branding, 3D motion graphics, and experimental design case studies."
+        title={isFa ? 'نمونه‌کارها — استودیو سیاوش' : 'Selected Works — SIAWSH Studio'}
+        description={isFa ? 'مجموعه نمونه‌کارهای طراحی معماری، دیوارنگاری، هویت بصری و موشن گرافیک سه‌بعدی.' : 'A curated index of spatial architecture, murals, kinetic branding, 3D motion graphics, and experimental design case studies.'}
         canonical="https://siawsh.co/work"
       />
 
@@ -220,11 +235,15 @@ export default function WorkPage() {
 
       <main className="work-container pt-32 md:pt-40 pb-16 md:pb-24 px-6 md:px-12 max-w-7xl mx-auto">
         <header className="work-header mb-12 md:mb-16">
-          <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-4">
-            {lang === 'fa' ? 'نمونه‌کارها و پروژه‌ها' : 'Selected Works'}
+          <h1 className={`text-4xl md:text-6xl font-light tracking-tight mb-4 ${
+            isFa ? "font-['Vazirmatn',sans-serif]" : "font-sans"
+          }`}>
+            {isFa ? 'نمونه‌کارها و پروژه‌ها' : 'Selected Works'}
           </h1>
-          <p className={`max-w-xl text-sm md:text-base leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`}>
-            {lang === 'fa'
+          <p className={`max-w-xl text-sm md:text-base leading-relaxed ${
+            isFa ? "font-['Vazirmatn',sans-serif]" : "font-sans"
+          } ${isLight ? 'text-black/70' : 'text-white/70'}`}>
+            {isFa
               ? 'مجموعه نمونه‌کارهای طراحی معماری، دیوارنگاری، موشن گرافیک سه‌بعدی و هویت بصری استودیو.'
               : 'A curated index of spatial architecture, murals & wall art, kinetic branding, and 3D motion design.'}
           </p>
@@ -238,6 +257,8 @@ export default function WorkPage() {
                 type="button"
                 onClick={() => handleFilterChange(cat.id)}
                 className={`filter-pill whitespace-nowrap text-xs md:text-xs uppercase tracking-widest px-4 md:px-5 py-2 rounded-none transition-all duration-300 border ${
+                  isFa ? "font-['Vazirmatn',sans-serif]" : "font-sans"
+                } ${
                   activeFilter === cat.id
                     ? isLight
                       ? 'bg-black text-white font-medium border-black'
@@ -247,7 +268,7 @@ export default function WorkPage() {
                       : 'bg-white/2 hover:bg-white/5 text-white/70 border-white/10'
                 }`}
               >
-                {lang === 'fa' ? cat.labelFa : cat.labelEn}
+                {isFa ? cat.labelFa : cat.labelEn}
               </button>
             ))}
           </div>

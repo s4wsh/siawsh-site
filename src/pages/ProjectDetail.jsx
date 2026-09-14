@@ -45,7 +45,6 @@ function LazyVideo({
     if (!videoRef.current) return;
 
     if (isInView) {
-      // Set start time to 13 seconds only for IMG_6722.webm
       if (isTargetWebm && videoRef.current.currentTime < 13) {
         videoRef.current.currentTime = 13;
       }
@@ -55,7 +54,6 @@ function LazyVideo({
     }
   }, [isInView, isTargetWebm]);
 
-  // Handle loop reset for IMG_6722.webm when reaching the end or if reset occurs
   const handleTimeUpdate = () => {
     if (!videoRef.current || !isTargetWebm) return;
     if (videoRef.current.currentTime < 8) {
@@ -69,7 +67,6 @@ function LazyVideo({
     videoRef.current.play().catch(() => {});
   };
 
-  // Convert "16/9" string to inline style if needed
   const styleAspectRatio = aspectRatio.includes('/') ? aspectRatio.replace('/', ' / ') : aspectRatio;
 
   return (
@@ -95,7 +92,7 @@ function LazyVideo({
         }}
       />
       {label && (
-        <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-sm px-2 py-0.5 text-[9px] uppercase tracking-widest text-white z-10">
+        <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-sm px-2.5 py-1 text-xs uppercase tracking-wider text-white/90 z-10">
           {label}
         </div>
       )}
@@ -119,7 +116,6 @@ export default function ProjectDetail() {
     }
   }, [project, setMode]);
 
-  // Filter related projects based on shared categories
   const relatedProjects = useMemo(() => {
     if (!project || !project.categoryType) return [];
     return projectsData
@@ -131,7 +127,6 @@ export default function ProjectDetail() {
       .slice(0, 3);
   }, [project]);
 
-  // Scroll Reset on Route Change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
@@ -139,15 +134,14 @@ export default function ProjectDetail() {
   if (!project) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
-        <h1 className="text-3xl font-light mb-4">{t.projectDetail.notFound}</h1>
-        <button onClick={() => navigate('/')} className="text-xs uppercase tracking-widest border-b pb-1">
+        <h1 className="text-2xl md:text-3xl font-medium mb-4">{t.projectDetail.notFound}</h1>
+        <button onClick={() => navigate('/')} className="text-sm uppercase tracking-wider border-b pb-1 opacity-80 hover:opacity-100">
           ← {t.projectDetail.backToPortfolio}
         </button>
       </div>
     );
   }
 
-  // Localized field selectors with English fallbacks
   const activeTitle = isFa ? (project.titleFa || project.title) : project.title;
   const activeSubtitle = isFa ? (project.subtitleFa || project.subtitle) : project.subtitle;
   const activeTagline = isFa ? (project.taglineFa || project.tagline) : project.tagline;
@@ -161,7 +155,6 @@ export default function ProjectDetail() {
   const activeMetaTitle = isFa ? (project.metaTitleFa || project.metaTitle) : project.metaTitle;
   const activeMetaDescription = isFa ? (project.metaDescriptionFa || project.metaDescription) : project.metaDescription;
 
-  // Localized Specs Matrix
   const activeSpecs = project.specs ? {
     client: isFa ? (project.specs.clientFa || project.specs.client) : project.specs.client,
     year: project.specs.year,
@@ -221,14 +214,11 @@ export default function ProjectDetail() {
     });
   }, [theySaidVideos, usedVideoSrcs]);
 
-  // Calculate total gallery assets count
   const totalGalleryItems = (theySaidImages?.length || 0) + filteredTheySaidVideos.length;
 
-  // Detect if context asset is a video format
   const isContextVideo = contextVideo || (typeof contextImage === 'string' && (contextImage.endsWith('.webm') || contextImage.endsWith('.mp4')));
   const contextMediaSrc = contextVideo || contextImage;
 
-  // Detect if main strategy asset is a video format
   const isMainVideo = mainVideo || (typeof mainImage === 'string' && (mainImage.endsWith('.webm') || mainImage.endsWith('.mp4')));
   const mainMediaSrc = mainVideo || mainImage;
 
@@ -244,24 +234,28 @@ export default function ProjectDetail() {
 
       <Navbar />
 
-      <main className="pt-24 pb-20">
-        <div className="mx-auto max-w-7xl px-6 md:px-12 space-y-16">
+      <main className="pt-28 pb-24">
+        <div className="mx-auto max-w-7xl px-6 md:px-12 space-y-20">
           
           {/* Header Navigation Bar */}
-          <div className="flex items-center justify-between border-b pb-6 border-current/10">
+          <div className="flex items-center justify-between border-b pb-6 border-current/15">
             <button 
               onClick={() => navigate(-1)} 
-              className="text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+              className="text-sm sm:text-base font-medium uppercase tracking-wider opacity-80 hover:opacity-100 transition-opacity"
             >
-              {isFa ? `← ${t.projectDetail.back}` : `← ${t.projectDetail.back}`}
+              ← {t.projectDetail.back}
             </button>
-            <span className="text-xs uppercase tracking-widest opacity-40">{activeTagline}</span>
+            <span className="text-sm sm:text-base uppercase tracking-wider opacity-75 font-medium">{activeTagline}</span>
           </div>
 
-          {/* Title & Subtitle */}
+          {/* Title & Subtitle Header */}
           <div className="space-y-4 max-w-4xl">
-            <h1 className="text-4xl md:text-6xl font-light tracking-tight leading-tight">{activeTitle}</h1>
-            {activeSubtitle && <p className="text-lg md:text-2xl font-light opacity-70 leading-relaxed">{activeSubtitle}</p>}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-snug">{activeTitle}</h1>
+            {activeSubtitle && (
+              <p className="text-base sm:text-lg md:text-xl font-normal opacity-85 leading-relaxed">
+                {activeSubtitle}
+              </p>
+            )}
           </div>
 
           {/* Hero Media Container */}
@@ -287,7 +281,7 @@ export default function ProjectDetail() {
                   key={vid.id || vid.src}
                   src={vid.src}
                   aspectRatio={vid.aspectRatio || postHeroVideoGrid?.aspectRatio || "16/9"}
-                  objectFit={vid.objectFit || postHeroVideoGrid?.objectFit || "cover"}
+                  objectFit="cover"
                   label={vid.label}
                 />
               ))}
@@ -296,35 +290,35 @@ export default function ProjectDetail() {
 
           {/* Technical Specs Matrix */}
           {activeSpecs && (
-            <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 p-8 border ${isLight ? 'border-black/10 bg-neutral-50' : 'border-white/10 bg-[#111]'}`}>
+            <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 p-8 border ${isLight ? 'border-black/10 bg-neutral-50' : 'border-white/10 bg-[#111]'}`}>
               {activeSpecs.client && (
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.clientContext}</div>
-                  <div className="text-sm md:text-base font-medium mt-1">{activeSpecs.client}</div>
+                  <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider opacity-75">{t.projectDetail.clientContext}</div>
+                  <div className="text-sm sm:text-base md:text-lg font-medium opacity-95 mt-1.5">{activeSpecs.client}</div>
                 </div>
               )}
               {activeSpecs.year && (
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.year}</div>
-                  <div className="text-sm md:text-base font-medium mt-1">{activeSpecs.year}</div>
+                  <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider opacity-75">{t.projectDetail.year}</div>
+                  <div className="text-sm sm:text-base md:text-lg font-medium opacity-95 mt-1.5">{activeSpecs.year}</div>
                 </div>
               )}
               {activeSpecs.location && (
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.location}</div>
-                  <div className="text-sm md:text-base font-medium mt-1">{activeSpecs.location}</div>
+                  <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider opacity-75">{t.projectDetail.location}</div>
+                  <div className="text-sm sm:text-base md:text-lg font-medium opacity-95 mt-1.5">{activeSpecs.location}</div>
                 </div>
               )}
               {activeSpecs.tools && (
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.tools}</div>
-                  <div className="text-sm md:text-base font-medium mt-1">{activeSpecs.tools}</div>
+                  <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider opacity-75">{t.projectDetail.tools}</div>
+                  <div className="text-sm sm:text-base md:text-lg font-medium opacity-95 mt-1.5 leading-relaxed">{activeSpecs.tools}</div>
                 </div>
               )}
               {activeSpecs.deliverables && (
-                <div className="col-span-2 md:col-span-4 border-t pt-4 border-current/10">
-                  <div className="text-[10px] font-semibold uppercase tracking-widest opacity-40">{t.projectDetail.deliverables}</div>
-                  <div className="text-sm md:text-base font-medium mt-1">{activeSpecs.deliverables}</div>
+                <div className="col-span-2 md:col-span-4 border-t pt-6 border-current/10">
+                  <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider opacity-75">{t.projectDetail.deliverables}</div>
+                  <div className="text-sm sm:text-base md:text-lg font-medium opacity-95 mt-1.5 leading-relaxed">{activeSpecs.deliverables}</div>
                 </div>
               )}
             </div>
@@ -333,8 +327,10 @@ export default function ProjectDetail() {
           {/* 01 / Concept & Context */}
           {activeContextParagraph && (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start py-4">
-              <div className="md:col-span-4 text-xs uppercase tracking-widest opacity-40">{t.projectDetail.conceptContext}</div>
-              <div className={`md:col-span-8 text-lg md:text-xl font-light leading-relaxed border-current/20 ${isFa ? 'border-r-2 pr-6' : 'border-l-2 pl-6'}`}>
+              <div className="md:col-span-4 text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider opacity-85">
+                {t.projectDetail.conceptContext}
+              </div>
+              <div className={`md:col-span-8 text-base sm:text-lg md:text-xl font-normal leading-relaxed md:leading-loose opacity-95 border-current/25 ${isFa ? 'border-r-2 pr-6' : 'border-l-2 pl-6'}`}>
                 {activeContextParagraph}
               </div>
             </div>
@@ -357,8 +353,10 @@ export default function ProjectDetail() {
           {/* 02 / Execution & Strategy */}
           {activeMainParagraph && (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start py-4">
-              <div className="md:col-span-4 text-xs uppercase tracking-widest opacity-40">{t.projectDetail.executionStrategy}</div>
-              <div className="md:col-span-8 text-base md:text-lg leading-relaxed opacity-80">
+              <div className="md:col-span-4 text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider opacity-85">
+                {t.projectDetail.executionStrategy}
+              </div>
+              <div className="md:col-span-8 text-base sm:text-lg md:text-xl font-normal leading-relaxed md:leading-loose opacity-95">
                 {activeMainParagraph}
               </div>
             </div>
@@ -378,19 +376,19 @@ export default function ProjectDetail() {
             </div>
           )}
 
-          {/* Recognition Banner */}
+          {/* Recognition & Client Quote Banner */}
           {(activeRecognition || (activeTheySaidParagraph && activeTheySaidTitle)) && (
-            <div className={`p-8 md:p-12 border ${isLight ? 'border-black/10 bg-neutral-50' : 'border-white/10 bg-[#111]'} space-y-6`}>
+            <div className={`p-8 md:p-10 border ${isLight ? 'border-black/10 bg-neutral-50' : 'border-white/10 bg-[#111]'} space-y-6`}>
               {activeRecognition && (
                 <div>
-                  <span className="text-[10px] font-semibold uppercase tracking-widest opacity-40 block mb-1">{t.projectDetail.recognition}</span>
-                  <span className="text-sm md:text-base font-medium">{activeRecognition}</span>
+                  <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider opacity-75 block mb-1.5">{t.projectDetail.recognition}</span>
+                  <span className="text-base sm:text-lg md:text-xl font-medium opacity-95">{activeRecognition}</span>
                 </div>
               )}
               {activeTheySaidParagraph && (
-                <div className="border-t pt-6 border-current/10 space-y-2">
-                  <span className="text-[10px] font-semibold uppercase tracking-widest opacity-40 block">{activeTheySaidTitle || t.projectDetail.directClientQuote}</span>
-                  <blockquote className="text-base md:text-xl italic font-light leading-relaxed">
+                <div className="border-t pt-6 border-current/10 space-y-3">
+                  <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider opacity-75 block">{activeTheySaidTitle || t.projectDetail.directClientQuote}</span>
+                  <blockquote className="text-base sm:text-lg md:text-xl font-medium leading-relaxed opacity-95 not-italic">
                     "{activeTheySaidParagraph}"
                   </blockquote>
                 </div>
@@ -401,7 +399,7 @@ export default function ProjectDetail() {
           {/* Gallery Grid */}
           {totalGalleryItems > 0 && (
             <div className="space-y-8 pt-8">
-              <div className="text-xs uppercase tracking-widest opacity-40">{t.projectDetail.visualGallery}</div>
+              <div className="text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider opacity-85">{t.projectDetail.visualGallery}</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {theySaidImages?.map((img, idx) => (
                   <div key={idx} className="w-full overflow-hidden border border-current/10">
@@ -423,15 +421,15 @@ export default function ProjectDetail() {
             </div>
           )}
 
-          {/* End-of-Page Share Buttons Section */}
+          {/* Share Buttons Section */}
           <div className="py-0 my-0 border-t border-b border-current/10 leading-none">
             <ShareButtons title={activeTitle} excerpt={activeSubtitle || activeTagline} isLight={isLight} />
           </div>
 
-          {/* Related Projects */}
+          {/* Related Projects Section */}
           {relatedProjects.length > 0 && (
             <div className="pt-8 space-y-8">
-              <div className="text-xs uppercase tracking-widest opacity-40">{t.projectDetail.relatedProjects}</div>
+              <div className="text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider opacity-85">{t.projectDetail.relatedProjects}</div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedProjects.map((rel) => {
                   const relTitle = isFa ? (rel.titleFa || rel.title) : rel.title;
@@ -440,7 +438,7 @@ export default function ProjectDetail() {
                     <Link
                       key={rel.id}
                       to={`/work/${rel.id}`}
-                      className="group block space-y-3 border border-current/10 p-3 transition-colors hover:border-current/30"
+                      className="group block space-y-4 border border-current/10 p-4 transition-colors hover:border-current/30"
                     >
                       <div className="aspect-video w-full overflow-hidden bg-neutral-900">
                         <img
@@ -450,8 +448,8 @@ export default function ProjectDetail() {
                         />
                       </div>
                       <div>
-                        <h3 className="text-sm font-medium group-hover:underline">{relTitle}</h3>
-                        <p className="text-[11px] opacity-60 line-clamp-2 mt-1">{relSubtitle}</p>
+                        <h3 className="text-sm sm:text-base font-semibold opacity-95 group-hover:underline">{relTitle}</h3>
+                        <p className="text-xs sm:text-sm opacity-75 line-clamp-2 mt-1.5 leading-relaxed">{relSubtitle}</p>
                       </div>
                     </Link>
                   );

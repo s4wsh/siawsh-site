@@ -614,7 +614,7 @@ export const projectsData = [
     subtitleFa: "بازآفرینی برند و هویت تجاری ماندگار مبلمان آریو از طریق طراحی محصول، برنامه‌ریزی خط تولید، متریال‌شناسی جامع و بصری‌سازی سه‌بعدی معماری.",
     categoryType: ["cinematic", "spatial"],
     tagline: "Product Design, Material Strategy & Spatial Transformation",
-    taglineFa: "طراحی محصول، استراتژی متریال و بازآفرینی فضایی",
+    taglineFa: "توسعه استراتژیک برند، طراحی محصول و معماری",
     aspectRatio: "rectangular",
     logo: null,
 

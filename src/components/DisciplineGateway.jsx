@@ -28,10 +28,10 @@ export default function DisciplineGateway({ isPersian = false }) {
     return () => clearTimeout(timer);
   }, []);
 
-  // Gentle LERP Loop for Fluid & Slow Effect Tracking
+  // Gentle LERP Loop for Fluid Effect Tracking
   useEffect(() => {
     let animationFrameId;
-    const lerpFactor = 0.035; // Ultra-slow easing
+    const lerpFactor = 0.035;
 
     const animatePointer = () => {
       setSmoothMousePos((prev) => {
@@ -157,27 +157,30 @@ export default function DisciplineGateway({ isPersian = false }) {
         <link rel="alternate icon" href="/favicon.ico" />
       </Helmet>
 
+      {/* Viewport locked to 100dvh on mobile to prevent scrolling */}
       <div 
-        className={`min-h-screen bg-black text-white flex flex-col justify-between p-6 md:p-12 relative overflow-hidden select-none transition-opacity duration-1000 ease-out ${
+        className={`h-[100dvh] min-h-[100dvh] bg-black text-white flex flex-col justify-between p-4 md:p-12 relative overflow-hidden select-none transition-opacity duration-1000 ease-out ${
           isLoaded ? 'opacity-100' : 'opacity-0'
         }`}
         style={fontStyle}
         dir={activeIsPersian ? 'rtl' : 'ltr'}
       >
-        {/* Gyroscope-Balanced Starfield Background */}
+        {/* Starfield Background */}
         <StarfieldBackground />
 
         {/* Global Ambient Glow */}
         <div 
-          className={`absolute inset-0 pointer-events-none transition-opacity duration-1200 ease-out opacity-20 z-0 ${
-            hoveredCard === 'spatial' ? 'bg-[radial-gradient(ellipse_at_top_left,var(--tw-gradient-stops))] from-amber-900/40 via-black to-black' : ''
-          } ${
-            hoveredCard === 'cinematic' ? 'bg-[radial-gradient(ellipse_at_bottom_right,var(--tw-gradient-stops))] from-sky-900/40 via-black to-black' : ''
+          className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ease-out z-0 ${
+            hoveredCard === 'spatial' || activeTouchCard === 'spatial' 
+              ? 'opacity-40 bg-[radial-gradient(ellipse_at_top_left,var(--tw-gradient-stops))] from-amber-900/40 via-black to-black' 
+              : hoveredCard === 'cinematic' || activeTouchCard === 'cinematic' 
+              ? 'opacity-40 bg-[radial-gradient(ellipse_at_bottom_right,var(--tw-gradient-stops))] from-sky-900/40 via-black to-black' 
+              : 'opacity-0'
           }`}
         />
 
         {/* Header Bar */}
-        <header className="relative z-10 flex justify-between items-center text-xs tracking-widest uppercase font-mono text-neutral-400 border-b border-neutral-800/80 pb-4" dir="ltr">
+        <header className="relative z-10 flex justify-between items-center text-xs tracking-widest uppercase font-mono text-neutral-400 border-b border-neutral-800/80 pb-3 md:pb-4 shrink-0" dir="ltr">
           <div className="flex items-center">
             <img 
               src="/favicon.svg" 
@@ -201,10 +204,10 @@ export default function DisciplineGateway({ isPersian = false }) {
           </button>
         </header>
 
-        {/* Gateway Options Grid */}
-        <main className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 my-auto py-8 max-w-6xl mx-auto w-full">
+        {/* Gateway Options Grid — Fitted to Viewport Height */}
+        <main className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 my-auto py-2 md:py-8 max-w-6xl mx-auto w-full flex-1 max-h-[calc(100dvh-100px)] items-stretch">
           
-          {/* Card 01: Spatial Architecture (Architectural Light & Shadow Spatial Beam) */}
+          {/* Card 01: Spatial Architecture */}
           <div
             onClick={() => handleSelect('spatial')}
             onMouseMove={(e) => handleMouseMove(e, 'spatial')}
@@ -212,14 +215,15 @@ export default function DisciplineGateway({ isPersian = false }) {
             onTouchStart={(e) => handleTouchStart(e, 'spatial')}
             onTouchMove={(e) => handleTouchMove(e, 'spatial')}
             onTouchEnd={handleTouchEnd}
-            className="group relative min-h-104 border border-neutral-800/80 bg-neutral-950/40 rounded-none p-6 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.008] hover:border-white/30 overflow-hidden"
+            className={`group relative h-full flex-1 border border-neutral-800/80 bg-neutral-950/60 rounded-none p-4 sm:p-6 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.008] hover:border-white/30 overflow-hidden ${
+              hoveredCard === 'spatial' || activeTouchCard === 'spatial' ? 'border-amber-500/50' : ''
+            }`}
           >
-            {/* Soft Ambient Vignette Layer */}
-            <div className="absolute inset-0 pointer-events-none backdrop-blur-[3px] bg-black/20 z-10 transition-opacity duration-1000" />
+            <div className="absolute inset-0 pointer-events-none backdrop-blur-[3px] bg-black/20 z-10 transition-opacity duration-700" />
 
-            {/* Architectural Volumetric Light Cone Beam (Spatial Light Effect) */}
+            {/* Spatial Light Effect */}
             <div 
-              className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-45 transition-opacity duration-1200 ease-out z-0"
+              className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-45 transition-opacity duration-1000 ease-out z-0"
               style={{
                 background: activeIsPersian
                   ? `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
@@ -227,9 +231,9 @@ export default function DisciplineGateway({ isPersian = false }) {
               }}
             />
 
-            {/* Dynamic Magic Border Stroke Line */}
+            {/* Magic Border Stroke */}
             <div 
-              className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ease-out z-30 ${
+              className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ease-out z-30 ${
                 hoveredCard === 'spatial' || activeTouchCard === 'spatial' ? 'opacity-100' : 'opacity-0'
               }`}
               style={getWandStrokeStyle('spatial')}
@@ -237,7 +241,7 @@ export default function DisciplineGateway({ isPersian = false }) {
 
             {/* Sparkle Trail */}
             <div 
-              className={`pointer-events-none absolute inset-0 transition-opacity duration-1000 ease-out z-20 overflow-hidden ${
+              className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out z-20 overflow-hidden ${
                 hoveredCard === 'spatial' || activeTouchCard === 'spatial' ? 'opacity-100' : 'opacity-0'
               }`}
               style={{
@@ -252,36 +256,31 @@ export default function DisciplineGateway({ isPersian = false }) {
 
             {/* Background Internal Shapes */}
             <div 
-              className={`absolute w-72 h-72 border-2 border-neutral-600 group-hover:border-amber-200/40 rotate-35 skew-x-12 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-15 group-hover:scale-110 opacity-70 group-hover:opacity-100 pointer-events-none z-0 ${
-                activeIsPersian ? '-left-10 -top-10' : '-right-10 -bottom-10'
-              }`} 
-            />
-            <div 
-              className={`absolute w-72 h-72 border border-neutral-700 group-hover:border-neutral-400 rotate-35 skew-x-12 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-15 group-hover:scale-110 opacity-50 group-hover:opacity-80 pointer-events-none z-0 ${
-                activeIsPersian ? '-left-5 -top-5' : '-right-5 -bottom-5'
+              className={`absolute w-48 h-48 sm:w-72 sm:h-72 border-2 border-neutral-600 group-hover:border-amber-200/40 rotate-35 skew-x-12 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-15 group-hover:scale-110 opacity-60 group-hover:opacity-100 pointer-events-none z-0 ${
+                activeIsPersian ? '-left-8 -top-8' : '-right-8 -bottom-8'
               }`} 
             />
 
             <div className="flex justify-between items-start gap-2 relative z-40" dir="ltr">
-              <span className="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors duration-700">
+              <span className="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors duration-500">
                 [ 01 ]
               </span>
-              <span className="font-sans text-xs uppercase tracking-widest text-neutral-300 border border-neutral-700 group-hover:border-neutral-500 px-2.5 py-1 rounded-sm shrink-0 backdrop-blur-sm bg-black/40 transition-colors duration-700" style={fontStyle}>
+              <span className="font-sans text-[10px] sm:text-xs uppercase tracking-widest text-neutral-300 border border-neutral-700 group-hover:border-neutral-500 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-sm shrink-0 backdrop-blur-sm bg-black/40 transition-colors duration-500" style={fontStyle}>
                 {activeIsPersian ? 'معماری / فضای داخلی' : 'Spatial / Environment'}
               </span>
             </div>
 
-            <div className="mt-8 relative z-40">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white mb-3 wrap-break-word leading-tight" style={fontStyle}>
+            <div className="my-auto py-2 relative z-40">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light tracking-tight text-white mb-2 md:mb-3 leading-tight" style={fontStyle}>
                 {activeIsPersian ? 'طراحی معماری و معماری داخلی' : 'SPATIAL ARCHITECTURE'}
               </h2>
-              <p className="text-sm font-sans text-neutral-300 max-w-sm group-hover:text-neutral-100 transition-colors duration-700 leading-relaxed" style={fontStyle}>
+              <p className="text-xs sm:text-sm font-sans text-neutral-300 max-w-sm group-hover:text-neutral-100 transition-colors duration-500 leading-relaxed line-clamp-2 sm:line-clamp-none" style={fontStyle}>
                 {activeIsPersian
                   ? 'طراحی معماری، بازسازی تخصصی، دیزاین داخلی و ساخت مبلمان سفارشی'
                   : 'Structural minimalism, interior environments, bespoke furniture, and tactile materials.'}
               </p>
               
-              <div className="mt-8 inline-flex items-center gap-2.5 font-sans text-sm md:text-base font-medium text-white uppercase tracking-wider group-hover:translate-x-1.5 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" style={fontStyle}>
+              <div className="mt-3 sm:mt-6 md:mt-8 inline-flex items-center gap-2 font-sans text-xs sm:text-sm md:text-base font-medium text-amber-400 sm:text-white uppercase tracking-wider group-hover:translate-x-1.5 transition-transform duration-500 ease-out" style={fontStyle}>
                 <span>{activeIsPersian ? 'ورود به استودیوی معماری' : 'ENTER SPATIAL'}</span>
                 <span>{activeIsPersian ? '←' : '→'}</span>
               </div>
@@ -296,14 +295,15 @@ export default function DisciplineGateway({ isPersian = false }) {
             onTouchStart={(e) => handleTouchStart(e, 'cinematic')}
             onTouchMove={(e) => handleTouchMove(e, 'cinematic')}
             onTouchEnd={handleTouchEnd}
-            className="group relative min-h-104 border border-neutral-800/80 bg-neutral-950/40 rounded-none p-6 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.008] hover:border-white/30 overflow-hidden"
+            className={`group relative h-full flex-1 border border-neutral-800/80 bg-neutral-950/60 rounded-none p-4 sm:p-6 md:p-8 flex flex-col justify-between cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.008] hover:border-white/30 overflow-hidden ${
+              hoveredCard === 'cinematic' || activeTouchCard === 'cinematic' ? 'border-cyan-500/50' : ''
+            }`}
           >
-            {/* Soft Ambient Vignette Layer */}
-            <div className="absolute inset-0 pointer-events-none backdrop-blur-[3px] bg-black/20 z-10 transition-opacity duration-1000" />
+            <div className="absolute inset-0 pointer-events-none backdrop-blur-[3px] bg-black/20 z-10 transition-opacity duration-700" />
 
-            {/* Dynamic Magic Border Stroke Line */}
+            {/* Magic Border Stroke */}
             <div 
-              className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ease-out z-30 ${
+              className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ease-out z-30 ${
                 hoveredCard === 'cinematic' || activeTouchCard === 'cinematic' ? 'opacity-100' : 'opacity-0'
               }`}
               style={getWandStrokeStyle('cinematic')}
@@ -311,7 +311,7 @@ export default function DisciplineGateway({ isPersian = false }) {
 
             {/* Sparkle Trail */}
             <div 
-              className={`pointer-events-none absolute inset-0 transition-opacity duration-1000 ease-out z-20 overflow-hidden ${
+              className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out z-20 overflow-hidden ${
                 hoveredCard === 'cinematic' || activeTouchCard === 'cinematic' ? 'opacity-100' : 'opacity-0'
               }`}
               style={{
@@ -324,38 +324,33 @@ export default function DisciplineGateway({ isPersian = false }) {
               }}
             />
 
-            {/* Background Internal Shapes (Dashed Circle on Top in Farsi Mode) */}
+            {/* Background Internal Shapes */}
             <div 
-              className={`absolute w-64 h-64 border-2 border-dashed border-neutral-600 group-hover:border-neutral-300 rounded-full animate-[spin_40s_linear_infinite] transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-70 group-hover:opacity-100 pointer-events-none z-0 ${
-                activeIsPersian ? '-left-12 -top-12' : '-right-12 -bottom-12'
-              }`} 
-            />
-            <div 
-              className={`absolute w-48 h-48 border border-neutral-700 group-hover:border-neutral-400 rotate-45 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-90 group-hover:scale-125 opacity-50 group-hover:opacity-80 pointer-events-none z-0 ${
-                activeIsPersian ? 'left-4 top-4' : 'right-4 bottom-4'
+              className={`absolute w-44 h-44 sm:w-64 sm:h-64 border-2 border-dashed border-neutral-600 group-hover:border-cyan-300/40 rounded-full animate-[spin_40s_linear_infinite] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-60 group-hover:opacity-100 pointer-events-none z-0 ${
+                activeIsPersian ? '-left-8 -top-8' : '-right-8 -bottom-8'
               }`} 
             />
 
             <div className="flex justify-between items-start gap-2 relative z-40" dir="ltr">
-              <span className="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors duration-700">
+              <span className="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors duration-500">
                 [ 02 ]
               </span>
-              <span className="font-sans text-xs uppercase tracking-widest text-neutral-300 border border-neutral-700 group-hover:border-neutral-500 px-2.5 py-1 rounded-sm shrink-0 backdrop-blur-sm bg-black/40 transition-colors duration-700" style={fontStyle}>
+              <span className="font-sans text-[10px] sm:text-xs uppercase tracking-widest text-neutral-300 border border-neutral-700 group-hover:border-neutral-500 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-sm shrink-0 backdrop-blur-sm bg-black/40 transition-colors duration-500" style={fontStyle}>
                 {activeIsPersian ? 'موشن دیزاین / CGI' : 'Digital / Kinetic'}
               </span>
             </div>
 
-            <div className="mt-8 relative z-40">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white mb-3 wrap-break-word leading-tight" style={fontStyle}>
+            <div className="my-auto py-2 relative z-40">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light tracking-tight text-white mb-2 md:mb-3 leading-tight" style={fontStyle}>
                 {activeIsPersian ? 'موشن گرافیک ۳ بعدی و سینماتیک' : 'CINEMATIC & 3D MOTION'}
               </h2>
-              <p className="text-sm font-sans text-neutral-300 max-w-sm group-hover:text-neutral-100 transition-colors duration-700 leading-relaxed" style={fontStyle}>
+              <p className="text-xs sm:text-sm font-sans text-neutral-300 max-w-sm group-hover:text-neutral-100 transition-colors duration-500 leading-relaxed line-clamp-2 sm:line-clamp-none" style={fontStyle}>
                 {activeIsPersian
                   ? 'رندرینگ ۳ بعدی، موشن دیزاین تبلیغاتی، CGI و هویت بصری پویا'
                   : 'High-fidelity 3D CGI rendering, kinetic branding, visual identity systems, and digital motion.'}
               </p>
               
-              <div className="mt-8 inline-flex items-center gap-2.5 font-sans text-sm md:text-base font-medium text-white uppercase tracking-wider group-hover:translate-x-1.5 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" style={fontStyle}>
+              <div className="mt-3 sm:mt-6 md:mt-8 inline-flex items-center gap-2 font-sans text-xs sm:text-sm md:text-base font-medium text-cyan-400 sm:text-white uppercase tracking-wider group-hover:translate-x-1.5 transition-transform duration-500 ease-out" style={fontStyle}>
                 <span>{activeIsPersian ? 'ورود به استودیوی موشن' : 'ENTER CINEMATIC'}</span>
                 <span>{activeIsPersian ? '←' : '→'}</span>
               </div>
@@ -365,14 +360,14 @@ export default function DisciplineGateway({ isPersian = false }) {
         </main>
 
         {/* Footer Bar */}
-        <footer className="relative z-10 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs font-mono text-neutral-500 border-t border-neutral-800/80 pt-4" dir="ltr">
-          <div className="flex items-center gap-2">
+        <footer className="relative z-10 flex flex-row justify-between items-center text-[10px] sm:text-xs font-mono text-neutral-500 border-t border-neutral-800/80 pt-2 sm:pt-4 shrink-0" dir="ltr">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="uppercase tracking-widest font-sans text-xs" style={fontStyle}>
-              {activeIsPersian ? 'استودیوی دیزاین چند‌رشته‌ای' : 'MULTIDISCIPLINARY DESIGN STUDIO'}
+            <span className="uppercase tracking-widest font-sans" style={fontStyle}>
+              {activeIsPersian ? 'استودیوی دیزاین' : 'MULTIDISCIPLINARY STUDIO'}
             </span>
           </div>
-          <span className="uppercase tracking-widest text-neutral-600 font-sans text-xs" style={fontStyle}>
+          <span className="uppercase tracking-widest text-neutral-600 font-sans hidden sm:inline-block" style={fontStyle}>
             {activeIsPersian ? 'تهران / بین‌المللی' : 'TEHRAN // GLOBAL'}
           </span>
           <span>SIAWSH © 2026</span>

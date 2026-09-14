@@ -98,18 +98,16 @@ export const projectsData = [
 
     // Technical Specifications Matrix
     specs: {
-      client: "پروژه آکادمیک بین‌المللی قبرس (برند Skinny Cow / Nestlé)",
-      year: "۲۰۲۵ – ۲۰۲۶",
-      location: "قبرس",
-      deliverables: "تولید تصاویر لیبل با هوش مصنوعی، تدوین سیستم پالت رنگی برند، انتخاب تایپوگرافی، مدل‌سازی سه‌بعدی بسته‌بندی‌های ۵۰۰ میلی‌لیتری، رندرهای سه‌بعدی محصول، طراحی لیبل‌ها (طعم‌های شکلاتی، وانیلی و راکی رود)",
-      tools: "Adobe Firefly, Huemint, Blender (Cycles Renderer), Adobe Illustrator, Adobe Photoshop"
-    },
-    specsFa: {
-      client: "پروژه آکادمیک بین‌المللی قبرس (برند Skinny Cow / Nestlé)",
-      year: "۲۰۲۵ – ۲۰۲۶",
-      location: "قبرس",
-      deliverables: "تولید تصاویر لیبل با هوش مصنوعی، تدوین سیستم پالت رنگی برند، انتخاب تایپوگرافی، مدل‌سازی سه‌بعدی بسته‌بندی‌های ۵۰۰ میلی‌لیتری، رندرهای سه‌بعدی محصول، طراحی لیبل‌ها (طعم‌های شکلاتی، وانیلی و راکی رود)",
-      tools: "ادوبی فایرفلای (Adobe Firefly)، هیومینت (Huemint)، بلندر (Blender - Cycles)، ادوبی ایلاستریتور، ادوبی فتوشاپ"
+      client: "Academic Project / Skinny Cow / Nestlé",
+      clientFa: "پروژه آکادمیک بین‌المللی قبرس (برند Skinny Cow / Nestlé)",
+      year: "2025 – 2026",
+      yearFa: "۲۰۲۵ – ۲۰۲۶",
+      location: "Cyprus",
+      locationFa: "قبرس",
+      tools: "Adobe Firefly, Huemint, Blender (Cycles Renderer), Adobe Illustrator, Adobe Photoshop",
+      toolsFa: "ادوبی فایرفلای (Adobe Firefly)، هیومینت (Huemint)، بلندر (Blender - Cycles)، ادوبی ایلاستریتور، ادوبی فتوشاپ",
+      deliverables: "AI Label Image Generation, Color Palette System, Typography Selection, 3D Packaging Modeling, 500ml 3D Renders, Label Design",
+      deliverablesFa: "تولید تصاویر لیبل با هوش مصنوعی، تدوین سیستم پالت رنگی برند، انتخاب تایپوگرافی، مدل‌سازی سه‌بعدی بسته‌بندی‌های ۵۰۰ میلی‌لیتری، رندرهای سه‌بعدی محصول، طراحی لیبل‌ها (طعم‌های شکلاتی، وانیلی و راکی رود)"
     },
 
     // Section 01: Concept & Context

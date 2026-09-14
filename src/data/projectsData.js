@@ -608,23 +608,30 @@ export const projectsData = [
   },
   {
     id: "ario-built-spatial-design",
-    title: "طراحی اختصاصی مبلمان و رندرینگ سه‌بعدی معماری | برند ماندگار مبلمان آریو",
-    subtitle: "بازآفرینی برند و هویت تجاری ماندگار مبلمان آریو از طریق طراحی محصول، برنامه‌ریزی خط تولید، متریال‌شناسی جامع و بصری‌سازی سه‌بعدی معماری.",
+    title: "Ario Furniture Custom Design & 3D Architectural Visualization",
+    titleFa: "طراحی اختصاصی مبلمان و رندرینگ سه‌بعدی معماری | برند ماندگار مبلمان آریو",
+    subtitle: "Brand elevation and spatial identity for Ario Furniture through product design, production planning, material strategy, and 3D architectural rendering.",
+    subtitleFa: "بازآفرینی برند و هویت تجاری ماندگار مبلمان آریو از طریق طراحی محصول، برنامه‌ریزی خط تولید، متریال‌شناسی جامع و بصری‌سازی سه‌بعدی معماری.",
     categoryType: ["cinematic", "spatial"],
-    tagline: "طراحی محصول، استراتژی متریال و بازآفرینی فضایی",
+    tagline: "Product Design, Material Strategy & Spatial Transformation",
+    taglineFa: "طراحی محصول، استراتژی متریال و بازآفرینی فضایی",
     aspectRatio: "rectangular",
     logo: null,
 
     // SEO Metadata
-    metaTitle: "طراحی اختصاصی مبلمان و رندرینگ سه‌بعدی معماری | برند ماندگار مبلمان آریو",
-    metaDescription: "پروژه بازآفرینی برند ماندگار مبلمان آریو: طراحی محصول و خط تولید مبلمان سفارشی، ترکیب چوب، برنج، سنگ، شیشه/اپوکسی و نورپردازی توکار همراه با رندرهای سه‌بعدی معماری.",
+    metaTitle: "Ario Furniture Custom Design & 3D Architectural Rendering | SIAWSH Studio",
+    metaTitleFa: "طراحی اختصاصی مبلمان و رندرینگ سه‌بعدی معماری | برند ماندگار مبلمان آریو",
+    metaDescription: "Brand elevation for Ario Furniture: Custom furniture product design, material integration (wood, brass, stone, glass/epoxy), and photorealistic 3D architectural renders.",
+    metaDescriptionFa: "پروژه بازآفرینی برند ماندگار مبلمان آریو: طراحی محصول و خط تولید مبلمان سفارشی، ترکیب چوب، برنج، سنگ، شیشه/اپوکسی و نورپردازی توکار همراه با رندرهای سه‌بعدی معماری.",
     keywords: [
+      "Ario Furniture Design",
+      "Custom Furniture Product Design",
+      "3D Architectural Visualization",
+      "Blender Architectural Render",
+      "Material Strategy Furniture",
       "ماندگار مبلمان آریو",
       "طراحی اختصاصی مبلمان",
-      "رندرینگ سه‌بعدی معماری",
-      "طراحی محصول و خط تولید مبلمان",
-      "مدل‌سازی بلندر معماری",
-      "استراتژی متریال مبلمان"
+      "رندرینگ سه‌بعدی معماری"
     ],
     schemaType: "CreativeWork",
 
@@ -633,6 +640,13 @@ export const projectsData = [
 
     // Technical Specifications Matrix
     specs: {
+      client: "Ario Furniture",
+      year: "2026–Present (10+ Years Brand Legacy)",
+      location: "Tehran, Iran",
+      deliverables: "Product Design, Production Planning, Custom Furniture Design, 3D Architectural Modeling & Rendering, Material Strategy, Interior Brand Roadmap",
+      tools: "Blender, Adobe Photoshop, Adobe Illustrator, Figma, AI Generative Tools"
+    },
+    specsFa: {
       client: "ماندگار مبلمان آریو",
       year: "۲۰۲۶ تا کنون (با بیش از ۱۰ سال سابقه فعالیت ماندگار مبلمان آریو)",
       location: "تهران، ایران",
@@ -641,17 +655,22 @@ export const projectsData = [
     },
 
     // Section 01: Concept & Context
-    contextParagraph: "مجموعه ماندگار مبلمان آریو با بیش از یک دهه فعالیت تخصصی در زمینه طراحی و تولید مبلمان مدرن، برنامه‌ریزی خط تولید و بازآفرینی برند خود را در سال ۲۰۲۶ با محوریت طراحی مبلمان سفارشی آغاز کرد. هدف اصلی این فاز، توسعه هویت بصری و فرم‌دهی به ایده‌های کلیدی طراحی از طریق ترکیب چهار عنصر اصلی—چوب طبیعی، برنج، سنگ و شیشه یا اپوکسی—همراه با نورپردازی مخفی بود تا امضای زیبایی‌شناسی پایدار و متمایزی برای پروژه‌های معماری و دکوراسیون داخلی خلق شود.",
+    contextParagraph: "With over a decade of expertise in modern furniture production, Ario Furniture initiated a comprehensive brand transformation and production pipeline update in 2026. The main objective was to shape key design concepts through the harmonious synthesis of four primary elements: natural wood, brass, stone, and glass/epoxy, accented with integrated indirect lighting to create a signature aesthetic for architectural spaces.",
+    contextParagraphFa: "مجموعه ماندگار مبلمان آریو با بیش از یک دهه فعالیت تخصصی در زمینه طراحی و تولید مبلمان مدرن، برنامه‌ریزی خط تولید و بازآفرینی برند خود را در سال ۲۰۲۶ با محوریت طراحی مبلمان سفارشی آغاز کرد. هدف اصلی این فاز، توسعه هویت بصری و فرم‌دهی به ایده‌های کلیدی طراحی از طریق ترکیب چهار عنصر اصلی—چوب طبیعی، برنج، سنگ و شیشه یا اپوکسی—همراه با نورپردازی مخفی بود تا امضای زیبایی‌شناسی پایدار و متمایزی برای پروژه‌های معماری و دکوراسیون داخلی خلق شود.",
     contextImage: "/projects/Ario_built/ario_built_wood_joinery_bronze_detail_close_up.webp",
 
     // Section 02: Execution & Strategy
-    mainParagraph: "روند اجرای پروژه بر هویت‌بخشی نوین به برند، برنامه‌ریزی دقیق ساخت محصول و تبدیل اصول مهندسی به رندرهای سه‌بعدی واقع‌گرایانه (Photorealistic) معطوف شد. با تمرکز بر اتصالات دقیق چوب، جزئیات فلز برنج، بافت‌های سنگ طبیعی و شفافیت شیشه و اپوکسی، صحنه‌های سه‌بعدی معماری خلق شدند. این تصاویر نحوه تعامل هارمونیک متریال‌های چهارگانه و نورپردازی ملایم را در فضاهای مدرن به نمایش می‌گذارند و استانداردهای کیفی یک دهه تجربه ماندگار مبلمان آریو را به زبانی مدرن روایت می‌کنند.",
+    mainParagraph: "Execution focused on rearticulating the brand identity while translating precise production engineering into photorealistic 3D architectural renders. Emphasizing intricate wood joinery, polished brass accents, natural stone textures, and epoxy clarity, 3D scenes were constructed to demonstrate how integrated lighting and material harmony translate within contemporary living spaces.",
+    mainParagraphFa: "روند اجرای پروژه بر هویت‌بخشی نوین به برند، برنامه‌ریزی دقیق ساخت محصول و تبدیل اصول مهندسی به رندرهای سه‌بعدی واقع‌گرایانه (Photorealistic) معطوف شد. با تمرکز بر اتصالات دقیق چوب، جزئیات فلز برنج، بافت‌های سنگ طبیعی و شفافیت شیشه و اپوکسی، صحنه‌های سه‌بعدی معماری خلق شدند. این تصاویر نحوه تعامل هارمونیک متریال‌های چهارگانه و نورپردازی ملایم را در فضاهای مدرن به نمایش می‌گذارند و استانداردهای کیفی یک دهه تجربه ماندگار مبلمان آریو را به زبانی مدرن روایت می‌کنند.",
     mainImage: "/projects/Ario_built/ario_built_kitchen_island_integrated_lighting_render.webp",
 
     // Section 04: Impact & Recognition
-    recognition: "پروژه شاخص: نمونه‌کار برتر در حوزه طراحی محصول، سفارشی‌سازی مبلمان و رندرینگ سه‌بعدی معماری",
-    theySaidTitle: "چشم‌انداز استودیو سیاوش برای ماندگار مبلمان آریو",
-    theySaidParagraph: "تمرکز استودیو سیاوش در این پروژه بر پیوند دادن اصالت ۱۰ ساله ماندگار مبلمان آریو با زبان بصری معاصر بود. ما با تدوین استراتژی متریال، برنامه‌ریزی و طراحی محصول، ترکیب چهار عنصر کلیدی (چوب، برنج، سنگ و شیشه/اپوکسی) و بازآفرینی فضایی در قالب رندرهای سه‌بعدی معماری، بستری هوشمندانه فراهم کردیم تا این برند بتواند هویت تجاری خود را به نسلی تازه از مخاطبان، معماران و طراحان داخلی معرفی کند.",
+    recognition: "Featured Product Design & 3D Architectural Rendering Case Study",
+    recognitionFa: "پروژه شاخص: نمونه‌کار برتر در حوزه طراحی محصول، سفارشی‌سازی مبلمان و رندرینگ سه‌بعدی معماری",
+    theySaidTitle: "SIAWSH Studio Vision for Ario Furniture",
+    theySaidTitleFa: "چشم‌انداز استودیو سیاوش برای ماندگار مبلمان آریو",
+    theySaidParagraph: "SIAWSH Studio focused on bridging Ario Furniture’s ten-year heritage with contemporary visual language through tailored material strategy, precise product planning, and spatial 3D architectural visualization.",
+    theySaidParagraphFa: "تمرکز استودیو سیاوش در این پروژه بر پیوند دادن اصالت ۱۰ ساله ماندگار مبلمان آریو با زبان بصری معاصر بود. ما با تدوین استراتژی متریال، برنامه‌ریزی و طراحی محصول، ترکیب چهار عنصر کلیدی (چوب، برنج، سنگ و شیشه/اپوکسی) و بازآفرینی فضایی در قالب رندرهای سه‌بعدی معماری، بستری هوشمندانه فراهم کردیم تا این برند بتواند هویت تجاری خود را به نسلی تازه از مخاطبان، معماران و طراحان داخلی معرفی کند.",
 
     // Gallery Assets
     theySaidImages: [

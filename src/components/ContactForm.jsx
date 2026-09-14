@@ -78,20 +78,25 @@ export default function ContactForm() {
     e.preventDefault();
     setLoading(true);
 
-    const submitData = new FormData();
-    submitData.append("access_key", "f5778241-8463-452c-8e63-489e789530b3");
-    submitData.append("name", formData.name);
-    submitData.append("email", formData.email);
-    submitData.append("message", formData.message);
-    submitData.append(
-      "selected_discipline",
-      disciplines.find((item) => item.id === selectedDiscipline)?.label || ''
-    );
+    const payload = {
+      access_key: "f5778241-8463-452c-8e63-489e789530b3",
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+      selected_discipline: disciplines.find((item) => item.id === selectedDiscipline)?.label || '',
+      subject: `New Project Inquiry from ${formData.name}`,
+      from_name: "Siavash Studio Website",
+      botcheck: false
+    };
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: submitData,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -121,16 +126,20 @@ export default function ContactForm() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 pb-4 border-b border-white/10 gap-2">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00f0ff] animate-pulse" />
-              <span className="text-[10px] tracking-widest text-[#00f0ff] uppercase">
+              <span className="h-2 w-2 rounded-full bg-[#00f0ff] animate-pulse" />
+              <span className={`text-[#00f0ff] uppercase ${
+                isFa ? 'text-xs md:text-sm font-medium tracking-normal' : 'text-[10px] tracking-widest'
+              }`}>
                 {isFa ? "پروتکل ارتباطی // سیستم ثبت سفارش" : "COMMUNICATION PROTOCOL // INITIATE COLLABORATION"}
               </span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-light tracking-tight">
+            <h2 className={`text-2xl md:text-3xl font-light ${isFa ? 'tracking-normal leading-relaxed mt-1' : 'tracking-tight'}`}>
               {t?.contact?.title || (isFa ? 'شروع همکاری و مشاوره پروژه' : 'Start a Project')}
             </h2>
           </div>
-          <p className="text-xs opacity-50 tracking-widest">
+          <p className={`${
+            isFa ? 'text-xs md:text-sm opacity-80 tracking-normal' : 'text-xs opacity-50 tracking-widest'
+          }`}>
             {isFa 
               ? (mode === 'spatial' ? '[ معماری و طراحی فضا ]' : '[ مووشن گرافیک و سینماتیک ]')
               : (mode === 'spatial' ? '[ SPATIAL ARCHITECTURE ]' : '[ 3D MOTION & CINEMATIC ]')
@@ -144,13 +153,13 @@ export default function ContactForm() {
             isLight ? 'border-black/20 bg-black/5' : 'border-[#00f0ff]/30 bg-[#00f0ff]/5'
           }`}>
             <div className="space-y-3">
-              <span className="text-xs text-[#00f0ff] tracking-widest block">
+              <span className={`text-[#00f0ff] block ${isFa ? 'text-xs md:text-sm tracking-normal' : 'text-xs tracking-widest'}`}>
                 {isFa ? "[ پیام با موفقیت ثبت شد ]" : "[ MESSAGE SUBMITTED SUCCESSFULLY ]"}
               </span>
-              <h3 className="text-2xl font-light tracking-tight">
+              <h3 className={`text-2xl font-light ${isFa ? 'tracking-normal leading-relaxed' : 'tracking-tight'}`}>
                 {t?.contact?.successTitle || (isFa ? 'اطلاعات پروژه شما دریافت شد' : 'Project Information Received')}
               </h3>
-              <p className="text-sm opacity-70 max-w-xl leading-relaxed">
+              <p className="text-sm md:text-base opacity-80 max-w-xl leading-relaxed">
                 {t?.contact?.successDesc || (isFa 
                   ? 'با تشکر از ارتباط شما. مشخصات پروژه ثبت گردید و جهت بررسی به مدیر استودیو ارجاع داده شد. به‌زودی با شما تماس خواهیم گرفت.' 
                   : 'Thank you for reaching out. Your project details have been recorded and assigned for review. We will contact you shortly.')}
@@ -161,7 +170,9 @@ export default function ContactForm() {
                   setSubmitted(false);
                   setFormData({ name: '', email: '', message: '' });
                 }}
-                className={`mt-4 px-6 py-2.5 text-xs tracking-wider border rounded-none transition-all duration-300 ${
+                className={`mt-4 px-6 py-2.5 text-xs md:text-sm border rounded-none transition-all duration-300 ${
+                  isFa ? 'tracking-normal' : 'tracking-wider'
+                } ${
                   isLight
                     ? 'border-black bg-black text-white hover:bg-transparent hover:text-black'
                     : 'border-[#00f0ff] text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black'
@@ -173,19 +184,23 @@ export default function ContactForm() {
             </div>
           </div>
         ) : (
-          <form className="contact-form space-y-5" onSubmit={handleSubmit}>
+          <form className="contact-form space-y-6" onSubmit={handleSubmit}>
             
             {/* Discipline Selector */}
             <div className="discipline-selector space-y-2">
               <div className="flex items-center justify-between">
-                <label className="field-label text-[11px] tracking-widest opacity-60">
+                <label className={`field-label ${
+                  isFa ? 'text-xs md:text-sm font-medium opacity-80 tracking-normal' : 'text-[11px] opacity-60 tracking-widest'
+                }`}>
                   {t?.contact?.disciplineLabel || (isFa ? 'حوزه خدمات مورد نیاز' : 'Required Service Discipline')}
                 </label>
                 {detectedTag && detectedTag !== selectedDiscipline && (
                   <button
                     type="button"
                     onClick={() => handleApplyDetected(detectedTag)}
-                    className="text-[10px] text-[#00f0ff] underline hover:opacity-80 transition-opacity tracking-wider"
+                    className={`text-[#00f0ff] underline hover:opacity-80 transition-opacity ${
+                      isFa ? 'text-xs tracking-normal' : 'text-[10px] tracking-wider'
+                    }`}
                     style={{ fontFamily: 'inherit' }}
                   >
                     {isFa 
@@ -195,7 +210,7 @@ export default function ContactForm() {
                 )}
               </div>
 
-              <div className="discipline-grid flex flex-wrap gap-2">
+              <div className="discipline-grid flex flex-wrap gap-2.5">
                 {disciplines.map((item) => {
                   const isActive = selectedDiscipline === item.id;
                   const isSuggested = detectedTag === item.id && !isActive;
@@ -205,7 +220,9 @@ export default function ContactForm() {
                       type="button"
                       key={item.id}
                       style={{ fontFamily: 'inherit' }}
-                      className={`relative px-4 py-2.5 text-xs tracking-wider border rounded-none transition-all duration-300 ${
+                      className={`relative px-4 py-2.5 border rounded-none transition-all duration-300 ${
+                        isFa ? 'text-xs md:text-sm font-medium tracking-normal leading-relaxed whitespace-nowrap' : 'text-xs tracking-wider'
+                      } ${
                         isActive
                           ? isLight
                             ? 'bg-black text-white border-black shadow-md'
@@ -219,7 +236,7 @@ export default function ContactForm() {
                       onClick={() => setSelectedDiscipline(item.id)}
                     >
                       {item.label}
-                      {isActive && <span className={isFa ? "mr-2 text-[10px] font-bold" : "ml-2 text-[10px] font-bold"}>✓</span>}
+                      {isActive && <span className={isFa ? "mr-2 text-xs font-bold" : "ml-2 text-[10px] font-bold"}>✓</span>}
                     </button>
                   );
                 })}
@@ -237,7 +254,9 @@ export default function ContactForm() {
                   placeholder={t?.contact?.namePlaceholder || (isFa ? 'نام و نام خانوادگی' : 'Your name')} 
                   required 
                   style={{ fontFamily: 'inherit' }}
-                  className={`w-full px-4 py-3 rounded-none border text-xs transition-all duration-200 focus:outline-none ${
+                  className={`w-full px-4 py-3 rounded-none border transition-all duration-200 focus:outline-none ${
+                    isFa ? 'text-xs md:text-sm tracking-normal leading-relaxed' : 'text-xs tracking-normal'
+                  } ${
                     isLight 
                       ? 'bg-black/5 border-black/15 text-black placeholder:text-black/40 focus:border-black' 
                       : 'bg-white/5 border-white/15 text-white placeholder:text-white/40 focus:border-[#00f0ff]'
@@ -254,7 +273,9 @@ export default function ContactForm() {
                   placeholder={t?.contact?.emailPlaceholder || (isFa ? 'آدرس ایمیل یا شماره تماس' : 'Your email')} 
                   required 
                   style={{ fontFamily: 'inherit' }}
-                  className={`w-full px-4 py-3 rounded-none border text-xs transition-all duration-200 focus:outline-none ${
+                  className={`w-full px-4 py-3 rounded-none border transition-all duration-200 focus:outline-none ${
+                    isFa ? 'text-xs md:text-sm tracking-normal leading-relaxed' : 'text-xs tracking-normal'
+                  } ${
                     isLight 
                       ? 'bg-black/5 border-black/15 text-black placeholder:text-black/40 focus:border-black' 
                       : 'bg-white/5 border-white/15 text-white placeholder:text-white/40 focus:border-[#00f0ff]'
@@ -273,14 +294,16 @@ export default function ContactForm() {
                 rows="5" 
                 required 
                 style={{ fontFamily: 'inherit' }}
-                className={`w-full p-4 rounded-none border text-xs transition-all duration-200 focus:outline-none resize-y ${
+                className={`w-full p-4 rounded-none border transition-all duration-200 focus:outline-none resize-y ${
+                  isFa ? 'text-xs md:text-sm tracking-normal leading-relaxed' : 'text-xs tracking-normal'
+                } ${
                   isLight 
                     ? 'bg-black/5 border-black/15 text-black placeholder:text-black/40 focus:border-black' 
                     : 'bg-white/5 border-white/15 text-white placeholder:text-white/40 focus:border-[#00f0ff]'
                 }`}
               ></textarea>
               
-              <div className="flex justify-between items-center mt-1 px-1 text-[10px] opacity-40">
+              <div className="flex justify-between items-center mt-1.5 px-1 text-xs opacity-70">
                 <span>{isFa ? `تعداد کاراکتر: ${formData.message.length}` : `Character count: ${formData.message.length}`}</span>
                 <span>
                   {isFa 
@@ -292,17 +315,17 @@ export default function ContactForm() {
 
             {/* Live Command Summary */}
             {(formData.name || formData.email || formData.message) && (
-              <div className={`p-3 border rounded-none text-[11px] space-y-1 ${
-                isLight ? 'border-black/10 bg-black/5 text-black/70' : 'border-white/10 bg-white/5 text-white/70'
+              <div className={`p-3 border rounded-none space-y-1.5 ${
+                isLight ? 'border-black/10 bg-black/5 text-black/80' : 'border-white/10 bg-white/5 text-white/80'
               }`}>
-                <div className="flex items-center justify-between text-[10px] opacity-50 border-b border-white/10 pb-1">
+                <div className="flex items-center justify-between text-xs opacity-70 border-b border-white/10 pb-1">
                   <span>{isFa ? "پیش‌نمایش اطلاعات ثبت‌شده" : "LIVE INQUIRY SUMMARY"}</span>
                   <span>{isFa ? "محرمانه" : "CONFIDENTIAL"}</span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
-                  <div><span className="opacity-40">{isFa ? "نام:" : "Name:"}</span> {formData.name || '—'}</div>
-                  <div><span className="opacity-40">{isFa ? "حوزه:" : "Discipline:"}</span> {disciplines.find(d => d.id === selectedDiscipline)?.label}</div>
-                  <div><span className="opacity-40">{isFa ? "ارتباط:" : "Contact:"}</span> {formData.email || '—'}</div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs md:text-sm">
+                  <div><span className="opacity-50">{isFa ? "نام:" : "Name:"}</span> {formData.name || '—'}</div>
+                  <div><span className="opacity-50">{isFa ? "حوزه:" : "Discipline:"}</span> {disciplines.find(d => d.id === selectedDiscipline)?.label}</div>
+                  <div><span className="opacity-50">{isFa ? "ارتباط:" : "Contact:"}</span> {formData.email || '—'}</div>
                 </div>
               </div>
             )}
@@ -312,7 +335,9 @@ export default function ContactForm() {
               type="submit" 
               disabled={loading}
               style={{ fontFamily: 'inherit' }}
-              className={`w-full py-4 rounded-none border text-xs tracking-widest transition-all duration-300 relative overflow-hidden group ${
+              className={`w-full py-4 rounded-none border text-xs md:text-sm transition-all duration-300 relative overflow-hidden group ${
+                isFa ? 'tracking-normal leading-relaxed font-semibold' : 'tracking-widest'
+              } ${
                 isLight
                   ? 'border-black bg-black text-white hover:bg-transparent hover:text-black'
                   : 'border-white bg-white text-black hover:bg-[#00f0ff] hover:border-[#00f0ff] hover:text-black'

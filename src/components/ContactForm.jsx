@@ -85,12 +85,11 @@ export default function ContactForm() {
       message: formData.message,
       selected_discipline: disciplines.find((item) => item.id === selectedDiscipline)?.label || '',
       subject: `New Project Inquiry from ${formData.name}`,
-      from_name: "Siavash Studio Website",
-      botcheck: false
+      from_name: "Siavash Studio Website"
     };
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

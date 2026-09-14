@@ -88,17 +88,17 @@ export default function ProjectCard({ project }) {
         )}
       </div>
 
-      {/* Card Information Footer - Formatted for LTR and RTL */}
+      {/* Card Information Footer - Optimized for Farsi & English typography */}
       <div 
-        className="flex flex-col gap-1.5 border-t p-4 rounded-none transition-colors"
+        className="flex flex-col gap-1.5 border-t p-4 sm:p-5 rounded-none transition-colors"
         style={{
           borderColor: isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)',
         }}
       >
         <h3 
-          className={`line-clamp-2 text-base font-semibold leading-snug tracking-tight ${
-            isLight ? 'text-neutral-900' : 'text-white/90'
-          }`}
+          className={`line-clamp-2 text-base md:text-lg font-semibold ${
+            isFa ? 'leading-relaxed tracking-normal font-vazir' : 'leading-snug tracking-tight'
+          } ${isLight ? 'text-neutral-900' : 'text-white/90'}`}
           style={{
             textShadow: isLight 
               ? '0 1px 2px rgba(255,255,255,0.8)' 
@@ -109,9 +109,9 @@ export default function ProjectCard({ project }) {
         </h3>
         {activeTagline && (
           <span 
-            className={`line-clamp-1 text-[11px] font-medium uppercase tracking-wider ${
-              isLight ? 'text-neutral-600' : 'text-neutral-400'
-            }`}
+            className={`line-clamp-2 text-xs md:text-sm font-medium ${
+              isFa ? 'leading-relaxed tracking-normal text-neutral-400' : 'uppercase tracking-wider text-[11px]'
+            } ${isLight ? 'text-neutral-600' : 'text-neutral-400'}`}
             style={{
               textShadow: isLight 
                 ? '0 1px 2px rgba(255,255,255,0.8)' 

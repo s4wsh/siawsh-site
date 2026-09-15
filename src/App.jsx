@@ -10,6 +10,7 @@ import InsightsPage from './pages/InsightsPage.jsx';
 import InsightDetail from './pages/InsightDetail.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import DisciplineGateway from './components/DisciplineGateway.jsx';
+import StudioLayout from './layouts/StudioLayout.jsx';
 import useSmoothScroll, { lenisInstance } from './hooks/useSmoothScroll.js';
 import './index.css';
 
@@ -96,37 +97,39 @@ export default function App() {
       >
         <GlobalLayout>
           <Routes>
-            {/* Starter Gateway Path Handler */}
+            {/* Starter Gateway Path Handlers */}
             <Route path="/" element={<RootGateway />} />
             <Route path="/gateway" element={<DisciplineGateway isPersian={false} />} />
             <Route path="/fa/gateway" element={<DisciplineGateway isPersian={true} />} />
 
-            {/* Studio Main Routes */}
-            <Route path="/home" element={<HomePage isPersian={false} />} />
-            <Route path="/fa" element={<HomePage isPersian={true} />} />
-            <Route path="/fa/home" element={<HomePage isPersian={true} />} />
-            
-            {/* English Discipline Pages & Dedicated Route Handlers */}
-            <Route path="/logo-motion" element={<WorkPage filter="logo-motion" />} />
-            <Route path="/disciplines/:id" element={<WorkPage />} />
+            {/* Studio Main Routes (Wrapped with Global Ambient Layout) */}
+            <Route element={<StudioLayout />}>
+              <Route path="/home" element={<HomePage isPersian={false} />} />
+              <Route path="/fa" element={<HomePage isPersian={true} />} />
+              <Route path="/fa/home" element={<HomePage isPersian={true} />} />
+              
+              {/* English Discipline Pages & Dedicated Route Handlers */}
+              <Route path="/logo-motion" element={<WorkPage filter="logo-motion" />} />
+              <Route path="/disciplines/:id" element={<WorkPage />} />
 
-            {/* Farsi Discipline Pages & Dedicated Route Handlers */}
-            <Route path="/fa/logo-motion" element={<WorkPage filter="logo-motion" isPersian={true} />} />
-            <Route path="/fa/about" element={<AboutPage isPersian={true} />} />
-            <Route path="/fa/work" element={<WorkPage isPersian={true} />} />
-            <Route path="/fa/work/:id" element={<ProjectDetail isPersian={true} />} />
-            <Route path="/fa/insights" element={<InsightsPage isPersian={true} />} />
-            <Route path="/fa/insights/:slug" element={<InsightDetail isPersian={true} />} />
-            <Route path="/fa/contact" element={<ContactPage isPersian={true} />} />
-            <Route path="/fa/disciplines/:id" element={<WorkPage isPersian={true} />} />
+              {/* Farsi Discipline Pages & Dedicated Route Handlers */}
+              <Route path="/fa/logo-motion" element={<WorkPage filter="logo-motion" isPersian={true} />} />
+              <Route path="/fa/about" element={<AboutPage isPersian={true} />} />
+              <Route path="/fa/work" element={<WorkPage isPersian={true} />} />
+              <Route path="/fa/work/:id" element={<ProjectDetail isPersian={true} />} />
+              <Route path="/fa/insights" element={<InsightsPage isPersian={true} />} />
+              <Route path="/fa/insights/:slug" element={<InsightDetail isPersian={true} />} />
+              <Route path="/fa/contact" element={<ContactPage isPersian={true} />} />
+              <Route path="/fa/disciplines/:id" element={<WorkPage isPersian={true} />} />
 
-            {/* Standard Studio Routes */}
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/work" element={<WorkPage />} />
-            <Route path="/work/:id" element={<ProjectDetail />} />
-            <Route path="/insights" element={<InsightsPage />} />
-            <Route path="/insights/:slug" element={<InsightDetail />} />
-            <Route path="/contact" element={<ContactPage />} />
+              {/* Standard Studio Routes */}
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/work" element={<WorkPage />} />
+              <Route path="/work/:id" element={<ProjectDetail />} />
+              <Route path="/insights" element={<InsightsPage />} />
+              <Route path="/insights/:slug" element={<InsightDetail />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Route>
 
             {/* Catch-all Fallback Route */}
             <Route path="*" element={<RootGateway />} />

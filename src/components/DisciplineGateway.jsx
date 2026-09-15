@@ -205,7 +205,7 @@ export default function DisciplineGateway({ isPersian = false }) {
         </header>
 
         {/* Gateway Options Grid — Sharp Obsidian Glass Architecture */}
-        <main className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 my-auto py-4 max-w-5xl lg:max-w-6xl mx-auto w-full flex-1 max-h-[calc(100dvh-120px)] 2xl:max-h-[620px] items-stretch">
+        <main className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 my-auto py-4 max-w-5xl lg:max-w-6xl mx-auto w-full flex-1 max-h-[calc(100dvh-120px)] 2xl:max-h-620px items-stretch">
           
           {/* Card 01: Spatial Architecture */}
           <div

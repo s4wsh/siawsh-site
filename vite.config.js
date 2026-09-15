@@ -14,7 +14,7 @@ export default defineConfig({
     sitemap({
       hostname: HOSTNAME,
       dynamicRoutes: dynamicProjectRoutes,
-      generateRobotsTxt: false,
+      generateRobotsTxt: true,
     }),
   ],
 })

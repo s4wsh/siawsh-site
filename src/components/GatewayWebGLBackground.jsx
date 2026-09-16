@@ -14,6 +14,12 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
     isInteracting: false 
   });
   const modeRef = useRef(0.0);
+  const activeDisciplineRef = useRef(activeDiscipline);
+
+  // Keep activeDiscipline ref updated without triggering full WebGL context rebuilds
+  useEffect(() => {
+    activeDisciplineRef.current = activeDiscipline;
+  }, [activeDiscipline]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -40,7 +46,6 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
     `;
 
     // Fragment Shader: Night Sky Blue, Micro Stars & Gateway Expansion
-    // SPEED OPTIMIZATION: Changed precision to mediump for faster GPU float execution
     const fsSource = `
       precision mediump float;
       uniform vec2 u_resolution;
@@ -268,7 +273,6 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
 
     // Render Animation Loop
     const render = (now) => {
-      // SPEED OPTIMIZATION: Pause rendering when browser tab is inactive
       if (document.hidden) {
         animId = requestAnimationFrame(render);
         return;
@@ -291,8 +295,8 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
       m.x += (m.targetX - m.x) * 0.02;
       m.y += (m.targetY - m.y) * 0.02;
 
-      // Smooth Gateway Opening LERP (0.0 -> 1.0)
-      const targetModeVal = activeDiscipline ? 1.0 : 0.0;
+      // Smooth Gateway Opening LERP (0.0 -> 1.0) via Ref
+      const targetModeVal = activeDisciplineRef.current ? 1.0 : 0.0;
       modeRef.current += (targetModeVal - modeRef.current) * 0.035;
 
       gl.uniform2f(uResLoc, canvas.width, canvas.height);
@@ -304,6 +308,13 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
       animId = requestAnimationFrame(render);
     };
 
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        startTime = performance.now();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     animId = requestAnimationFrame(render);
 
     return () => {
@@ -312,10 +323,17 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
       window.removeEventListener('touchstart', handleTouchMove);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      
       cancelAnimationFrame(animId);
+
+      // Clean GPU memory allocations
+      gl.deleteBuffer(positionBuffer);
+      gl.deleteShader(vertShader);
+      gl.deleteShader(fragShader);
       gl.deleteProgram(program);
     };
-  }, [activeDiscipline]);
+  }, []); // Run only once on mount
 
   return (
     <canvas

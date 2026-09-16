@@ -17,12 +17,15 @@ export default defineConfig({
       generateRobotsTxt: true,
     }),
   ],
-  esbuild: {
-    drop: ['console', 'debugger'],
-  },
   build: {
-    minify: 'esbuild',
+    target: 'esnext',
+    minify: 'oxc',
     cssMinify: true,
+    oxc: {
+      minify: {
+        drop: ['console', 'debugger'],
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks(id) {

@@ -1,0 +1,14 @@
+# SIAWSH Studio
+
+> A multidisciplinary studio bridging architectural precision, physical spatial design, visual identity systems, and digital motion[cite: 1].
+
+## Navigation
+- [Portfolio & Work](https://siavashstudio.ir/work): Collection of spatial architecture, 3D motion, and visual identity projects[cite: 1].
+- [About the Studio](https://siavashstudio.ir/about): Information on studio philosophy, multidisciplinary approach, and capabilities[cite: 1].
+- [Contact & Inquiries](https://siavashstudio.ir/contact): Direct communication channels and studio details[cite: 1].
+
+## Featured Projects
+- [Croissant House Branding](https://siavashstudio.ir/work/croissant-house-branding)
+- [Skinny Cow Packaging Redesign](https://siavashstudio.ir/work/skinny-cow-packaging-redesign)
+- [Aura Smart Speaker](https://siavashstudio.ir/work/aura-smart-speaker)
+- [Ario Built Spatial Design](https://siavashstudio.ir/work/ario-built-spatial-design)

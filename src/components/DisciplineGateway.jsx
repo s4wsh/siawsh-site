@@ -23,17 +23,22 @@ export default function DisciplineGateway({ isPersian = false }) {
     }
   }, [isPersian, lang, setLang]);
 
-  // LERP Loop for Fluid Magic Border & Trail Tracking
+  // Self-stopping LERP Loop to prevent unnecessary main-thread React re-renders
   useEffect(() => {
     let animationFrameId;
+    let isRunning = true;
     const lerpFactor = 0.035;
 
     const animatePointer = () => {
+      if (!isRunning) return;
+
       setSmoothMousePos((prev) => {
         const dx = targetMousePos.x - prev.x;
         const dy = targetMousePos.y - prev.y;
 
+        // Stop frame loop once pointer has converged
         if (Math.abs(dx) < 0.001 && Math.abs(dy) < 0.001) {
+          isRunning = false;
           return targetMousePos;
         }
 
@@ -43,11 +48,16 @@ export default function DisciplineGateway({ isPersian = false }) {
         };
       });
 
-      animationFrameId = requestAnimationFrame(animatePointer);
+      if (isRunning) {
+        animationFrameId = requestAnimationFrame(animatePointer);
+      }
     };
 
     animationFrameId = requestAnimationFrame(animatePointer);
-    return () => cancelAnimationFrame(animationFrameId);
+    return () => {
+      isRunning = false;
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, [targetMousePos]);
 
   // Pointer Location Update Handler

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
-import GatewayWebGLBackground from '../components/GatewayWebGLBackground.jsx';
+
+// SPEED OPTIMIZATION: Defer heavy WebGL background from main bundle
+const GatewayWebGLBackground = lazy(() => import('../components/GatewayWebGLBackground.jsx'));
 
 export default function StudioLayout() {
   const { mode, lang } = useStudioTheme();
@@ -21,7 +23,9 @@ export default function StudioLayout() {
     >
       {/* Dynamic Background Shader at lower opacity for content readability */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-40 transition-opacity duration-1000">
-        <GatewayWebGLBackground activeDiscipline={mode} />
+        <Suspense fallback={null}>
+          <GatewayWebGLBackground activeDiscipline={mode} />
+        </Suspense>
       </div>
 
       {/* Mode-Specific Radial Glow Overlay */}

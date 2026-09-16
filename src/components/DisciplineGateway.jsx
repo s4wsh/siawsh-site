@@ -10,7 +10,6 @@ export default function DisciplineGateway({ isPersian = false }) {
   const { setMode, lang, setLang } = useStudioTheme();
   const [hoveredCard, setHoveredCard] = useState(null);
   const [activeTouchCard, setActiveTouchCard] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   // Smooth Interpolated Pointer Positions (LERP)
   const [targetMousePos, setTargetMousePos] = useState({ x: 50, y: 50 });
@@ -23,11 +22,6 @@ export default function DisciplineGateway({ isPersian = false }) {
       setLang(targetLang);
     }
   }, [isPersian, lang, setLang]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   // LERP Loop for Fluid Magic Border & Trail Tracking
   useEffect(() => {
@@ -160,14 +154,14 @@ export default function DisciplineGateway({ isPersian = false }) {
 
       {/* Viewport locked to 100dvh with dark background */}
       <div 
-        className={`w-full min-h-screen h-dvh bg-slate-950 text-white flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 relative overflow-hidden select-none transition-opacity duration-1000 ease-out ${
-          isLoaded ? 'opacity-100' : 'opacity-0'
-        }`}
+        className="w-full min-h-screen h-dvh bg-slate-950 text-white flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 relative overflow-hidden select-none"
         style={fontStyle}
         dir={activeIsPersian ? 'rtl' : 'ltr'}
       >
         {/* Real-Time WebGL Fluid Shader Canvas Background */}
-        <GatewayWebGLBackground activeDiscipline={currentActiveDiscipline} />
+        <Suspense fallback={null}>
+          <GatewayWebGLBackground activeDiscipline={currentActiveDiscipline} />
+        </Suspense>
 
         {/* Global Ambient Glow */}
         <div 

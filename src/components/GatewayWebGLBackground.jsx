@@ -19,7 +19,14 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    // SPEED OPTIMIZATION: Context creation flags for lower GPU power consumption
+    const gl = canvas.getContext('webgl', { 
+      powerPreference: 'low-power', 
+      alpha: false, 
+      depth: false, 
+      antialias: false 
+    }) || canvas.getContext('experimental-webgl');
+
     if (!gl) return;
 
     // Vertex Shader
@@ -33,8 +40,9 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
     `;
 
     // Fragment Shader: Night Sky Blue, Micro Stars & Gateway Expansion
+    // SPEED OPTIMIZATION: Changed precision to mediump for faster GPU float execution
     const fsSource = `
-      precision highp float;
+      precision mediump float;
       uniform vec2 u_resolution;
       uniform vec2 u_mouse;
       uniform float u_time;
@@ -210,9 +218,12 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
     const uTimeLoc = gl.getUniformLocation(program, 'u_time');
     const uModeLoc = gl.getUniformLocation(program, 'u_mode');
 
+    // SPEED OPTIMIZATION: DPR capped at 1.25x for maximum rendering throughput
+    const getDPR = () => Math.min(window.devicePixelRatio || 1, 1.25);
+
     // Resize Handler
     const handleResize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = getDPR();
       const width = (canvas.width = Math.floor(window.innerWidth * dpr));
       const height = (canvas.height = Math.floor(window.innerHeight * dpr));
       gl.viewport(0, 0, width, height);
@@ -227,7 +238,7 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
 
     // Mouse Event Handlers
     const handleMouseMove = (e) => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = getDPR();
       mouseRef.current.targetX = e.clientX * dpr;
       mouseRef.current.targetY = canvas.height - e.clientY * dpr;
       mouseRef.current.isInteracting = true;
@@ -236,7 +247,7 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
     // Mobile Touch Handlers
     const handleTouchMove = (e) => {
       if (e.touches && e.touches[0]) {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const dpr = getDPR();
         mouseRef.current.targetX = e.touches[0].clientX * dpr;
         mouseRef.current.targetY = canvas.height - e.touches[0].clientY * dpr;
         mouseRef.current.isInteracting = true;
@@ -257,6 +268,12 @@ export default function GatewayWebGLBackground({ activeDiscipline = null }) {
 
     // Render Animation Loop
     const render = (now) => {
+      // SPEED OPTIMIZATION: Pause rendering when browser tab is inactive
+      if (document.hidden) {
+        animId = requestAnimationFrame(render);
+        return;
+      }
+
       const elapsed = (now - startTime) * 0.001;
       const m = mouseRef.current;
 

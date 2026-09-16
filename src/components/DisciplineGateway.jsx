@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
-import GatewayWebGLBackground from './GatewayWebGLBackground.jsx';
+
+const GatewayWebGLBackground = lazy(() => import('./GatewayWebGLBackground.jsx'));
 
 export default function DisciplineGateway({ isPersian = false }) {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function DisciplineGateway({ isPersian = false }) {
   // Smooth Interpolated Pointer Positions (LERP)
   const [targetMousePos, setTargetMousePos] = useState({ x: 50, y: 50 });
   const [smoothMousePos, setSmoothMousePos] = useState({ x: 50, y: 50 });
-
+  
   // Sync language state on mount / prop update
   useEffect(() => {
     const targetLang = isPersian ? 'fa' : 'en';

@@ -1,30 +1,37 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ProjectCard from './ProjectCard.jsx';
 
-export default function TunnelGrid({ projects, onSelectProject }) {
+// Inline GPU-accelerated CSS styles defined outside component render loop
+const FLOAT_STYLES = `
+  @keyframes floatUp {
+    0%, 100% {
+      transform: translate3d(0, 0px, 0);
+    }
+    50% {
+      transform: translate3d(0, -16px, 0);
+    }
+  }
+
+  .animate-float-even {
+    animation: floatUp 12s ease-in-out infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  .animate-float-odd {
+    animation: floatUp 14s ease-in-out infinite 2s;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+`;
+
+function TunnelGrid({ projects, onSelectProject }) {
   if (!projects || projects.length === 0) return null;
 
   return (
     <div className="relative w-full py-12">
       {/* Dynamic Keyframes for smooth subtle card floating */}
-      <style>{`
-        @keyframes floatUp {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-16px);
-          }
-        }
-
-        .animate-float-even {
-          animation: floatUp 12s ease-in-out infinite;
-        }
-
-        .animate-float-odd {
-          animation: floatUp 14s ease-in-out infinite 2s;
-        }
-      `}</style>
+      <style>{FLOAT_STYLES}</style>
 
       {/* True 2-Column Masonry preserving equal vertical margins between cards */}
       <div className="columns-1 gap-8 md:columns-2">
@@ -45,3 +52,5 @@ export default function TunnelGrid({ projects, onSelectProject }) {
     </div>
   );
 }
+
+export default memo(TunnelGrid);

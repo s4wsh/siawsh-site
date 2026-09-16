@@ -7,9 +7,10 @@ export default function ContactForm() {
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedDiscipline, setSelectedDiscipline] = useState('arch');
+  // Multi-select state initialized with default category
+  const [selectedDisciplines, setSelectedDisciplines] = useState(['arch']);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [detectedTag, setDetectedTag] = useState(null);
+  const [detectedTags, setDetectedTags] = useState([]);
 
   const disciplines = [
     { 
@@ -49,19 +50,19 @@ export default function ContactForm() {
     }
   ];
 
+  // AI Multi-Keyword Detection Engine
   useEffect(() => {
     const text = formData.message.toLowerCase();
     if (!text || text.length < 5) {
-      setDetectedTag(null);
+      setDetectedTags([]);
       return;
     }
 
-    for (const item of disciplines) {
-      if (item.keywords.some((kw) => text.includes(kw))) {
-        setDetectedTag(item.id);
-        break;
-      }
-    }
+    const matched = disciplines
+      .filter((item) => item.keywords.some((kw) => text.includes(kw)))
+      .map((item) => item.id);
+
+    setDetectedTags(matched);
   }, [formData.message]);
 
   const handleInputChange = (e) => {
@@ -69,27 +70,46 @@ export default function ContactForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleApplyDetected = (id) => {
-    setSelectedDiscipline(id);
-    setDetectedTag(null);
+  // Toggle single or multiple discipline selections
+  const toggleDiscipline = (id) => {
+    setSelectedDisciplines((prev) => {
+      if (prev.includes(id)) {
+        // Prevent unselecting all (keep at least one active)
+        return prev.length > 1 ? prev.filter((item) => item !== id) : prev;
+      } else {
+        return [...prev, id];
+      }
+    });
+  };
+
+  // One-click apply all smart detected categories
+  const handleApplyAllDetected = () => {
+    setSelectedDisciplines((prev) => Array.from(new Set([...prev, ...detectedTags])));
+    setDetectedTags([]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    const activeLabels = disciplines
+      .filter((d) => selectedDisciplines.includes(d.id))
+      .map((d) => d.label)
+      .join(' | ');
+
     const payload = {
       access_key: "f5778241-8463-452c-8e63-489e789530b3",
       name: formData.name,
       email: formData.email,
       message: formData.message,
-      selected_discipline: disciplines.find((item) => item.id === selectedDiscipline)?.label || '',
-      subject: `New Project Inquiry from ${formData.name}`,
-      from_name: "Siavash Studio Website"
+      selected_discipline: activeLabels,
+      subject: `New Project Inquiry (${selectedDisciplines.length} Services) from ${formData.name}`,
+      from_name: "Siavash Studio Website",
+      botcheck: false
     };
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -111,6 +131,8 @@ export default function ContactForm() {
       setLoading(false);
     }
   };
+
+  const unselectedSuggestions = detectedTags.filter((tag) => !selectedDisciplines.includes(tag));
 
   return (
     <section 
@@ -185,34 +207,35 @@ export default function ContactForm() {
         ) : (
           <form className="contact-form space-y-6" onSubmit={handleSubmit}>
             
-            {/* Discipline Selector */}
+            {/* Multi-Discipline Selector */}
             <div className="discipline-selector space-y-2">
               <div className="flex items-center justify-between">
                 <label className={`field-label ${
                   isFa ? 'text-xs md:text-sm font-medium opacity-80 tracking-normal' : 'text-[11px] opacity-60 tracking-widest'
                 }`}>
-                  {t?.contact?.disciplineLabel || (isFa ? 'حوزه خدمات مورد نیاز' : 'Required Service Discipline')}
+                  {t?.contact?.disciplineLabel || (isFa ? 'حوزه خدمات مورد نیاز (قابلیت انتخاب چندگانه)' : 'Required Service Discipline (Multi-Selectable)')}
                 </label>
-                {detectedTag && detectedTag !== selectedDiscipline && (
+
+                {unselectedSuggestions.length > 0 && (
                   <button
                     type="button"
-                    onClick={() => handleApplyDetected(detectedTag)}
+                    onClick={handleApplyAllDetected}
                     className={`text-[#00f0ff] underline hover:opacity-80 transition-opacity ${
                       isFa ? 'text-xs tracking-normal' : 'text-[10px] tracking-wider'
                     }`}
                     style={{ fontFamily: 'inherit' }}
                   >
                     {isFa 
-                      ? `✦ پیشنهاد هوشمند: تغییر به ${disciplines.find(d => d.id === detectedTag)?.label}؟`
-                      : `✦ Smart suggestion: Switch to ${disciplines.find(d => d.id === detectedTag)?.label}?`}
+                      ? `✦ پیشنهاد هوشمند: افزودن ${unselectedSuggestions.map(id => disciplines.find(d => d.id === id)?.label).join('، ')}؟`
+                      : `✦ Smart suggestion: Add ${unselectedSuggestions.map(id => disciplines.find(d => d.id === id)?.label).join(', ')}?`}
                   </button>
                 )}
               </div>
 
               <div className="discipline-grid flex flex-wrap gap-2.5">
                 {disciplines.map((item) => {
-                  const isActive = selectedDiscipline === item.id;
-                  const isSuggested = detectedTag === item.id && !isActive;
+                  const isActive = selectedDisciplines.includes(item.id);
+                  const isSuggested = detectedTags.includes(item.id) && !isActive;
 
                   return (
                     <button
@@ -232,7 +255,7 @@ export default function ContactForm() {
                             ? 'border-black/15 bg-black/5 text-black hover:border-black/40'
                             : 'border-white/15 bg-white/5 text-white hover:border-white/40'
                       }`}
-                      onClick={() => setSelectedDiscipline(item.id)}
+                      onClick={() => toggleDiscipline(item.id)}
                     >
                       {item.label}
                       {isActive && <span className={isFa ? "mr-2 text-xs font-bold" : "ml-2 text-[10px] font-bold"}>✓</span>}
@@ -323,7 +346,12 @@ export default function ContactForm() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs md:text-sm">
                   <div><span className="opacity-50">{isFa ? "نام:" : "Name:"}</span> {formData.name || '—'}</div>
-                  <div><span className="opacity-50">{isFa ? "حوزه:" : "Discipline:"}</span> {disciplines.find(d => d.id === selectedDiscipline)?.label}</div>
+                  <div><span className="opacity-50">{isFa ? "حوزه(ها):" : "Discipline(s):"}</span> {
+                    disciplines
+                      .filter(d => selectedDisciplines.includes(d.id))
+                      .map(d => d.label)
+                      .join(', ')
+                  }</div>
                   <div><span className="opacity-50">{isFa ? "ارتباط:" : "Contact:"}</span> {formData.email || '—'}</div>
                 </div>
               </div>

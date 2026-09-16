@@ -21,6 +21,7 @@ export default defineConfig({
     target: 'esnext',
     minify: 'oxc',
     cssMinify: true,
+    cssCodeSplit: true,
     oxc: {
       minify: {
         drop: ['console', 'debugger'],

@@ -8,6 +8,22 @@ export default function AboutSection() {
   const { isLight, lang } = useStudioTheme();
   const isEn = lang === 'en';
 
+  // Dynamic SEO: title & meta description per language
+  useEffect(() => {
+    document.title = isEn
+      ? 'SIAWSH Studio | Architectural Visualisation, CGI Production & Brand Identity'
+      : 'استودیو سیاوش | رندر معماری، CGI سینماتیک و هویت بصری برند';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute(
+        'content',
+        isEn
+          ? 'SIAWSH Studio is an international multidisciplinary practice — cinematic architectural visualisation, photorealistic CGI, 3D motion design, and brand identity systems. Commission a project or collaborate.'
+          : 'استودیو سیاوش، مجموعه‌ای چندرشته‌ای در طراحی معماری، رندر سینماتیک، CGI، موشن دیزاین سه‌بعدی و هویت بصری برند. سفارش پروژه و همکاری با طراحان و معماران.'
+      );
+    }
+  }, [isEn]);
+
   // Pointer & Smooth Interactive Light Tracking State
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [smoothMousePos, setSmoothMousePos] = useState({ x: 50, y: 50 });
@@ -210,19 +226,21 @@ export default function AboutSection() {
             } ${
               isLight ? 'text-black/50' : 'text-white/50'
             }`}>
-              {isEn ? 'SIAWSH STUDIO' : 'استودیوی چندرشته‌ای'}
+              {isEn ? 'SIAWSH STUDIO' : 'استودیو سیاوش'}
             </span>
             
             <h1 className={`text-2xl md:text-3xl font-normal tracking-tight leading-tight ${
               isLight ? 'text-black/70' : 'text-white/70'
             }`}>
-              {isEn ? 'About SIAWSH Studio' : 'درباره استودیوی سیاوش'}
+              {isEn 
+                ? 'Where Architecture, Cinema & Brand Worlds Converge' 
+                : 'جایی که معماری، سینما و جهانِ برند به هم می‌رسند'}
             </h1>
             
             <h2 className="text-3xl md:text-4xl font-semibold leading-snug">
               {isEn 
-                ? 'The Intersection of Spatial Architecture, Cinematic CGI, Brand Strategy & Motion Design' 
-                : 'تلاقی معماری، سینما، استراتژی برند و موشن دیزاین'}
+                ? 'About SIAWSH Studio — The Intersection of Architectural Design, Cinematic CGI, Brand Strategy & Motion Design' 
+                : 'درباره استودیو سیاوش — تلاقی طراحی معماری، رندر سینماتیک، CGI، استراتژی برند و موشن دیزاین'}
             </h2>
 
             <div className={`space-y-6 text-base md:text-lg font-normal leading-relaxed pt-4 ${
@@ -231,25 +249,25 @@ export default function AboutSection() {
               {isEn ? (
                 <>
                   <p>
-                    SIAWSH Studio is an international multidisciplinary creative practice led by Siavash Afsari. Operating at the apex of architecture, digital media, and brand strategy, our multidisciplinary team architects cohesive visual languages that transcend traditional platforms. We view visual identity not as a static visual system, but as a living ecosystem—one that moves effortlessly across architectural environments, cinematic productions, high-fidelity CGI, commercial motion graphics, bespoke furniture, and core brand strategy.
+                    SIAWSH Studio is an international, multidisciplinary creative practice led by Siavash Afsari, operating at the intersection of architectural design, 3D visualisation, cinematic CGI, brand strategy, and motion design. Our team architects cohesive visual languages that transcend traditional platforms.
                   </p>
                   <p>
-                    Rather than operating within rigid disciplinary silos, we approach every commission through holistic art direction, spatial intuition, and uncompromising visual fidelity. By pairing tactile material authenticity and geometric precision with cutting-edge digital pipelines, we empower visionary architecture firms, global brands, tech innovators, and film productions to transform ambitious ideas into enduring visual assets. The result: scalable, high-impact brand worlds designed for both the physical and digital realms.
+                    We believe a visual identity is not a static logo system — it is a living brand ecosystem: one that moves seamlessly across architectural environments, cinematic productions, photorealistic CGI, commercial motion graphics, bespoke furniture, and digital products. Every commission is approached through holistic art direction, architectural insight, and uncompromising visual fidelity — pairing tactile material authenticity and geometric precision with cutting-edge digital pipelines.
                   </p>
                   <p>
-                    Our signature expertise spans 3D product motion design, photorealistic CGI animation, cinematic architectural visualisation, custom furniture concepts, and kinetic typography—amplifying storytelling across digital touchpoints, spatial environments, and the cinema screen.
+                    The result: scalable, high-impact brand worlds designed for both the physical and digital realms — empowering visionary architecture firms, global brands, tech innovators, and film productions to transform ambitious ideas into enduring visual assets.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    استودیوی سیاوش یک مجموعه تخصصی و چندرشته‌ای در حوزه دیزاین، معماری، تولیدات سینمایی و کارگردانی بصری به مدیریت سیاوش افسری است که با تمرکز بر خلق و ساخت «زبان بصری» فعالیت می‌کند. ما باور داریم که یک هویت بصری قوی و اصیل، به یک ابزار یا بستر خاص محدود نمی‌شود؛ بلکه کیفیتی زنده است که می‌تواند به‌زیبایی در دلِ طراحی معماری و فضاهای داخلی، در روحِ سینما، تیزرهای تبلیغاتی و CGI، روی بومِ نقاشی دیواری و تبلیغات محیطی، در نبضِ موشن گرافیک سه‌بعدی، در پیکره‌ی مبلمان سفارشی و طراحی صنعتی، یا در بن‌مایه‌ی هویت بصری و لوگو زندگی کند.
+                    استودیو سیاوش یک مجموعه تخصصی و چندرشته‌ای به مدیریت سیاوش افسری است؛ در نقطه‌ی تلاقی طراحی معماری، رندر سه‌بعدی، CGI سینماتیک، استراتژی برند و موشن دیزاین. تیم ما «زبان‌های بصری» منسجمی خلق می‌کند که از مرز یک پلتفرم فراتر می‌روند.
                   </p>
                   <p>
-                    تیم ما به‌جای محدود ماندن در مرزهای یک تخصص واحد، مسیر خلق اثر را از زاویه «کارگردانی بصری و کیفیت تصویر» می‌بیند. ما با شناخت عمیق از متریال‌های باکیفیت، نورپردازی، هندسه و فرم، به دفاتر پیشرو معماری، پروژه‌های سینمایی و تبلیغاتی، برندهای مطرح، استارتاپ‌های فناوری و صاحبان کسب‌وکارهای خلاق کمک می‌کنیم تا ایده‌ها و استراتژی‌های خود را به سیستم‌های بصری زنده، هوشمند و ماندگار تبدیل کنند؛ خروجی‌هایی که در همان نگاه اول جذاب و اثرگذارند و ارزش برند یا پروژه شما را در هر دو جهان فیزیکی و دیجیتال ارتقا می‌بخشند.
+                    ما باور داریم هویت بصری یک سیستم ثابت یا صرفاً یک لوگو نیست؛ بلکه یک اکوسیستم زنده است — کیفیتی که به‌طور یکپارچه در فضاهای معماری، تولیدات سینمایی، CGI فوتورئال، موشن گرافیک تبلیغاتی، مبلمان سفارشی و محصولات دیجیتال جاری می‌شود. هر پروژه از دریچه‌ی کارگردانی بصری همه‌جانبه، نگاه معمارانگی و کیفیت تصویری بی‌تعارض دنبال می‌شود؛ با تلفیق اصالت متریال و دقت هندسی با جدیدترین پایپ‌لاین‌های دیجیتال.
                   </p>
                   <p>
-                    تمرکز ویژه استودیو بر موشن دیزاین سه‌بعدی، انیمیشن CGI، رندرهای سینماتیک، کانسپت‌های اختصاصی مبلمان و تایپوگرافی حرکتی است که روایت‌گری بصری را در بسترهای فیزیکی، دیجیتال و پرده سینما ارتقا می‌دهد.
+                    نتیجه: جهان‌های برندی مقیاس‌پذیر و اثرگذار برای هر دو بستر فیزیکی و دیجیتال — به‌گونه‌ای که دفاتر معماری پیشرو، برندهای جهانی، استارتاپ‌های فناوری و پروژه‌های سینمایی بتوانند ایده‌های جسورانه‌ی خود را به دارایی‌های بصری ماندگار تبدیل کنند.
                   </p>
                 </>
               )}
@@ -263,23 +281,23 @@ export default function AboutSection() {
             } ${
               isLight ? 'text-black/70' : 'text-white/70'
             }`}>
-              {isEn ? 'STUDIO SCALE & GLOBAL REACH' : 'مقیاس و تجربه استودیو'}
+              {isEn ? 'STUDIO SCALE & GLOBAL REACH' : 'مقیاس استودیو و گستره جهانی'}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
                   value: isEn ? '10+ Years' : '۱۰+ سال',
-                  label: isEn ? 'Experience' : 'سابقه',
+                  label: isEn ? 'Experience' : 'تجربه',
                   desc: isEn 
-                    ? 'Multidisciplinary design leadership across digital media, CGI, and spatial architecture.' 
-                    : 'تجربه فعالیت تخصصی و چندرشته‌ای در دیزاین و هنرهای بصری',
+                    ? 'Multidisciplinary design leadership across digital media, CGI, and architectural design.' 
+                    : 'رهبری طراحی چندرشته‌ای در رسانه‌های دیجیتال، CGI و طراحی معماری',
                 },
                 {
                   value: isEn ? '40+ Projects' : '۴۰+ پروژه',
-                  label: isEn ? 'Delivered' : 'تحویل داده شده',
+                  label: isEn ? 'Delivered' : 'تحویل‌شده',
                   desc: isEn 
                     ? 'High-profile international commissions delivered across Europe, Cyprus, and global markets.' 
-                    : 'سفارش اختصاصی و پروژه بین‌المللی تحویل داده‌شده',
+                    : 'پروژه‌های شاخص بین‌المللی در اروپا، قبرس و بازارهای جهانی',
                 },
               ].map((metric, idx) => {
                 const cardId = `metric-${idx}`;
@@ -352,6 +370,157 @@ export default function AboutSection() {
             </div>
           </div>
 
+          {/* Collaboration Section — New Phase */}
+          <div className={`space-y-8 ${isEn ? 'text-left' : 'text-right'}`}>
+            <h3 className={`text-lg md:text-xl font-normal uppercase tracking-widest ${
+              isEn ? 'font-sans' : "font-['Vazirmatn','Vazir',sans-serif]"
+            } ${
+              isLight ? 'text-black/70' : 'text-white/70'
+            }`}>
+              {isEn ? 'A STUDIO BUILT FOR COLLABORATION' : 'استودیویی برای همکاری'}
+            </h3>
+
+            <div className={`max-w-4xl space-y-6 text-base md:text-lg font-normal leading-relaxed ${
+              isLight ? 'text-black/70' : 'text-white/70'
+            }`}>
+              {isEn ? (
+                <>
+                  <p>
+                    As SIAWSH Studio enters its next chapter, we are actively expanding our creative network — partnering with independent designers, developers, architects, art directors, and production specialists worldwide. Whether you are an architect seeking cinematic 3D visualisation for an unbuilt project, a developer or agency looking for a 3D web experience or motion identity, a brand or creative director in need of CGI-driven campaign content, or a designer interested in co-production — we provide the pipeline, the craft, and the vision.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    استودیو سیاوش در فاز تازه‌ای از فعالیت خود، شبکه‌ی خلاقانه‌ی خود را گسترش می‌دهد و با طراحان مستقل، توسعه‌دهندگان وب، معماران، کارگردانان هنری و متخصصان تولید در سراسر جهان همکاری می‌کند. چه معماری باشید که به رندر سینماتیک و بازنمایی سه‌بعدی پروژه‌ی در دست طراحی یا ساخت خود نیاز دارد، چه توسعه‌دهنده یا آژانسی در جست‌وجوی تجربه‌ی وب سه‌بعدی یا هویت متحرک برند، چه مدیر خلاقیتی که به محتوای CGI کمپین خود فکر می‌کند، و چه طراح یا استودیویی که خواهان هم‌تولیدی است — ما پایپ‌لاین، مهارت و چشم‌انداز را در کنار شما فراهم می‌کنیم. اگر پروژه‌ای جاه‌طلبانه دارید، بیایید جهان آن را با هم بسازیم.
+                  </p>
+                </>
+              )}
+            </div>
+
+            {/* Collaboration Audience Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {(isEn ? [
+                {
+                  num: '01',
+                  title: 'Architects & Studios',
+                  desc: 'Cinematic 3D visualisation and CGI storytelling for unbuilt and under-construction projects.',
+                },
+                {
+                  num: '02',
+                  title: 'Developers & Agencies',
+                  desc: 'Immersive 3D web experiences, motion identities, and interactive product showcases.',
+                },
+                {
+                  num: '03',
+                  title: 'Brands & Creative Directors',
+                  desc: 'CGI-driven campaign content, kinetic identity systems, and commercial teasers.',
+                },
+                {
+                  num: '04',
+                  title: 'Designers & Production Partners',
+                  desc: 'Co-production, white-label collaboration, and shared pipelines for ambitious work.',
+                },
+              ] : [
+                {
+                  num: '۰۱',
+                  title: 'معماران و دفاتر معماری',
+                  desc: 'رندر سینماتیک سه‌بعدی و روایت CGI برای پروژه‌های در دست طراحی یا ساخت.',
+                },
+                {
+                  num: '۰۲',
+                  title: 'توسعه‌دهندگان و آژانس‌ها',
+                  desc: 'تجربه‌های وب سه‌بعدی، هویت‌های متحرک و شوکیس‌های تعاملی محصول.',
+                },
+                {
+                  num: '۰۳',
+                  title: 'برندها و مدیران خلاقیت',
+                  desc: 'محتوای CGI کمپین‌ها، سیستم‌های هویت متحرک و تیزرهای تبلیغاتی.',
+                },
+                {
+                  num: '۰۴',
+                  title: 'طراحان و شرکای تولید',
+                  desc: 'هم‌تولیدی، همکاری وایت‌لیبل و پایپ‌لاین مشترک برای پروژه‌های جاه‌طلبانه.',
+                },
+              ]).map((item, index) => {
+                const cardId = `collab-${index}`;
+                const isCardActive = activeCardIndex === cardId;
+                return (
+                  <div 
+                    key={index} 
+                    onMouseMove={(e) => handlePointerMove(e, cardId)}
+                    onMouseLeave={handlePointerLeave}
+                    onTouchStart={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchMove={(e) => handleTouchStartMove(e, cardId)}
+                    onTouchEnd={handlePointerLeave}
+                    className={`flex flex-col justify-between ${cardContainerClass}`}
+                  >
+                    {/* Volumetric Architectural Light Cone Beam */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ease-out z-0 ${
+                        isCardActive ? 'opacity-40' : 'opacity-0 group-hover:opacity-20'
+                      }`}
+                      style={{
+                        background: isEn
+                          ? `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(225deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                          : `radial-gradient(ellipse 120% 80% at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255, 220, 180, 0.18) 0%, rgba(255, 170, 100, 0.05) 45%, transparent 80%), linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)`
+                      }}
+                    />
+
+                    {/* Very Thin 3D Dynamic Wand Border Stroke */}
+                    <div 
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-700 z-10 ${
+                        isCardActive ? 'opacity-75' : 'opacity-20 sm:opacity-0 sm:group-hover:opacity-60'
+                      }`}
+                      style={getWandStrokeStyle(isCardActive)}
+                    />
+
+                    {/* Wand Stardust Particle Trail */}
+                    <div 
+                      className={`pointer-events-none absolute inset-0 transition-opacity duration-700 z-0 overflow-hidden ${
+                        isCardActive ? 'opacity-100' : 'opacity-30 sm:opacity-0 sm:group-hover:opacity-100'
+                      }`}
+                      style={{
+                        backgroundImage: `
+                          radial-gradient(1.5px 1.5px at ${smoothMousePos.x}% ${smoothMousePos.y}%, rgba(255,255,255,0.95) 100%, transparent),
+                          radial-gradient(2px 2px at ${Math.min(smoothMousePos.x + 6, 100)}% ${Math.max(smoothMousePos.y - 10, 0)}%, rgba(0,240,255,0.9) 100%, transparent),
+                          radial-gradient(1.5px 1.5px at ${Math.max(smoothMousePos.x - 8, 0)}% ${Math.min(smoothMousePos.y + 8, 100)}%, rgba(255,85,0,0.85) 100%, transparent),
+                          radial-gradient(1px 1px at ${Math.min(smoothMousePos.x + 12, 100)}% ${Math.min(smoothMousePos.y + 12, 100)}%, rgba(0,255,102,0.8) 100%, transparent)
+                        `
+                      }}
+                    />
+
+                    <div className="relative z-20 space-y-3">
+                      <span className={`text-sm font-semibold block ${isLight ? 'text-cyan-600' : 'text-cyan-400'}`}>
+                        {item.num}
+                      </span>
+                      <h4 className="text-base font-semibold leading-snug group-hover:text-cyan-500 transition-colors duration-300">
+                        {item.title}
+                      </h4>
+                      <p className={`text-sm font-normal leading-relaxed ${isLight ? 'text-black/70' : 'text-white/70'}`}>
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Collaboration CTA */}
+            <div className={`pt-4 ${isEn ? 'text-left' : 'text-right'}`}>
+              <a
+                href="/contact"
+                className={`inline-flex items-center gap-2 border px-6 py-3 text-sm font-medium tracking-wide uppercase transition-all duration-500 hover:-translate-y-0.5 ${
+                  isLight
+                    ? 'border-black/20 text-black hover:border-cyan-600 hover:text-cyan-600'
+                    : 'border-white/20 text-white hover:border-cyan-400 hover:text-cyan-400'
+                }`}
+              >
+                {isEn ? 'Start a Collaboration →' : 'شروع همکاری ←'}
+              </a>
+            </div>
+          </div>
+
           {/* Core Capabilities Cards */}
           <div className={`space-y-12 ${isEn ? 'text-left' : 'text-right'}`}>
             <h3 className={`text-lg md:text-xl font-normal uppercase tracking-widest ${
@@ -359,7 +528,7 @@ export default function AboutSection() {
             } ${
               isLight ? 'text-black/70' : 'text-white/70'
             }`}>
-              {isEn ? 'CORE CAPABILITIES' : 'توانمندی‌های اصلی (خدمات و خروجی‌ها)'}
+              {isEn ? 'CORE CAPABILITIES' : 'توانمندی‌های اصلی'}
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -368,7 +537,7 @@ export default function AboutSection() {
                   num: '01',
                   category: 'Architecture & Render',
                   title: 'Architectural Design, Spatial Planning & 3D Visualisation',
-                  desc: 'High-end architectural design, spatial layout planning, photorealistic 3D visualization, interior styling, and environmental landscaping.',
+                  desc: 'High-end architectural design, spatial layout planning, photorealistic 3D visualisation, interior styling, and environmental landscaping.',
                   outcomes: ['Architectural Spatial Concepts', 'Cinematic 3D Visualisations', 'CAD Construction Specs'],
                 },
                 {
@@ -403,51 +572,51 @@ export default function AboutSection() {
                   num: '06',
                   category: 'Digital Product',
                   title: 'Digital Product Design & UI/UX Engineering',
-                  desc: 'Interactive web interfaces, digital editorial platforms, and 3D web experiences designed in Figma and built for modern high-performance web frameworks.',
+                  desc: 'Interactive web interfaces, digital editorial platforms, and immersive 3D web experiences designed in Figma and built for modern high-performance web frameworks.',
                   outcomes: ['Web UI/UX Interfaces', 'Interactive 3D Web Models', 'Functional Web Prototypes'],
                 },
               ] : [
                 {
                   num: '۰۱',
                   category: 'معماری و رندر',
-                  title: 'طراحی معماری، دکوراسیون داخلی و رندر 3D',
-                  desc: 'بازنمایی فوتورئال معماری، مدلسازی سه‌بعدی فضاهای داخلی و خارجی، دیزاین محیطی و جانمایی فضای سبز.',
-                  outcomes: ['طراحی فضاهای معماری', 'رندرهای ۳D معماری', 'مشاوره نقشه CAD'],
+                  title: 'طراحی معماری، دکوراسیون داخلی و رندر سه‌بعدی',
+                  desc: 'طراحی معماری سطح‌بالا، جانمایی فضایی، رندر فوتورئال سه‌بعدی معماری، استایل‌دهی داخلی و طراحی منظر و فضای سبز.',
+                  outcomes: ['کانسپت فضایی معماری', 'رندرهای سینماتیک سه‌بعدی', 'مستندات فنی CAD'],
                 },
                 {
                   num: '۰۲',
                   category: 'سینما و CGI',
-                  title: 'کارگردانی سینمایی، جلوه‌های بصری (VFX) و CGI',
-                  desc: 'تولید جلوه‌های ویژه بصری، رندرلوپ‌های سینماتیک CGI، ساخت سکانس‌های حرکتی پیچیده، تدوین سینمایی و تصحیح رنگ تخصصی برای پروژه‌های تصویر متحرک و ویدیوهای تبلیغاتی فاخر.',
-                  outcomes: ['سکانس‌های VFX و CGI', 'تیزرهای سینماتیک', 'اصلاح رنگ سینماتیک'],
+                  title: 'کارگردانی سینمایی، جلوه‌های بصری (VFX) و تولید CGI',
+                  desc: 'جلوه‌های ویژه (VFX) با کیفیت بالا، رندرلوپ‌های سینماتیک CGI، کوریوگرافی حرکتی پیچیده، تدوین و تصحیح رنگ سینمایی برای کمپین‌های تبلیغاتی و برندهای لوکس.',
+                  outcomes: ['سکانس‌های CGI و VFX', 'تیزرهای سینماتیک تبلیغاتی', 'تصحیح رنگ گره‌محور'],
                 },
                 {
                   num: '۰۳',
                   category: 'طراحی صنعتی',
-                  title: 'طراحی مبلمان سفارشی و دیزاین صنعتی',
-                  desc: 'ایده‌پرازی و خلق مبلمان سفارشی، تدوین نقشه‌های صنعتی، انتخاب متریال‌های اصیل، بررسی جزئیات ساخت و ارائه نقشه‌های فنی و ۳D.',
-                  outcomes: ['کانسبت مبلمان سفارشی', 'نمونه فیزیکی (ماکت)', 'شیت مشخصات متریال'],
+                  title: 'طراحی مبلمان سفارشی و طراحی صنعتی محصول',
+                  desc: 'طراحی صنعتی سرتاسری، کانسپت مبلمان سفارشی، نقشه‌های فنی ساخت، کیوریشن متریال و نمونه‌سازی سه‌بعدی.',
+                  outcomes: ['کانسپت مبلمان سفارشی', 'نمونه‌سازی مقیاس‌شده', 'شیت‌های فنی ساخت'],
                 },
                 {
                   num: '۰۴',
-                  category: 'هویت بصری',
-                  title: 'استراتژی برند و سیستم‌های حرکتی',
-                  desc: 'طراحی جامع سیستم‌های هویت بصری، معماری برند، حرکت‌پذیری پویای لوگو، کارگردانی بصری و هدایت خلاقانه برند.',
-                  outcomes: ['دفترچه راهنمای برند', 'سیستم‌های پویای لوگو', 'سیستم جامع دیزاین'],
+                  category: 'هویت بصری برند',
+                  title: 'استراتژی برند و سیستم‌های هویت متحرک',
+                  desc: 'طراحی جامع هویت بصری برند، معماری برند، سیستم‌های برندینگ متحرک، طراحی لوگوی کینتیک و کارگردانی خلاقانه.',
+                  outcomes: ['راهنمای سبک برند (برندبوک)', 'سیستم‌های لوگوی کینتیک', 'دیزاین سیستم‌ها'],
                 },
                 {
                   num: '۰۵',
-                  category: 'موشن ۳D',
-                  title: 'موشن گرافیک 3D و انیمیشن محصول',
-                  desc: 'انیمیشن‌های فوتورئال محصول، شوکیس‌های متحرک، تایپوگرافی حرکتی و انیماتیک‌های حرفه‌ای خلق‌شده با Blender، DaVinci Resolve و After Effects.',
-                  outcomes: ['انیمیشن ۳D محصول', 'تیزرهای تبلیغاتی', 'تایپوگرافی حرکتی'],
+                  category: 'موشن دیزاین سه‌بعدی',
+                  title: 'موشن گرافیک سه‌بعدی و انیمیشن CGI محصول',
+                  desc: 'انیمیشن‌های فوتورئال سه‌بعدی محصول، موشن گرافیک پویا، شوکیس‌های وب و استوری‌بورد انیماتیک؛ ساخته‌شده با Blender، DaVinci Resolve و After Effects.',
+                  outcomes: ['انیمیشن سه‌بعدی محصول', 'تیزرهای تبلیغاتی متحرک', 'دارایی‌های تایپوگرافی کینتیک'],
                 },
                 {
                   num: '۰۶',
                   category: 'محصول دیجیتال',
-                  title: 'طراحی وب‌سایت و رابط کاربری (UI/UX)',
-                  desc: 'طراحی رابط‌های کاربری تعاملی و شوکیس‌های سه‌بعدی وب در Figma، مهندسی‌شده برای پیاده‌سازی با فریم‌ورک‌های مدرن وب.',
-                  outcomes: ['طراحی UI وب‌سایت', 'مدل‌های ۳D تعاملی', 'نمونه اولیه (Prototype)'],
+                  title: 'طراحی محصول دیجیتال و مهندسی UI/UX',
+                  desc: 'رابط‌های کاربری تعاملی، پلتفرم‌های تحریریه دیجیتال و تجربه‌های وب سه‌بعدی؛ طراحی‌شده در Figma و ساخته‌شده برای فریم‌ورک‌های مدرن و پرسرعت وب.',
+                  outcomes: ['رابط‌های UI/UX وب', 'مدل‌های سه‌بعدی تعاملی وب', 'پروتوتایپ‌های کاربردی'],
                 },
               ]).map((item, index) => {
                 const cardId = `cap-${index}`;
@@ -546,23 +715,23 @@ export default function AboutSection() {
             } ${
               isLight ? 'text-black/70' : 'text-white/70'
             }`}>
-              {isEn ? 'TOOLING & TECHNOLOGY ECOSYSTEM' : 'زیست‌بوم ابزارها و نرم‌افزارها'}
+              {isEn ? 'TOOLING & TECHNOLOGY ECOSYSTEM' : 'زیست‌بوم ابزارها و فناوری'}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
                   category: isEn ? 'Specialized Tooling' : 'ابزار تخصصی',
-                  title: isEn ? 'Cinema, Motion & 3D Pipeline' : 'سینما، موشن و 3D',
+                  title: isEn ? 'Cinema, Motion & 3D Pipeline' : 'پایپ‌لاین سینما، موشن و سه‌بعدی',
                   tools: 'Blender / Adobe After Effects / DaVinci Resolve / VFX & Generative AI Tools',
                 },
                 {
                   category: isEn ? 'Specialized Tooling' : 'ابزار تخصصی',
-                  title: isEn ? 'Brand & Visual Design' : 'گرافیک و برند',
+                  title: isEn ? 'Brand & Visual Design' : 'طراحی برند و بصری',
                   tools: 'Figma / Photoshop / Illustrator / Adobe Audition',
                 },
                 {
                   category: isEn ? 'Specialized Tooling' : 'ابزار تخصصی',
-                  title: isEn ? 'Web Engineering & Frontend' : 'طراحی وب‌سایت و فرانت‌اند',
+                  title: isEn ? 'Web Engineering & Frontend' : 'مهندسی وب و فرانت‌اند',
                   tools: 'React / Vite / Tailwind CSS / Lenis (Smooth Scroll) / Vercel',
                 },
               ].map((item, index) => {
@@ -643,7 +812,7 @@ export default function AboutSection() {
             } ${
               isLight ? 'text-black/70' : 'text-white/70'
             }`}>
-              {isEn ? 'CREATIVE PIPELINE' : 'فرایند خلق اثر (از ایده‌پردازی تا رندر و تولیدنهایی)'}
+              {isEn ? 'CREATIVE PIPELINE' : 'فرایند خلق اثر'}
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -676,26 +845,26 @@ export default function AboutSection() {
                 {
                   num: '۰۱',
                   phase: '',
-                  title: 'ایده، اسکچ و استوری‌بورد',
-                  desc: 'بررسی اولیه تصویری، ترسیم خطی طرح‌ها، استوری‌بورد پویا و تدوین ریتم حرکت یا فضا برای مشخص‌کردن مسیر خلاقانه.',
+                  title: 'کشف، کانسپت و استوری‌بورد',
+                  desc: 'تحقیق بصری، طراحی روایت، پیش‌نویس کانسپت، استوری‌بورد پویا و ریتم‌بندی فضا و حرکت برای تعریف چشم‌انداز خلاقانه.',
                 },
                 {
                   num: '۰۲',
                   phase: '',
-                  title: 'مدلسازی اولیه و پیش‌نمایش حرکتی',
-                  desc: 'مدلسازی ساختاری اولیه در Blender، زمان‌بندی انیمیشن، تنظیم مسیر دوربین و ساخت نمونه اولیه سریع برای تایید نهایی.',
+                  title: 'بلاک‌اوت سه‌بعدی و ساخت انیماتیک',
+                  desc: 'مدل‌سازی ساختاری سه‌بعدی در Blender، کارگردانی دوربین، هم‌ترازی زمانی و پیش‌نمایش انیماتیک برای تأیید کارفرما.',
                 },
                 {
                   num: '۰۳',
                   phase: '',
-                  title: 'متریال، نور و شبیه‌سازی',
-                  desc: 'تنظیم متریال‌های واقعی مبتنی بر فیزیک (PBR)، نورپردازی محیطی و سینماتیک، شبیه‌سازی فیزیکی پارچه و ذرات، و رندر آزمایشی باکیفیت.',
+                  title: 'متریال PBR، نورپردازی و شبیه‌سازی',
+                  desc: 'تکسچرینگ مبتنی بر فیزیک (PBR)، نورپردازی سینماتیک، شبیه‌سازی پارچه و ذرات و رندرهای آزمایشی.',
                 },
                 {
                   num: '۰۴',
                   phase: '',
-                  title: 'اصلاح رنگ، صدا و تحویل نهایی',
-                  desc: 'رندر نهایی CGI/VFX، تصحیح رنگ گره‌محور (Node-based) در DaVinci Resolve، طراحی و تنظیم صدا در Adobe Audition و خروجی دیجیتال یا سینمایی بهینه‌شده.',
+                  title: 'گریدینگ، مسترینگ صدا و خروجی نهایی',
+                  desc: 'رندر CGI با وضوح بالا، تصحیح رنگ گره‌محور در DaVinci Resolve، طراحی صدای فضایی در Adobe Audition و خروجی بهینه چندپلتفرمی.',
                 },
               ]).map((step, index) => {
                 const cardId = `pipeline-${index}`;

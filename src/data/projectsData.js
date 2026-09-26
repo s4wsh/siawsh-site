@@ -2,11 +2,11 @@ export const projectsData = [
   {
     id: "croissant-house-branding",
     title: {
-      en: "Croissant House Brand Identity & Spatial Design | Bakery Branding Germany",
-      fa: "طراحی هویت بصری و برندینگ کروسان هاوس | برندینگ کافه و فضای داخلی در آلمان"
+      en: "Croissant House Brand Identity & Packaging Design | Bakery Branding Germany",
+      fa: "طراحی هویت بصری و بسته‌بندی کروسان هاوس | برندینگ کافه در آلمان"
     },
-    categoryType: ["cinematic", "spatial"],
-    tags: ["brand-identity", "interior", "exterior"],
+    categoryType: ["cinematic"],
+    tags: ["brand-identity"],
     year: "2024",
     client: "Croissant House",
     location: "Germany",
@@ -54,11 +54,11 @@ export const projectsData = [
 
     // Technical Specifications Matrix
     specs: {
-      client: "کروسان هاوس (Croissant House)",
-      year: "۲۰۲۴",
-      location: "آلمان",
-      deliverables: "طراحی لوگو و مونوگرام اختصاصی، تدوین پالت رنگی حرفه‌ای، طراحی اقلام بسته‌بندی چاپی (لیوان قهوه، پاکت‌های کاغذی بیرون‌بر و استیکر)",
-      tools: "ادوبی ایلاستریتور، ادوبی فتوشاپ، فیگما"
+      client: "Croissant House",
+      year: "2024",
+      location: "Germany",
+      deliverables: "Custom logo & monogram design, professional color palette development, print packaging design (coffee cups, takeaway paper bags and stickers)",
+      tools: "Adobe Illustrator, Adobe Photoshop, Figma"
     },
     specsFa: {
       client: "کروسان هاوس (Croissant House)",
@@ -280,12 +280,12 @@ export const projectsData = [
     },
 
     // Technical Specifications Matrix
-    specs: {
-      client: "پروژه سفارشی / برند بین‌المللی جواهرات",
-      year: "۲۰۲۵",
-      location: "ریموت / بین‌المللی",
-      deliverables: "موشن انیمیشن سه‌بعدی تکرارشونده (Looped 3D Motion)، بازآفرینی مدل بسته‌بندی، نورپردازی استودیویی سینمایی، طراحی اختصاصی افکت‌های صوتی و موسیقی (SFX)",
-      tools: "بلندر (Blender - Cycles Render Engine)، ادوبی افترافکت، ادوبی ایلاستریتور، ادوبی آدیشن"
+     specs: {
+      client: "Custom Project / International Jewelry Brand",
+      year: "2025",
+      location: "Remote / International",
+      deliverables: "Looped 3D motion animation, packaging model reconstruction, cinematic studio lighting, custom SFX sound design",
+      tools: "Blender (Cycles), Adobe After Effects, Adobe Illustrator, Adobe Audition"
     },
     specsFa: {
       client: "پروژه سفارشی / برند بین‌المللی جواهرات",
@@ -608,12 +608,12 @@ export const projectsData = [
     },
 
     // Technical Specifications Matrix
-    specs: {
+     specs: {
       client: "BugsEmpire",
-      year: "۲۰۲۵",
-      location: "ریموت / بین‌المللی",
-      deliverables: "ویدیوهای تبلیغاتی عمودی (نسخه سه‌بعدی سناریومحور و نسخه گیم‌پلی)، مدل‌سازی سه‌بعدی عناصر، انیمیشن موشن گرافیک، طراحی افکت‌های صوتی (SFX)",
-      tools: "بلندر (Blender)، ادوبی ایلاستریتور، ادوبی افترافکت، ادوبی آدیشن"
+      year: "2025",
+      location: "Remote / International",
+      deliverables: "Vertical video ads (scenario-driven 3D version and gameplay version), 3D element modeling, motion graphics animation, custom SFX design",
+      tools: "Blender, Adobe Illustrator, Adobe After Effects, Adobe Audition"
     },
     specsFa: {
       client: "BugsEmpire",
@@ -739,21 +739,21 @@ export const projectsData = [
     },
 
     // Flat Technical Specs (Direct root-level fallbacks)
-    clientFa: "HYGEAR (HYGEARFIT)",
+  clientFa: "HYGEAR (HYGEARFIT)",
     yearFa: "۲۰۲۲ – ۲۰۲۴",
     locationFa: "ریموت / کالیفرنیا، آمریکا",
-    tools: "بلندر (Blender)، ادوبی افترافکت، ادوبی ایلاستریتور، ادوبی فتوشاپ، فیگما (Figma)",
-    toolsFa: "بلندر (Blender)، ادوبی افترافکت، ادوبی ایلاستریتور، ادوبی فتوشاپ، فیگما (Figma)",
-    deliverables: "مدل‌سازی سه‌بعدی و انیمیشن CGI، طراحی بسته‌بندی فروشگاهی (Gear X, Spider X)، ارائه‌های تجاری و معرفی محصول (Pitch Decks)، راهنمای هویت بصری، ویدیوگرافی و تدوین تبلیغاتی، گرافیک‌های مارکتینگ",
-    deliverablesFa: "مدل‌سازی سه‌بعدی و انیمیشن CGI، طراحی بسته‌بندی فروشگاهی (Gear X, Spider X)، ارائه‌های تجاری و معرفی محصول (Pitch Decks)، راهنمای هویت بصری، ویدیوگرافی و تدوین تبلیغاتی، گرافیک‌های مارکتینگ",
+    tools: "Blender, Adobe After Effects, Adobe Illustrator, Adobe Photoshop, Figma",
+    toolsFa: "بلندر (Blender)، ادوبی افترافکت، ادوبی ایلاستریتور، ادوبی فتوشاپ، فیگما",
+    deliverables: "3D modeling & CGI animation, retail packaging design (Gear X, Spider X), pitch decks, brand guidelines, video editing, marketing graphics",
+    deliverablesFa: "مدل‌سازی سه‌بعدی و انیمیشن CGI، طراحی بسته‌بندی فروشگاهی (Gear X, Spider X)، ارائه‌های تجاری، راهنمای هویت بصری، ویدیوگرافی و تدوین تبلیغاتی، گرافیک‌های مارکتینگ",
 
     // Technical Specifications Matrix Objects
-    specs: {
+   specs: {
       client: "HYGEAR (HYGEARFIT)",
-      year: "۲۰۲۲ – ۲۰۲۴",
-      location: "ریموت / کالیفرنیا، آمریکا",
-      deliverables: "مدل‌سازی سه‌بعدی و انیمیشن CGI، طراحی بسته‌بندی فروشگاهی (Gear X, Spider X)، ارائه‌های تجاری و معرفی محصول (Pitch Decks)، راهنمای هویت بصری، ویدیوگرافی و تدوین تبلیغاتی، گرافیک‌های مارکتینگ",
-      tools: "بلندر (Blender)، ادوبی افترافکت، ادوبی ایلاستریتور، ادوبی فتوشاپ، فیگما (Figma)"
+      year: "2022 – 2024",
+      location: "Remote / California, USA",
+      deliverables: "3D modeling & CGI animation, retail packaging design (Gear X, Spider X), pitch decks, brand guidelines, video editing, marketing graphics",
+      tools: "Blender, Adobe After Effects, Adobe Illustrator, Adobe Photoshop, Figma"
     },
     specsFa: {
       client: "HYGEAR (HYGEARFIT)",

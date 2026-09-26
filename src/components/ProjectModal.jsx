@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
+import { getLocalizedString, pickLocalized } from '../utils/localize.js';
 
 export default function ProjectModal({ project, onClose }) {
-  const { isLight, t } = useStudioTheme();
+  const { isLight, lang, t } = useStudioTheme();
 
-  // Handle ESC key press and body lock
+  // Handle ESC key press
   useEffect(() => {
     if (!project) return;
 
@@ -20,19 +21,22 @@ export default function ProjectModal({ project, onClose }) {
 
   const {
     title,
-    subtitle,
-    tagline,
     heroImage,
     heroVideo,
-    contextParagraph,
     contextImage,
-    mainParagraph,
     mainImage,
-    recognition,
-    theySaidTitle,
-    theySaidParagraph,
     theySaidImages
   } = project;
+
+  // Localized text — safe for both {en, fa} objects and legacy field pairs
+  const localizedTitle = getLocalizedString(title, lang) || pickLocalized(project, 'title', lang);
+  const localizedSubtitle = pickLocalized(project, 'subtitle', lang);
+  const localizedTagline = pickLocalized(project, 'tagline', lang);
+  const localizedContext = pickLocalized(project, 'contextParagraph', lang);
+  const localizedMain = pickLocalized(project, 'mainParagraph', lang);
+  const localizedRecognition = pickLocalized(project, 'recognition', lang);
+  const localizedTheySaidTitle = pickLocalized(project, 'theySaidTitle', lang);
+  const localizedTheySaidParagraph = pickLocalized(project, 'theySaidParagraph', lang);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8 backdrop-blur-md">
@@ -40,7 +44,7 @@ export default function ProjectModal({ project, onClose }) {
       <div className="absolute inset-0" onClick={onClose} />
 
       {/* Modal Scroll Container */}
-      <div 
+      <div
         data-lenis-prevent="true"
         onWheel={(e) => e.stopPropagation()}
         onTouchMove={(e) => e.stopPropagation()}
@@ -53,10 +57,12 @@ export default function ProjectModal({ project, onClose }) {
           isLight ? 'border-black/10 bg-white/95' : 'border-white/10 bg-[#111]/95'
         }`}>
           <div>
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-neutral-400">{tagline}</span>
-            <h2 className="text-xl font-medium tracking-tight">{title}</h2>
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-neutral-400">
+              {localizedTagline}
+            </span>
+            <h2 className="text-xl font-medium tracking-tight">{localizedTitle}</h2>
           </div>
-          <button 
+          <button
             onClick={onClose}
             className={`flex h-8 w-8 items-center justify-center rounded-none border text-xs font-mono transition-colors ${
               isLight ? 'border-black/20 hover:bg-black hover:text-white' : 'border-white/20 hover:bg-white hover:text-black'
@@ -72,40 +78,50 @@ export default function ProjectModal({ project, onClose }) {
             {heroVideo ? (
               <video src={heroVideo} autoPlay loop muted playsInline className="h-full w-full object-cover" />
             ) : (
-              <img src={heroImage} alt={title} className="h-full w-full object-cover" />
+              <img src={heroImage} alt={localizedTitle} className="h-full w-full object-cover" />
             )}
           </div>
 
-          {subtitle && <p className="text-xl md:text-2xl font-light leading-relaxed">{subtitle}</p>}
+          {localizedSubtitle && (
+            <p className="text-xl md:text-2xl font-light leading-relaxed">{localizedSubtitle}</p>
+          )}
 
-          {contextParagraph && (
+          {localizedContext && (
             <div className={`border-l-2 pl-6 py-2 text-sm md:text-base leading-relaxed ${
               isLight ? 'border-black/20 text-neutral-700' : 'border-white/20 text-neutral-300'
             }`}>
-              {contextParagraph}
+              {localizedContext}
             </div>
           )}
 
-          {contextImage && <img src={contextImage} alt={t.projectModal.contextAlt} className="w-full object-cover" />}
+          {contextImage && (
+            <img src={contextImage} alt={t.projectModal.contextAlt} className="w-full object-cover" />
+          )}
 
-          {mainParagraph && <p className="text-sm md:text-base leading-relaxed text-neutral-400">{mainParagraph}</p>}
+          {localizedMain && (
+            <p className="text-sm md:text-base leading-relaxed text-neutral-400">{localizedMain}</p>
+          )}
 
-          {mainImage && <img src={mainImage} alt={t.projectModal.mainAlt} className="w-full object-cover" />}
+          {mainImage && (
+            <img src={mainImage} alt={t.projectModal.mainAlt} className="w-full object-cover" />
+          )}
 
-          {recognition && (
+          {localizedRecognition && (
             <div className={`border-t border-b py-4 text-xs font-semibold uppercase tracking-widest ${
               isLight ? 'border-black/10 text-neutral-600' : 'border-white/10 text-neutral-400'
             }`}>
-              {t.projectModal.recognition.replace('{recognition}', recognition)}
+              {t.projectModal.recognition.replace('{recognition}', localizedRecognition)}
             </div>
           )}
 
-          {theySaidParagraph && (
+          {localizedTheySaidParagraph && (
             <div className={`p-6 border space-y-2 ${
               isLight ? 'border-black/10 bg-neutral-50' : 'border-white/10 bg-neutral-900/50'
             }`}>
-              {theySaidTitle && <h4 className="text-xs uppercase tracking-widest text-neutral-400">{theySaidTitle}</h4>}
-              <p className="text-sm italic">{theySaidParagraph}</p>
+              {localizedTheySaidTitle && (
+                <h4 className="text-xs uppercase tracking-widest text-neutral-400">{localizedTheySaidTitle}</h4>
+              )}
+              <p className="text-sm italic">{localizedTheySaidParagraph}</p>
             </div>
           )}
 

@@ -1,3 +1,4 @@
+import { getLocalizedString, pickLocalized } from '../utils/localize.js';
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
@@ -160,25 +161,29 @@ export default function ProjectDetail() {
     );
   }
 
-  const activeTitle = isFa ? (project.titleFa || project.title) : project.title;
-  const activeSubtitle = isFa ? (project.subtitleFa || project.subtitle) : project.subtitle;
-  const activeTagline = isFa ? (project.taglineFa || project.tagline) : project.tagline;
-  
-  const activeContextParagraph = isFa ? (project.contextParagraphFa || project.contextParagraph) : project.contextParagraph;
-  const activeMainParagraph = isFa ? (project.mainParagraphFa || project.mainParagraph) : project.mainParagraph;
-  const activeRecognition = isFa ? (project.recognitionFa || project.recognition) : project.recognition;
-  const activeTheySaidTitle = isFa ? (project.theySaidTitleFa || project.theySaidTitle) : project.theySaidTitle;
-  const activeTheySaidParagraph = isFa ? (project.theySaidParagraphFa || project.theySaidParagraph) : project.theySaidParagraph;
+  // SAFE localized extraction — handles {en, fa} objects (new data shape for title/shortDesc),
+  // legacy paired fields (subtitle/subtitleFa, tagline/taglineFa, ...), and plain strings.
+  // A raw object can never reach a React child or alt attribute.
+  const activeTitle = getLocalizedString(project.title, lang) || pickLocalized(project, 'title', lang);
+  const activeShortDesc = getLocalizedString(project.shortDesc, lang) || pickLocalized(project, 'shortDesc', lang);
+  const activeSubtitle = pickLocalized(project, 'subtitle', lang);
+  const activeTagline = pickLocalized(project, 'tagline', lang);
 
-  const activeMetaTitle = isFa ? (project.metaTitleFa || project.metaTitle) : project.metaTitle;
-  const activeMetaDescription = isFa ? (project.metaDescriptionFa || project.metaDescription) : project.metaDescription;
+  const activeContextParagraph = pickLocalized(project, 'contextParagraph', lang);
+  const activeMainParagraph = pickLocalized(project, 'mainParagraph', lang);
+  const activeRecognition = pickLocalized(project, 'recognition', lang);
+  const activeTheySaidTitle = pickLocalized(project, 'theySaidTitle', lang);
+  const activeTheySaidParagraph = pickLocalized(project, 'theySaidParagraph', lang);
+
+  const activeMetaTitle = pickLocalized(project, 'metaTitle', lang);
+  const activeMetaDescription = pickLocalized(project, 'metaDescription', lang);
 
   const activeSpecs = project.specs ? {
-    client: isFa ? (project.specs.clientFa || project.specs.client) : project.specs.client,
-    year: isFa ? (project.specs.yearFa || project.specs.year) : project.specs.year,
-    location: isFa ? (project.specs.locationFa || project.specs.location) : project.specs.location,
-    tools: isFa ? (project.specs.toolsFa || project.specs.tools) : project.specs.tools,
-    deliverables: isFa ? (project.specs.deliverablesFa || project.specs.deliverables) : project.specs.deliverables,
+    client: pickLocalized(project.specs, 'client', lang),
+    year: pickLocalized(project.specs, 'year', lang),
+    location: pickLocalized(project.specs, 'location', lang),
+    tools: pickLocalized(project.specs, 'tools', lang),
+    deliverables: pickLocalized(project.specs, 'deliverables', lang),
   } : null;
 
   const {
@@ -200,7 +205,7 @@ export default function ProjectDetail() {
     '@context': 'https://schema.org',
     '@type': schemaType || 'CreativeWork',
     name: activeTitle,
-    description: activeMetaDescription || activeSubtitle,
+    description: activeMetaDescription || activeSubtitle || activeShortDesc,
     image: heroImage,
     author: {
       '@type': 'Organization',
@@ -244,7 +249,7 @@ export default function ProjectDetail() {
     <div dir={isFa ? 'rtl' : 'ltr'} className={`min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}>
       <SEO 
         title={activeMetaTitle || `${activeTitle} | Studio Practice`}
-        description={activeMetaDescription || activeSubtitle || ''}
+        description={activeMetaDescription || activeSubtitle || activeShortDesc || ''}
         keywords={keywords}
         canonical={`https://siawsh.co/work/${id}`}
         schema={schemaData}
@@ -300,7 +305,7 @@ export default function ProjectDetail() {
                   src={vid.src}
                   aspectRatio={vid.aspectRatio || postHeroVideoGrid?.aspectRatio || "16/9"}
                   objectFit="cover"
-                  label={vid.label}
+                  label={getLocalizedString(vid.label, lang) || pickLocalized(vid, 'label', lang)}
                 />
               ))}
             </div>
@@ -441,7 +446,7 @@ export default function ProjectDetail() {
 
           {/* Share Buttons Section */}
           <div className="py-0 my-0 border-t border-b border-current/10 leading-none">
-            <ShareButtons title={activeTitle} excerpt={activeSubtitle || activeTagline} isLight={isLight} />
+            <ShareButtons title={activeTitle} excerpt={activeSubtitle || activeShortDesc || activeTagline} isLight={isLight} />
           </div>
 
           {/* Related Projects Section */}
@@ -450,8 +455,8 @@ export default function ProjectDetail() {
               <div className="text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider opacity-85">{labels.relatedProjects}</div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedProjects.map((rel) => {
-                  const relTitle = isFa ? (rel.titleFa || rel.title) : rel.title;
-                  const relSubtitle = isFa ? (rel.subtitleFa || rel.subtitle) : rel.subtitle;
+                  const relTitle = getLocalizedString(rel.title, lang) || pickLocalized(rel, 'title', lang);
+                  const relSubtitle = pickLocalized(rel, 'subtitle', lang) || pickLocalized(rel, 'shortDesc', lang);
                   return (
                     <Link
                       key={rel.id}

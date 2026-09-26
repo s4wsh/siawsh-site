@@ -26,7 +26,9 @@ const FLOAT_STYLES = `
 `;
 
 function TunnelGrid({ projects, onSelectProject }) {
-  if (!projects || projects.length === 0) return null;
+  const safeProjects = Array.isArray(projects) ? projects : [];
+
+  if (safeProjects.length === 0) return null;
 
   return (
     <div className="relative w-full py-12">
@@ -35,13 +37,13 @@ function TunnelGrid({ projects, onSelectProject }) {
 
       {/* True 2-Column Masonry preserving equal vertical margins between cards */}
       <div className="columns-1 gap-8 md:columns-2">
-        {projects.map((project, index) => {
+        {safeProjects.map((project, index) => {
           const isOdd = index % 2 === 1;
           const floatClass = isOdd ? 'animate-float-odd' : 'animate-float-even';
 
           return (
-            <div 
-              key={`${project.id}-${index}`} 
+            <div
+              key={project?.id || `project-${index}`}
               className={`mb-8 break-inside-avoid transition-all duration-700 ${floatClass}`}
             >
               <ProjectCard project={project} onClick={onSelectProject} />

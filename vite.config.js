@@ -4,8 +4,25 @@ import tailwindcss from '@tailwindcss/vite'
 import sitemap from 'vite-plugin-sitemap'
 import { projectsData } from './src/data/projectsData.js'
 
+// Primary domain — siavashstudio.ir . Keep in sync with SITE_URL inside src/components/SEO.jsx
 const HOSTNAME = 'https://siavashstudio.ir'
 const dynamicProjectRoutes = projectsData.map((project) => `/work/${project.id}`)
+
+// Static, crawlable routes. Query-param URLs like /work?category=x are NOT
+// listed here on purpose — they are indexed via their own canonical tags.
+const staticRoutes = [
+  '/',
+  '/home',
+  '/work',
+  '/about',
+  '/insights',
+  '/contact',
+  '/fa/home',
+  '/fa/work',
+  '/fa/about',
+  '/fa/insights',
+  '/fa/contact',
+]
 
 export default defineConfig({
   plugins: [
@@ -13,8 +30,11 @@ export default defineConfig({
     tailwindcss(),
     sitemap({
       hostname: HOSTNAME,
-      dynamicRoutes: dynamicProjectRoutes,
+      dynamicRoutes: [...staticRoutes, ...dynamicProjectRoutes],
       generateRobotsTxt: true,
+      robots: [
+        { userAgent: '*', allow: '/', disallow: ['/gateway', '/fa/gateway'] },
+      ],
     }),
   ],
   build: {

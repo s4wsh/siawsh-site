@@ -140,24 +140,16 @@ export default function DisciplineGateway({ isPersian = false }) {
 
   return (
     <>
+      {/* SEO: Utility/router page — explicitly excluded from search indexes.
+          robots.txt also disallows /gateway and /fa/gateway (vite.config.js). */}
       <Helmet>
         <title>
           {activeIsPersian
-            ? 'انتخاب حوزه فعالیت | استودیوی سیاوش'
-            : 'Select Discipline | SIAWSH Studio — Spatial Architecture & 3D Motion'}
+            ? 'انتخاب حوزه فعالیت | استودیو سیاوش'
+            : 'Select Discipline | SIAWSH Studio'}
         </title>
-        <meta
-          name="description"
-          content={
-            activeIsPersian
-              ? 'استودیوی دیزاین سیاوش — متخصص در طراحی معماری، معماری داخلی، و رندرینگ ۳ بعدی و موشن گرافیک سینماتیک.'
-              : 'SIAWSH Studio — Multidisciplinary design studio specializing in spatial architecture, interior environments, 3D CGI motion design, and kinetic visual identity.'
-          }
-        />
-        <meta
-          name="keywords"
-          content="SIAWSH, Spatial Architecture, Interior Design, 3D Motion, CGI Rendering, Visual Identity, Tehran Design Studio"
-        />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={activeIsPersian ? 'https://siavashstudio.ir/fa/gateway' : 'https://siavashstudio.ir/gateway'} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="alternate icon" href="/favicon.ico" />
       </Helmet>

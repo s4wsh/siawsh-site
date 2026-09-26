@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStudioTheme } from '../context/ThemeContext.jsx';
+import { getLocalizedString, pickLocalized } from '../utils/localize.js';
 
 export default function ProjectCard({ project }) {
   const { isLight, t, lang } = useStudioTheme();
@@ -9,12 +10,25 @@ export default function ProjectCard({ project }) {
 
   if (!project) return null;
 
-  const { id, title, titleFa, tagline, taglineFa, heroImage, heroVideo, aspectRatio } = project;
+  const { id, title, tagline, heroImage, heroVideo, aspectRatio } = project;
 
-  // Determine active language and safely pull direct Fa properties or fallback to raw JS value
+  // Determine active language
   const isFa = lang === 'fa';
-  const activeTitle = isFa ? (titleFa || t?.projects?.[id]?.title || title) : title;
-  const activeTagline = isFa ? (taglineFa || t?.projects?.[id]?.tagline || tagline) : tagline;
+
+  // SAFE localized extraction — handles {en, fa} objects (new data shape),
+  // legacy paired fields (title / titleFa, tagline / taglineFa),
+  // and plain strings, so a raw object can never reach a React child.
+  const activeTitle =
+    pickLocalized(project, 'title', lang) ||
+    getLocalizedString(title, lang) ||
+    (isFa ? t?.projects?.[id]?.title : '') ||
+    '';
+
+const activeTagline =
+    pickLocalized(project, 'tagline', lang) ||
+    getLocalizedString(tagline, lang) ||
+    (isFa ? t?.projects?.[id]?.tagline : '') ||
+    '';
 
   let computedRatio = '16 / 10';
   if (aspectRatio === 'square') computedRatio = '1 / 1';

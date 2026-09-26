@@ -1,11 +1,36 @@
 export const projectsData = [
- {
+  {
     id: "croissant-house-branding",
-    title: "Croissant House Visual Identity & Spatial Design",
-    titleFa: "هویت بصری کروسان هاوس",
+    title: {
+      en: "Croissant House Brand Identity & Spatial Design | Bakery Branding Germany",
+      fa: "طراحی هویت بصری و برندینگ کروسان هاوس | برندینگ کافه و فضای داخلی در آلمان"
+    },
+    categoryType: ["cinematic", "spatial"],
+    tags: ["brand-identity", "interior", "exterior"],
+    year: "2024",
+    client: "Croissant House",
+    location: "Germany",
+    shortDesc: {
+      en: "Complete brand identity system for Croissant House bakery in Germany — custom logo mark, premium color palette, packaging design, storefront window graphics, and warm interior signage. Brand identity system, cafe interior branding and commercial packaging built in Illustrator, Photoshop and Figma.",
+      fa: "هویت بصری کامل کروسان هاوس در آلمان — طراحی لوگو اختصاصی، پالت رنگی پرمیوم، بسته‌بندی تجاری، گرافیک ویترین مغازه و تابلوهای داخلی. طراحی هویت بصری و برندینگ کافه با ایلاستریتور، فتوشاپ و فیگما."
+    },
+    seoKeywords: [
+      "brand identity system",
+      "bakery brand identity design",
+      "cafe interior branding",
+      "storefront signage design",
+      "commercial packaging design",
+      "Croissant House branding",
+      "cafe visual identity",
+      "bakery logo design",
+      "spatial branding Germany",
+      "طراحی هویت بصری",
+      "برندینگ کافه",
+      "طراحی بسته‌بندی تجاری",
+      "طراحی داخلی ۳ بعدی"
+    ],
     subtitle: "Developing a warm, modern brand identity, logo mark, and physical environmental design for Croissant House.",
     subtitleFa: "خلق یک هویت بصری مدرن، صمیمی و منسجم همراه با سیستم لوگو و طراحی اقلام بسته‌بندی برای شعب کروسان هاوس در آلمان.",
-    categoryType: ["cinematic"],
     tagline: "BRAND IDENTITY & SPATIAL INTEGRATION FOR A GERMAN BAKERY",
     taglineFa: "هویت بصری و پکیج بسته‌بندی کافی‌شاپ کروسان هاوس آلمان",
     aspectRatio: "rectangular",
@@ -60,7 +85,7 @@ export const projectsData = [
     theySaidTitleFa: "دستاوردهای پروژه",
     theySaidParagraph: "Delivered a complete brand identity package and spatial execution for Croissant House's flagship German location, establishing a welcoming brand experience from packaging to store interior.",
     theySaidParagraphFa: "ماحصل این همکاری، تدوین سیستم جامع استانداردهای بصری و اجرای کامل بسته‌بندی‌های اختصاصی برای کروسان هاوس بود؛ ساختاری منسجم که علاوه بر تثبیت حضور برند در بازار آلمان، ارتباطی مؤثر و ماندگار میان مخاطب و اقلام فیزیکی محصول ایجاد کرد.",
-    
+
     // Gallery Assets
     theySaidImages: [
       "/projects/croissanthouse/croissant_house_exterior_storefront_window_graphics.webp",
@@ -70,11 +95,36 @@ export const projectsData = [
   },
   {
     id: "skinny-cow-packaging-redesign",
-    title: "Skinny Cow AI Packaging Redesign",
-    titleFa: "بازطراحی بسته‌بندی اسکینی کاو با هوش مصنوعی",
+    title: {
+      en: "Skinny Cow AI Packaging Redesign | 3D Product Rendering & Blender Cycles",
+      fa: "بازطراحی بسته‌بندی اسکینی کاو با هوش مصنوعی | رندر سه‌بعدی محصول با بلندر"
+    },
+    categoryType: ["cinematic"],
+    tags: ["brand-identity", "3d-product"],
+    year: "2025 – 2026",
+    client: "Skinny Cow / Nestlé (Academic Project)",
+    location: "Cyprus",
+    shortDesc: {
+      en: "AI-assisted packaging redesign and photorealistic 3D product render pipeline for Skinny Cow (Nestlé) 500mL ice cream tubs — Adobe Firefly label generation, Huemint color systems, and Blender Cycles 3D packaging modeling and studio lighting.",
+      fa: "بازطراحی بسته‌بندی بستنی اسکینی کاو (نستله) با هوش مصنوعی و رندر سه‌بعدی فتورئال — تولید لیبل با ادوبی فایرفلای، پالت رنگی هیومینت و مدل‌سازی و نورپردازی سه‌بعدی در بلندر Cycles. انیمیشن سه بعدی محصول و رندر فتورئال."
+    },
+    seoKeywords: [
+      "photorealistic product render",
+      "3d cgi product animation",
+      "AI packaging design",
+      "Blender Cycles product mockup",
+      "ice cream packaging redesign",
+      "Skinny Cow packaging redesign",
+      "AI ice cream packaging",
+      "Blender 3D tub mockup",
+      "Adobe Firefly brand design",
+      "انیمیشن سه بعدی محصول",
+      "رندر فتورئال محصول",
+      "طراحی بسته‌بندی با هوش مصنوعی",
+      "مدل‌سازی سه بعدی بسته‌بندی"
+    ],
     subtitle: "Reimagining the visual identity and tub packaging for Skinny Cow ice cream through AI image generation, color palette optimization, and 3D product modeling.",
     subtitleFa: "بازطراحی هویت بصری و بسته‌بندی بستنی Skinny Cow با استفاده از تصویرسازی هوش مصنوعی، تنظیم پالت رنگی و مدل‌سازی سه‌بعدی محصول.",
-    categoryType: ["cinematic"],
     tagline: "AI-ASSISTED PACKAGING REDESIGN & 3D RENDERING",
     taglineFa: "طراحی بسته‌بندی با هوش مصنوعی و مدل‌سازی سه‌بعدی",
     aspectRatio: "rectangular",
@@ -137,13 +187,42 @@ export const projectsData = [
     ],
     theySaidVideos: []
   },
-   {
+  {
     id: "almas-pedia-3d-visuals",
-    title: "Jewelry Packaging 3D Visuals & Motion CGI",
-    titleFa: "طراحی و موشن انیمیشن ۳بعدی بسته بندی جواهرات",
+    title: {
+      en: "Jewelry Packaging 3D Motion CGI | Looped Product Animation & Cinematic Teaser",
+      fa: "موشن انیمیشن سه بعدی بسته‌بندی جواهرات | تیزر تبلیغاتی CGI و رندر سینمایی"
+    },
+    categoryType: ["cinematic"],
+    tags: ["cgi-vfx", "3d-product", "commercial-teasers"],
+    year: "2025",
+    client: "International Jewelry Brand (Custom Project)",
+    location: "Remote / Global",
+    shortDesc: {
+      en: "Luxury jewelry packaging brought to life as a seamless 3D looped motion ad — Blender Cycles CGI animation, cinematic studio lighting, custom SFX sound design, and a vertical 9:16 commercial teaser optimized for mobile and Instagram. Photorealistic 3D product animation for luxury retail.",
+      fa: "بسته‌بندی لوکس جواهرات در قالب موشن انیمیشن سه‌بعدی تکرارشونده — انیمیشن CGI در بلندر Cycles، نورپردازی سینمایی، طراحی صوتی اختصاصی و تیزر تبلیغاتی عمودی ۹:۱۶ بهینه‌شده برای موبایل و اینستاگرام. انیمیشن سه بعدی محصول و تیزر سینماتیک."
+    },
+    seoKeywords: [
+      "3d cgi product animation",
+      "photorealistic product render",
+      "commercial video teaser",
+      "cinematic CGI jewelry ad",
+      "looped 3D motion design",
+      "vertical 9:16 product teaser",
+      "Jewelry packaging 3D motion design",
+      "Blender 3D looped animation",
+      "Vertical 9:16 CGI commercial",
+      "Jewelry box 3D visualization",
+      "Custom SFX audio design",
+      "موشن انیمیشن سه بعدی بسته بندی جواهرات",
+      "طراحی سه بعدی بسته بندی طلا و جواهر",
+      "رندرینگ و تجسم بخشی سه بعدی محصول",
+      "تیزر تبلیغاتی CGI عمودی 9:16",
+      "انیمیشن سه بعدی محصول",
+      "تیزر سینماتیک"
+    ],
     subtitle: "Bringing physical jewelry packaging to life through custom 3D looped motion design, cinematic studio lighting, and tailored audio design.",
     subtitleFa: "پویانمایی و بازآفرینی سه‌بعدی بسته‌بندی طلا و جواهرات در قالب موشن انیمیشن تکرارشونده، نورپردازی سینمایی و طراحی صوتی اختصاصی.",
-    categoryType: ["cinematic", "3d"],
     tagline: "JEWELRY PACKAGING 3D LOOPED MOTION & CGI",
     taglineFa: "موشن انیمیشن سه‌بعدی و تیزر تبلیغاتی CGI بسته‌بندی جواهرات",
     aspectRatio: "portrait",
@@ -243,11 +322,38 @@ export const projectsData = [
   },
   {
     id: "brave-bidding-platform",
-    title: "BRAVE Bidding Platform",
-    titleFa: "طراحی فایل ارائه جذب سرمایه (Pitch Deck)، موشن گرافیک و رابط کاربری پلتفرم BRAVE",
+    title: {
+      en: "BRAVE Bidding Platform | Motion Graphics Explainer, SaaS UI/UX & Investor Pitch Deck",
+      fa: "پلتفرم BRAVE | موشن گرافیک تبلیغاتی، طراحی رابط کاربری SaaS و ارائه جذب سرمایه"
+    },
+    categoryType: ["cinematic"],
+    tags: ["motion-kinetic", "ui-ux-web", "brand-identity"],
+    year: "2024",
+    client: "BRAVE Platform (bravehub.co)",
+    location: "Remote / Global",
+    shortDesc: {
+      en: "Multi-channel product launch suite for a ConTech bidding marketplace — kinetic typography motion graphics explainer, high-converting SaaS landing page UI/UX design in Figma, and a structured investor pitch deck. Commercial video teaser and interactive web UI design for B2B SaaS.",
+      fa: "مجموعه راه‌اندازی محصول برای بازار مناقصات ساخت‌وساز — موشن گرافیک با تایپوگرافی حرکتی، طراحی رابط کاربری لندینگ پیج SaaS در فیگما و فایل ارائه جذب سرمایه. تیزر تبلیغاتی و طراحی سایت تعاملی برای پلتفرم B2B."
+    },
+    seoKeywords: [
+      "kinetic typography motion",
+      "commercial video teaser",
+      "interactive 3d web design",
+      "SaaS landing page UI UX",
+      "investor pitch deck design",
+      "B2B motion graphics explainer",
+      "subcontractor bidding platform design",
+      "construction tech pitch deck",
+      "B2B SaaS motion design",
+      "con-tech presentation layout",
+      "موشن گرافیک تبلیغاتی",
+      "تایپوگرافی حرکتی",
+      "طراحی سایت تعاملی",
+      "طراحی رابط کاربری SaaS",
+      "طراحی ارائه جذب سرمایه"
+    ],
     subtitle: "Structuring investor pitch decks, UI workflows, and promotional explainer media for a ConTech bidding marketplace.",
     subtitleFa: "طراحی پرزنتیشن سرمایه‌گذاران، رابط کاربری و ویدیوهای توضیحی برای بازار مناقصات صنعت ساخت‌وساز.",
-    categoryType: ["cinematic"],
     tagline: "BRAND & PRODUCT PRESENTATION",
     taglineFa: "ارائه محصول و هویت برند",
     aspectRatio: "rectangular",
@@ -314,11 +420,39 @@ export const projectsData = [
   },
   {
     id: "aura-smart-speaker",
-    title: "AURA Smart Speaker",
-    titleFa: "بلندگوی هوشمند AURA",
+    title: {
+      en: "AURA Smart Speaker | Photorealistic 3D Product CGI & Industrial Design Visualization",
+      fa: "بلندگوی هوشمند AURA | رندر فتورئال محصول سه‌بعدی و طراحی صنعتی"
+    },
+    categoryType: ["cinematic"],
+    tags: ["3d-product", "cgi-vfx", "brand-identity"],
+    year: "2025",
+    client: "Cyprus International University (Academic Project)",
+    location: "Nicosia, Cyprus",
+    shortDesc: {
+      en: "End-to-end proprietary hardware brand built from scratch — industrial design blueprint, exploded CAD technical diagrams, micro-texture material maps, and photorealistic 4K 3D product renders in Blender, Cinema 4D and Octane/Redshift. Cinematic CGI product animation and commercial visualization.",
+      fa: "طراحی کامل یک برند سخت‌افزاری از صفر — نقشه راه طراحی صنعتی، نمودارهای فنی قطعه‌قطعه، مپ‌های متریال ریزبافت و رندرهای سه‌بعدی فتورئال ۴K در بلندر، سینما فوردی و اکتان/ردشیفت. انیمیشن سه بعدی محصول و تصویرسازی سینمایی CGI."
+    },
+    seoKeywords: [
+      "3d cgi product animation",
+      "photorealistic product render",
+      "CGI product visualization",
+      "industrial design 3D rendering",
+      "exploded technical diagram",
+      "3D product visualization",
+      "conceptual smart speaker design",
+      "CGI product rendering",
+      "Cyprus International University project",
+      "طراحی صنعتی محصول",
+      "شبیه‌سازی سه‌بعدی محصول",
+      "بازنمایی تجاری ۳D",
+      "تصویرسازی سینمایی محصول",
+      "طراحی سه بعدی بلندگو",
+      "مدلسازی صنعتی بلندر",
+      "انیمیشن سه بعدی محصول"
+    ],
     subtitle: "Engineering a proprietary hardware brand identity through industrial design principles and high-fidelity 3D CGI.",
     subtitleFa: "طراحی هویت برند یک محصول سخت‌افزاری بر پایه اصول طراحی صنعتی و بازنمایی سه‌بعدی سینمایی.",
-    categoryType: ["cinematic"],
     tagline: "CINEMATIC VISUALIZATION",
     taglineFa: "تصویرسازی سینمایی",
     aspectRatio: "portrait",
@@ -389,11 +523,38 @@ export const projectsData = [
   },
   {
     id: "bugsempire-3d-video-ad",
-    title: "BugsEmpire 3D Video Ad",
-    titleFa: "تیزر تبلیغاتی سه‌بعدی BugsEmpire",
+    title: {
+      en: "BugsEmpire 3D Video Ad | Vertical Commercial Teaser & Blender CGI Animation",
+      fa: "تیزر تبلیغاتی سه بعدی BugsEmpire | انیمیشن CGI بلندر و تبلیغات عمودی اینستاگرام"
+    },
+    categoryType: ["cinematic"],
+    tags: ["commercial-teasers", "3d-product", "motion-kinetic"],
+    year: "2025",
+    client: "BugsEmpire",
+    location: "Remote / Global",
+    shortDesc: {
+      en: "High-converting 9:16 vertical 3D video ad campaign for BugsEmpire — dual-version production with a fully custom Blender 3D environment, 2D motion graphics compositing in After Effects, and layered custom SFX sound design optimized for Instagram Reels and mobile feeds.",
+      fa: "کمپین تیزر تبلیغاتی سه‌بعدی عمودی ۹:۱۶ برای BugsEmpire — تولید دو نسخه با محیط کاملاً اختصاصی بلندر، کامپوزیت موشن گرافیک دوبعدی در افترافکت و طراحی صوتی لایه‌بندی‌شده بهینه‌شده برای ریلز اینستاگرام و تبلیغات موبایلی."
+    },
+    seoKeywords: [
+      "commercial video teaser",
+      "3d cgi product animation",
+      "vertical video ad production",
+      "Instagram Reels 3D commercial",
+      "Blender motion graphics",
+      "mobile video ad campaign",
+      "3D video ad production",
+      "Blender commercial motion graphics",
+      "vertical video ad design",
+      "Instagram 9:16 commercial",
+      "BugsEmpire 3D ad campaign",
+      "موشن گرافیک تبلیغاتی",
+      "تیزر سینماتیک",
+      "تیزر تبلیغاتی عمودی",
+      "انیمیشن سه بعدی محصول"
+    ],
     subtitle: "Producing a high-converting 9:16 vertical 3D video commercial optimized for mobile web and Instagram engagement.",
     subtitleFa: "تولید تیزر ویدیویی سه‌بعدی و عمودی بهینه‌سازی‌شده برای ریلز اینستاگرام و تبلیغات موبایلی.",
-    categoryType: ["cinematic"],
     tagline: "3D MOTION GRAPHICS & VERTICAL VIDEO AD",
     taglineFa: "موشن گرافیک سه‌بعدی و تبلیغات ویدیویی عمودی",
     aspectRatio: "portrait",
@@ -488,11 +649,39 @@ export const projectsData = [
   },
   {
     id: "hygear-brand-collateral-3d-cgi",
-    title: "HYGEAR Brand Collateral, 3D CGI & Packaging",
-    titleFa: "هویت بصری، رندر سه‌بعدی و بسته‌بندی HYGEAR",
+    title: {
+      en: "HYGEAR Brand Collateral | 3D CGI Product Rendering, Retail Packaging & Motion Ads",
+      fa: "هویت بصری HYGEAR | رندر سه بعدی محصول CGI، بسته‌بندی فروشگاهی و تیزر تبلیغاتی"
+    },
+    categoryType: ["cinematic"],
+    tags: ["3d-product", "brand-identity", "motion-kinetic"],
+    year: "2022 – 2024",
+    client: "HYGEAR (HYGEARFIT)",
+    location: "California, USA / Remote",
+    shortDesc: {
+      en: "Three-year visual ecosystem for a California smart fitness brand — photorealistic Blender CGI product renders with translucent hardware passes, retail packaging design for Gear X and Spider X, investor pitch decks, and commercial motion video reels. Photorealistic product render and brand identity system production.",
+      fa: "اکوسیستم بصری سه‌ساله برای برند تجهیزات ورزشی هوشمند کالیفرنیا — رندرهای CGI فتورئال بلندر با متریال‌های شفاف، طراحی بسته‌بندی فروشگاهی Gear X و Spider X، ارائه‌های سرمایه‌گذاران و تیزرهای موشن تبلیغاتی. رندر فتورئال محصول و طراحی هویت بصری."
+    },
+    seoKeywords: [
+      "photorealistic product render",
+      "3d cgi product animation",
+      "brand identity system",
+      "retail packaging design",
+      "CGI hardware visualization",
+      "smart fitness equipment design",
+      "3D product CGI",
+      "fitness hardware packaging",
+      "tech presentation decks",
+      "Blender CGI commercial",
+      "طراحی بسته بندی تجهیزات ورزشی",
+      "رندر سه بعدی محصول بلندر",
+      "موشن گرافیک CGI لوازم خانگی هوشمند",
+      "طراحی ارائه‌های تجاری",
+      "انیمیشن سه بعدی محصول",
+      "طراحی هویت بصری"
+    ],
     subtitle: "Crafting high-fidelity 3D product renders, retail packaging layouts, presentation decks, and video assets for smart fitness brand HYGEAR.",
     subtitleFa: "خلق رندرهای سه‌بعدی باکیفیت، طراحی بسته‌بندی فروشگاهی، ارائه‌های تجاری و ویدیوهای تبلیغاتی برای برند تجهیزات ورزشی هوشمند HYGEAR.",
-    categoryType: ["cinematic", "3d"],
     tagline: "VISUAL ASSET DESIGN & CGI PRODUCTION",
     taglineFa: "طراحی هویت بصری و تولید موشن گرافیک و رندر CGI",
     aspectRatio: "rectangular",
@@ -550,11 +739,8 @@ export const projectsData = [
     },
 
     // Flat Technical Specs (Direct root-level fallbacks)
-    client: "HYGEAR (HYGEARFIT)",
     clientFa: "HYGEAR (HYGEARFIT)",
-    year: "۲۰۲۲ – ۲۰۲۴",
     yearFa: "۲۰۲۲ – ۲۰۲۴",
-    location: "ریموت / کالیفرنیا، آمریکا",
     locationFa: "ریموت / کالیفرنیا، آمریکا",
     tools: "بلندر (Blender)، ادوبی افترافکت، ادوبی ایلاستریتور، ادوبی فتوشاپ، فیگما (Figma)",
     toolsFa: "بلندر (Blender)، ادوبی افترافکت، ادوبی ایلاستریتور، ادوبی فتوشاپ، فیگما (Figma)",
@@ -585,8 +771,8 @@ export const projectsData = [
     // Section 02: Execution & Strategy
     mainParagraph: "The process initiated with structural retail packaging layouts for the Gear X and Spider X product lines, emphasizing grid-based typography and precise feature callouts. In Blender, custom 3D models and lighting setups were engineered to deliver crisp CGI renders, including translucent material passes showcasing internal hardware mechanics. To support corporate communications, structured presentation decks were produced alongside promotional video reels demonstrating the seamless integration between physical hardware and the mobile app ecosystem.",
     mainParagraphFa: "روند اجرا با شبکه‌بندی و طراحی بسته‌بندی‌های فروشگاهی سری محصولات Gear X و Spider X با سیستم تایپوگرافی خوانا و چیدمان دقیق پنل‌ها آغاز شد. در نرم‌افزار بلندر، مدل‌های سه‌بعدی و نورپردازی‌های استودیویی توسعه یافتند تا رندرهای دقیق CGI، از جمله نمای متریال‌های شفاف (Translucent) برای نمایش قطعات سخت‌افزاری داخلی ایجاد شوند. همچنین برای ارتقای ارتباطات تجاری برند، ارائه‌های تجاری ساختاریافته برای تدوین نقشه راه محصول و ویدیوهای تبلیغاتی جهت نمایش تعامل سخت‌افزار با اپلیکیشن طراحی و تدوین گردید.",
-    mainImage: "/projects/HYGEARFIT/hygearfit-package design.webm",
-    mainVideo: "/projects/HYGEARFIT/hygearfit-package design.webm",
+    mainImage: "/projects/HYGEARFIT/hygearfit-package-design.webm",
+    mainVideo: "/projects/HYGEARFIT/hygearfit-package-design.webm",
 
     // Section 04: Impact & Recognition
     recognition: "Case Study / Smart Fitness Hardware & Visual Identity",
@@ -606,11 +792,40 @@ export const projectsData = [
   },
   {
     id: "ario-built-spatial-design",
-    title: "Ario Furniture Custom Design & 3D Architectural Visualization",
-    titleFa: "طراحی اختصاصی مبلمان و رندرینگ سه‌بعدی معماری | برند ماندگار مبلمان آریو",
+    title: {
+      en: "Ario Furniture | Custom Furniture Design & 3D Architectural Visualization",
+      fa: "ماندگار مبلمان آریو | طراحی اختصاصی مبلمان و رندر معماری داخلی سه بعدی"
+    },
+    categoryType: ["spatial", "cinematic"],
+    tags: ["furniture", "interior", "3d-product"],
+    year: "2026",
+    client: "Ario Furniture (Mandegar)",
+    location: "Tehran, Iran",
+    shortDesc: {
+      en: "Brand elevation and production pipeline for a Tehran furniture house with 10+ years of legacy — custom furniture product design, wood/brass/stone/epoxy material strategy, integrated indirect lighting, and photorealistic 3D architectural visualization rendered in Blender. Custom cabinetry design and interior render engine quality.",
+      fa: "بازآفرینی برند و خط تولید برای مجموعه‌ای با بیش از یک دهه سابقه در تهران — طراحی اختصاصی مبلمان، استراتژی متریال چوب/برنج/سنگ/اپوکسی، نورپردازی توکار و رندر معماری سه‌بعدی فتورئال در بلندر. طراحی کابینت و دکوراسیون با کیفیت رندر معماری پویانو."
+    },
+    seoKeywords: [
+      "3d architectural visualization",
+      "interior render engine",
+      "custom furniture design",
+      "custom cabinetry design",
+      "photorealistic architectural render",
+      "material strategy furniture",
+      "Ario Furniture Design",
+      "Custom Furniture Product Design",
+      "3D Architectural Visualization",
+      "Blender Architectural Render",
+      "Material Strategy Furniture",
+      "ماندگار مبلمان آریو",
+      "طراحی اختصاصی مبلمان",
+      "رندرینگ سه‌بعدی معماری",
+      "طراحی داخلی ۳ بعدی",
+      "رندر معماری پویانو",
+      "طراحی کابینت و دکوراسیون"
+    ],
     subtitle: "Brand elevation and spatial identity for Ario Furniture through product design, production planning, material strategy, and 3D architectural rendering.",
     subtitleFa: "بازآفرینی برند و هویت تجاری ماندگار مبلمان آریو از طریق طراحی محصول، برنامه‌ریزی خط تولید، متریال‌شناسی جامع و بصری‌سازی سه‌بعدی معماری.",
-    categoryType: ["cinematic", "spatial"],
     tagline: "Product Design, Material Strategy & Spatial Transformation",
     taglineFa: "توسعه استراتژیک برند، طراحی محصول و معماری",
     aspectRatio: "rectangular",
@@ -681,11 +896,36 @@ export const projectsData = [
   },
   {
     id: "luckys-custom-homes",
-    title: "Lucky's Custom Homes Brand Identity & Visual System",
-    titleFa: "طراحی هویت بصری و لوگوی شرکت ساختمانی | Lucky's Custom Homes",
+    title: {
+      en: "Lucky's Custom Homes | Brand Identity System & Southwest Architectural Visual Identity",
+      fa: "Lucky's Custom Homes | طراحی هویت بصری و برندینگ شرکت ساختمانی با معماری بومی"
+    },
+    categoryType: ["cinematic", "spatial"],
+    tags: ["brand-identity", "exterior"],
+    year: "2026",
+    client: "Lucky's Custom Homes",
+    location: "Southern New Mexico, USA",
+    shortDesc: {
+      en: "Complete brand identity system for a New Mexico custom home builder — combination mark logo design, desert-inspired color palette, optical alignment grids, brand style guide, stationery suite, and job-site signage rooted in Southwest architectural character. Exterior architecture branding and construction brand strategy.",
+      fa: "هویت بصری کامل برای شرکت ساخت‌وساز سفارشی نیومکزیکو — طراحی لوگوی ترکیبی، پالت رنگی کویری، شبکه‌بندی هندسی لوگو، دفترچه برند، ست اداری و تابلوهای کارگاهی برگرفته از معماری بومی جنوب غربی آمریکا. برندینگ معماری نما و استراتژی برند ساختمانی."
+    },
+    seoKeywords: [
+      "brand identity system",
+      "exterior architecture branding",
+      "construction brand strategy",
+      "logo design grid system",
+      "regional brand identity",
+      "custom home builder branding",
+      "real estate logo design",
+      "Southwest architectural visual identity",
+      "construction brand strategy",
+      "طراحی هویت بصری",
+      "برندینگ ساختمانی",
+      "طراحی نما مدرن",
+      "طراحی لوگوی شرکت ساختمانی"
+    ],
     subtitle: "Developing a warm, modern visual identity and custom combination mark rooted in Southwest architectural design.",
     subtitleFa: "طراحی هویت بصری مدرن، لوگوی ترکیبی و پالت رنگی اقلیمی برپایه معماری بومی جنوب غربی آمریکا.",
-    categoryType: ["cinematic", "spatial"],
     tagline: "BRAND IDENTITY & REGIONAL POSITIONING",
     taglineFa: "هویت برند و جایگاه‌یابی اقلیمی",
     aspectRatio: "rectangular",
@@ -746,14 +986,39 @@ export const projectsData = [
       "/projects/Lucky_homes/lucky's costum homes-04.jpg",
       "/projects/Lucky_homes/lucky's costum homes-07.jpg"
     ]
-},
+  },
   {
     id: "puzzle-travel-salvador-dali-mural",
-    title: "Salvador Dalí Geometric Wall Mural",
-    titleFa: "طراحی و اجرای نقاشی دیواری مدرن (سالوادور دالی) | پازل تراول",
+    title: {
+      en: "Salvador Dalí Geometric Wall Mural | Hand-Painted Environmental Art for Commercial Lounge",
+      fa: "نقاشی دیواری سفارشی سالوادور دالی | هنر محیطی دست‌نقش برای لانژ تجاری در قبرس"
+    },
+    categoryType: ["spatial"],
+    tags: ["murals", "interior"],
+    year: "2021",
+    client: "Puzzle Travel",
+    location: "Northern Cyprus",
+    shortDesc: {
+      en: "Custom hand-painted geometric mural of Salvador Dalí for the Puzzle Travel terrace lounge in Northern Cyprus — grid mapping, multi-layered acrylic color blocking, time-lapse documentation, and architectural lighting integration. Hand-painted mural art and environmental interior design.",
+      fa: "نقاشی دیواری سفارشی ژئومتریک سالوادور دالی برای تراس پازل تراول در قبرس شمالی — شبکه‌بندی دیواری، رنگ‌آمیزی آکریلیک چندلایه، مستندسازی تایم‌لپس و هماهنگی با نورپردازی معماری. نقاشی دیواری سفارشی و طراحی داخلی محیطی."
+    },
+    seoKeywords: [
+      "hand-painted mural art",
+      "custom wall mural design",
+      "geometric portrait mural",
+      "environmental graphic design",
+      "commercial lounge mural",
+      "Salvador Dali mural design",
+      "Puzzle Travel Cyprus wall art",
+      "geometric portrait mural",
+      "spatial lounge mural art",
+      "نقاشی دیواری سفارشی",
+      "نقاشی دیواری مدرن",
+      "گرافیک محیطی",
+      "طراحی داخلی ۳ بعدی"
+    ],
     subtitle: "Hand-painted Salvador Dalí mural artwork designed for the outdoor lounge and terrace environment at Puzzle Travel in Northern Cyprus.",
     subtitleFa: "طراحی و اجرای دستی نقاشی دیواری سالوادور دالی برای فضای تراس و روف‌گاردن آژانس گردشگری پازل تراول در قبرس شمالی.",
-    categoryType: ["spatial"],
     tagline: "GEOMETRIC PORTRAIT MURAL & SPATIAL INTEGRATION",
     taglineFa: "نقاشی دیواری پرتره ژئومتریک و یکپارچه‌سازی فضایی",
     aspectRatio: "rectangular",
@@ -819,11 +1084,37 @@ export const projectsData = [
   },
   {
     id: "cubist-jazz-ensemble-wall-mural-la-terrazza",
-    title: "Cubist Jazz Ensemble Wall Mural",
-    titleFa: "طراحی و اجرای نقاشی دیواری ابعاد بزرگ (گروه جاز کوبیستی) | هتل لا ترتسا",
+    title: {
+      en: "Cubist Jazz Ensemble Wall Mural | Large-Scale Hand-Painted Hotel Restaurant Art",
+      fa: "نقاشی دیواری سفارشی گروه جاز کوبیستی | هنر محیطی ابعاد بزرگ رستوران هتل"
+    },
+    categoryType: ["spatial"],
+    tags: ["murals", "interior"],
+    year: "2021",
+    client: "La Terrazza Hotel (8th Floor Restaurant)",
+    location: "Famagusta, Northern Cyprus",
+    shortDesc: {
+      en: "Monumental 3.5m × 4m hand-painted cubist jazz mural executed over 17 days on scaffolding for the 8th-floor rooftop restaurant at La Terrazza Hotel — scaffold grid mapping, layered sepia texturing, anatomical cubism brushwork, and time-lapse video documentation. Custom hand-painted mural art for hospitality interiors.",
+      fa: "نقاشی دیواری دست‌نقش کوبیستی ۳.۵ در ۴ متر اجراشده در ۱۷ روز روی داربست برای رستوران روف‌گاردن هتل لا ترتسا — شبکه‌بندی دیواری، بافت‌دهی سپیای لایه‌ای، ظریف‌کاری کوبیسم آناتومیک و مستندسازی تایم‌لپس. نقاشی دیواری سفارشی برای فضاهای هتلداری و رستوران."
+    },
+    seoKeywords: [
+      "hand-painted mural art",
+      "large scale wall mural",
+      "cubist mural painting",
+      "hotel restaurant mural design",
+      "hospitality interior art",
+      "environmental graphic design",
+      "cubist jazz mural artwork",
+      "La Terrazza Hotel Famagusta restaurant mural",
+      "custom large scale hotel wall painting",
+      "acoustic jazz ensemble wall art",
+      "نقاشی دیواری سفارشی",
+      "نقاشی دیواری ابعاد بزرگ",
+      "نقاشی دیواری رستوران",
+      "گرافیک محیطی"
+    ],
     subtitle: "A monumental hand-painted wall installation depicting a stylized jazz ensemble, integrated into the 8th-floor rooftop restaurant atmosphere at La Terrazza Hotel in Famagusta.",
     subtitleFa: "طراحی و اجرای نقاشی دیواری ابعاد بزرگ گروه جاز به سبک کوبیسم برای فضای رستوران روف‌گاردن طبقه هشتم هتل لا ترتسا در فاماگوستا.",
-    categoryType: ["spatial"],
     tagline: "ACOUSTIC JAZZ CUBISM & ARCHITECTURAL SCALE",
     taglineFa: "کوبیسم جاز آکوستیک و مقیاس معماری",
     aspectRatio: "rectangular",

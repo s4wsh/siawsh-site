@@ -52,10 +52,10 @@ export default function Footer() {
               className="inline-block text-xl md:text-2xl font-bold tracking-normal transition-opacity hover:opacity-80"
               style={{ letterSpacing: 'normal' }}
             >
-              {t?.footer?.brandName || (isFa ? 'استودیوی سیاوش' : 'SIAWSH.CO')}
+              {t?.footer?.brandName || (isFa ? 'استودیو سیاوش' : 'SIAWSH.CO')}
             </a>
             <p className="text-xs md:text-sm opacity-80 leading-relaxed max-w-sm flex items-start gap-2.5">
-              <span className="h-2 w-2 rounded-full bg-[#00f0ff] animate-pulse flex-shrink-0 mt-1.5" />
+              <span className="h-2 w-2 rounded-full bg-[#00f0ff] animate-pulse shrink-0 mt-1.5" />
               <span>{t?.footer?.status || (isFa ? 'پذیرای پروژه‌های منتخب در بخش‌های طراحی معماری، دکوراسیون داخلی و موشن گرافیک.' : 'Available for select projects in architecture, spatial design & motion graphics.')}</span>
             </p>
           </div>

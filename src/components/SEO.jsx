@@ -18,6 +18,14 @@ import { useStudioTheme } from '../context/ThemeContext.jsx';
 const SITE_URL = 'https://www.siavashstudio.ir'; // Primary canonical domain with www
 const DEFAULT_OG_IMAGE = `${SITE_URL}/projects/croissanthouse/croissant_house_coffee_cup_and_fresh_croissant.webp`;
 
+// Helper for clean, bulletproof URL joining
+const safeUrl = (base, path = '') => {
+  if (!path) return base;
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${base}${cleanPath}`;
+};
+
 // Site-wide Organization schema — rendered on every page for brand entity building
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -25,7 +33,7 @@ const organizationSchema = {
   name: 'SIAWSH Studio | استودیو سیاوش',
   alternateName: ['SIAWSH', 'Siavash Afsari Studio', 'استودیو سیاوش'],
   url: SITE_URL,
-  logo: `${SITE_URL}/favicon.svg`,
+  logo: safeUrl(SITE_URL, '/favicon.svg'),
   email: 'info@siavashstudio.ir',
   sameAs: [
     'https://www.instagram.com/siawsh/',
@@ -38,17 +46,25 @@ const organizationSchema = {
 export default function SEO({
   title,
   description = '',
-  canonical,
+  canonical = '',
   keywords = [],
   schema = null,
-  image,
+  image = '',
   type = 'website',
   noindex = false,
 }) {
-  const { lang } = useStudioTheme();
-  const isFa = lang === 'fa';
+  // Safely extract theme context with fallback
+  let isFa = false;
+  try {
+    const themeContext = useStudioTheme();
+    if (themeContext && themeContext.lang) {
+      isFa = themeContext.lang === 'fa';
+    }
+  } catch (e) {
+    isFa = false;
+  }
 
-  // Append brand suffix when the caller didn't include it
+  // Format full document title
   const fullTitle =
     title && (title.includes('SIAWSH') || title.includes('سیاوش'))
       ? title
@@ -57,23 +73,36 @@ export default function SEO({
       : 'SIAWSH — Spatial Architecture, 3D Motion & Design Studio | استودیو سیاوش';
 
   // Format Canonical URL
-  const canonicalPath = canonical ? (canonical.startsWith('http') ? new URL(canonical).pathname : canonical) : '';
-  const canonicalUrl = canonical
-    ? (canonical.startsWith('http') ? canonical : `${SITE_URL}${canonical.startsWith('/') ? '' : '/'}${canonical}`)
-    : `${SITE_URL}/`;
+  const canonicalUrl = canonical ? safeUrl(SITE_URL, canonical) : `${SITE_URL}/`;
 
-  // Dynamic hreflang generation based on current route path
-  const basePath = canonicalPath.replace(/^\/(fa\/|fa$)/, '/').replace(/\/$/, '') || '/home';
+  // Parse path for dynamic hreflang alternate links
+  let cleanPath = '';
+  if (canonical) {
+    if (canonical.startsWith('http://') || canonical.startsWith('https://')) {
+      try {
+        cleanPath = new URL(canonical).pathname;
+      } catch (e) {
+        cleanPath = '';
+      }
+    } else {
+      cleanPath = canonical;
+    }
+  }
+
+  const basePath = cleanPath.replace(/^\/(fa\/|fa$)/, '/').replace(/\/$/, '') || '/home';
   const enPath = basePath.startsWith('/') ? basePath : `/${basePath}`;
   const faPath = `/fa${enPath === '/' ? '' : enPath}`;
 
-  const ogImage = image
-    ? (image.startsWith('http') ? image : `${SITE_URL}${image.startsWith('/') ? '' : '/'}${image}`)
-    : DEFAULT_OG_IMAGE;
+  // Format Open Graph image URL
+  const ogImage = image ? safeUrl(SITE_URL, image) : DEFAULT_OG_IMAGE;
 
+  // Format Keywords
   const keywordString = Array.isArray(keywords) ? keywords.join(', ') : keywords;
 
+  // Combine schemas
   const schemas = [organizationSchema, ...(Array.isArray(schema) ? schema : schema ? [schema] : [])];
+
+  const isNoIndex = Boolean(noindex);
 
   return (
     <Helmet>
@@ -81,10 +110,13 @@ export default function SEO({
       <title>{fullTitle}</title>
       {description && <meta name="description" content={description} />}
       {keywordString && <meta name="keywords" content={keywordString} />}
+      
+      {/* Robots Directive */}
       <meta
         name="robots"
-        content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'}
+        content={isNoIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'}
       />
+      
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Dynamic Route hreflang Alternates */}

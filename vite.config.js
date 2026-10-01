@@ -3,13 +3,18 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import sitemap from 'vite-plugin-sitemap'
 import { projectsData } from './src/data/projectsData.js'
+import { articles } from './src/data/articles.js'
 
-// Primary domain — siavashstudio.ir . Keep in sync with SITE_URL inside src/components/SEO.jsx
-const HOSTNAME = 'https://siavashstudio.ir'
-const dynamicProjectRoutes = projectsData.map((project) => `/work/${project.id}`)
+// Primary canonical domain — matching Vercel target
+const HOSTNAME = 'https://www.siavashstudio.ir'
 
-// Static, crawlable routes. Query-param URLs like /work?category=x are NOT
-// listed here on purpose — they are indexed via their own canonical tags.
+// Dynamic routes for portfolio projects & case studies / articles
+const dynamicProjectRoutes = (projectsData || []).map((project) => `/work/${project.id}`)
+const dynamicArticleRoutes = (articles || [])
+  .filter((article) => article && article.slug)
+  .map((article) => `/insights/${article.slug}`)
+
+// Static crawlable routes
 const staticRoutes = [
   '/',
   '/home',
@@ -30,7 +35,7 @@ export default defineConfig({
     tailwindcss(),
     sitemap({
       hostname: HOSTNAME,
-      dynamicRoutes: [...staticRoutes, ...dynamicProjectRoutes],
+      dynamicRoutes: [...staticRoutes, ...dynamicProjectRoutes, ...dynamicArticleRoutes],
       generateRobotsTxt: true,
       robots: [
         { userAgent: '*', allow: '/', disallow: ['/gateway', '/fa/gateway'] },
@@ -51,8 +56,8 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('three')) return 'three-vendor';
-            if (id.includes('react')) return 'react-vendor';
+            if (id.includes('three') || id.includes('@react-three')) return 'three-vendor';
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) return 'react-vendor';
             return 'vendor';
           }
         },

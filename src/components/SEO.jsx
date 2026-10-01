@@ -4,15 +4,6 @@ import { useStudioTheme } from '../context/ThemeContext.jsx';
 
 /**
  * Central SEO component — powers every page via react-helmet-async.
- * Props:
- *  - title        (string)
- *  - description  (string)
- *  - canonical    (string, absolute URL or path starting with /)
- *  - keywords     (array of strings | string)
- *  - schema       (object | array — JSON-LD structured data)
- *  - image        (string, absolute og:image URL or site path)
- *  - type         ('website' | 'article')
- *  - noindex      (bool — for gateway/utility pages)
  */
 
 const SITE_URL = 'https://www.siavashstudio.ir'; // Primary canonical domain with www
@@ -64,18 +55,23 @@ export default function SEO({
     isFa = false;
   }
 
+  // Fallback high-value search titles
+  const defaultTitle = isFa
+    ? 'استودیو سیاوش | طراحی معماری، موشن گرافیک ۳بعدی و هویت بصری'
+    : 'SIAWSH — Spatial Architecture, 3D Motion & Design Studio';
+
   // Format full document title
   const fullTitle =
     title && (title.includes('SIAWSH') || title.includes('سیاوش'))
       ? title
       : title
       ? `${title} | SIAWSH Studio`
-      : 'SIAWSH — Spatial Architecture, 3D Motion & Design Studio | استودیو سیاوش';
+      : defaultTitle;
 
   // Format Canonical URL
   const canonicalUrl = canonical ? safeUrl(SITE_URL, canonical) : `${SITE_URL}/`;
 
-  // Parse path for dynamic hreflang alternate links
+  // Parse path for clean dynamic hreflang alternate links
   let cleanPath = '';
   if (canonical) {
     if (canonical.startsWith('http://') || canonical.startsWith('https://')) {
@@ -89,15 +85,20 @@ export default function SEO({
     }
   }
 
-  const basePath = cleanPath.replace(/^\/(fa\/|fa$)/, '/').replace(/\/$/, '') || '/home';
-  const enPath = basePath.startsWith('/') ? basePath : `/${basePath}`;
-  const faPath = `/fa${enPath === '/' ? '' : enPath}`;
+  const rawPath = cleanPath.replace(/^\/(fa\/|fa$)/, '/').replace(/\/$/, '') || '';
+  const enPath = rawPath ? (rawPath.startsWith('/') ? rawPath : `/${rawPath}`) : '';
+  const faPath = `/fa${enPath}`;
 
   // Format Open Graph image URL
   const ogImage = image ? safeUrl(SITE_URL, image) : DEFAULT_OG_IMAGE;
 
   // Format Keywords
-  const keywordString = Array.isArray(keywords) ? keywords.join(', ') : keywords;
+  const defaultKeywords = isFa
+    ? ['طراحی معماری', 'موشن گرافیک', 'هویت بصری', 'معماری فضایی', 'استودیو سیاوش', 'سیاوش افسری', 'SIAWSH']
+    : ['Spatial Architecture', '3D Motion', 'Kinetic Branding', 'Visual Identity', 'SIAWSH Studio', 'Siavash Afsari'];
+
+  const combinedKeywords = Array.isArray(keywords) && keywords.length > 0 ? keywords : defaultKeywords;
+  const keywordString = Array.isArray(combinedKeywords) ? combinedKeywords.join(', ') : combinedKeywords;
 
   // Combine schemas
   const schemas = [organizationSchema, ...(Array.isArray(schema) ? schema : schema ? [schema] : [])];
@@ -120,9 +121,9 @@ export default function SEO({
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Dynamic Route hreflang Alternates */}
-      <link rel="alternate" hrefLang="en" href={`${SITE_URL}${enPath}`} />
+      <link rel="alternate" hrefLang="en" href={`${SITE_URL}${enPath || '/'}`} />
       <link rel="alternate" hrefLang="fa" href={`${SITE_URL}${faPath}`} />
-      <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}${enPath}`} />
+      <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}${enPath || '/'}`} />
 
       {/* Open Graph */}
       <meta property="og:site_name" content={isFa ? 'استودیو سیاوش | SIAWSH Studio' : 'SIAWSH Studio'} />

@@ -140,21 +140,21 @@ export default function DisciplineGateway({ isPersian = false }) {
 
   return (
     <>
-     {/* SEO Configuration */}
+   {/* SEO Configuration */}
       <Helmet>
         <title>
           {activeIsPersian
-            ? 'انتخاب حوزه فعالیت | استودیو سیاوش'
-            : 'Select Discipline | SIAWSH Studio'}
+            ? 'استودیو سیاوش | طراحی معماری، موشن گرافیک ۳بعدی و هویت بصری'
+            : 'SIAWSH — Spatial Architecture, 3D Motion & Design Studio'}
         </title>
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link
           rel="canonical"
-          href={activeIsPersian ? 'https://www.siavashstudio.ir/fa/gateway' : 'https://www.siavashstudio.ir/gateway'}
+          href={activeIsPersian ? 'https://www.siavashstudio.ir/fa' : 'https://www.siavashstudio.ir/'}
         />
-        <link rel="alternate" hrefLang="en" href="https://www.siavashstudio.ir/gateway" />
-        <link rel="alternate" hrefLang="fa" href="https://www.siavashstudio.ir/fa/gateway" />
-        <link rel="alternate" hrefLang="x-default" href="https://www.siavashstudio.ir/gateway" />
+        <link rel="alternate" hrefLang="en" href="https://www.siavashstudio.ir/" />
+        <link rel="alternate" hrefLang="fa" href="https://www.siavashstudio.ir/fa" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.siavashstudio.ir/" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="alternate icon" href="/favicon.ico" />
       </Helmet>

@@ -30,9 +30,27 @@ const CINEMATIC_TAGS = [
 
 export default function SelectedPractices() {
   const canvasRef = useRef(null);
+  const sectionRef = useRef(null);
   const { mode, isLight, lang, t } = useStudioTheme();
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeSubTag, setActiveSubTag] = useState('all');
+  const [isVisible, setIsVisible] = useState(false);
+
+  // IntersectionObserver to pause rendering when section is off-screen
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   // Reset tag selection back to 'all' whenever mode toggles between spatial and cinematic
   useEffect(() => {
@@ -59,22 +77,25 @@ export default function SelectedPractices() {
     );
   }, [baseModeProjects, activeSubTag]);
 
+  // Canvas Particle Animation with Thread & Off-screen Guard
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !isVisible) return;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
 
     const resizeCanvas = () => {
-      canvas.width = canvas.parentElement?.offsetWidth || window.innerWidth;
-      canvas.height = canvas.parentElement?.offsetHeight || window.innerHeight;
+      const parent = canvas.parentElement;
+      canvas.width = parent ? parent.offsetWidth : window.innerWidth;
+      canvas.height = parent ? parent.offsetHeight : window.innerHeight;
     };
 
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
     // Particles/Stars setup
-    const numParticles = window.innerWidth < 768 ? 80 : 140;
+    const isMobile = window.innerWidth < 768;
+    const numParticles = isMobile ? 60 : 110;
     const particles = Array.from({ length: numParticles }, () => ({
       x: (Math.random() - 0.5) * canvas.width * 2,
       y: (Math.random() - 0.5) * canvas.height * 2,
@@ -93,10 +114,16 @@ export default function SelectedPractices() {
     let angle = 0;
 
     const render = () => {
+      // Pause frame execution if tab is inactive or hidden
+      if (document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       angle += 0.002;
-      const cameraX = Math.sin(angle) * (window.innerWidth < 768 ? 40 : 120);
+      const cameraX = Math.sin(angle) * (isMobile ? 40 : 120);
       const cameraY = scrollY * 0.35 + Math.cos(angle * 0.8) * 50;
 
       const centerX = canvas.width / 2;
@@ -154,12 +181,15 @@ export default function SelectedPractices() {
       window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isLight]);
+  }, [isLight, isVisible]);
 
   return (
-    <section className={`relative overflow-hidden pt-8 pb-4 md:pt-12 md:pb-6 transition-colors duration-500 font-'Vazirmatn',_sans-serif ${
-      isLight ? 'bg-transparent text-black' : 'bg-black text-white'
-    }`}>
+    <section 
+      ref={sectionRef}
+      className={`relative overflow-hidden pt-8 pb-4 md:pt-12 md:pb-6 transition-colors duration-500 font-'Vazirmatn',_sans-serif ${
+        isLight ? 'bg-transparent text-black' : 'bg-black text-white'
+      }`}
+    >
       {/* Background Canvas Effect */}
       <canvas
         ref={canvasRef}

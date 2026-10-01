@@ -140,8 +140,7 @@ export default function DisciplineGateway({ isPersian = false }) {
 
   return (
     <>
-      {/* SEO: Utility/router page — explicitly excluded from search indexes.
-          robots.txt also disallows /gateway and /fa/gateway (vite.config.js). */}
+     {/* SEO Configuration */}
       <Helmet>
         <title>
           {activeIsPersian
@@ -149,7 +148,13 @@ export default function DisciplineGateway({ isPersian = false }) {
             : 'Select Discipline | SIAWSH Studio'}
         </title>
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <link rel="canonical" href={activeIsPersian ? 'https://siavashstudio.ir/fa/gateway' : 'https://siavashstudio.ir/gateway'} />
+        <link
+          rel="canonical"
+          href={activeIsPersian ? 'https://www.siavashstudio.ir/fa/gateway' : 'https://www.siavashstudio.ir/gateway'}
+        />
+        <link rel="alternate" hrefLang="en" href="https://www.siavashstudio.ir/gateway" />
+        <link rel="alternate" hrefLang="fa" href="https://www.siavashstudio.ir/fa/gateway" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.siavashstudio.ir/gateway" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="alternate icon" href="/favicon.ico" />
       </Helmet>

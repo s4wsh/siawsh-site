@@ -148,7 +148,7 @@ export default function DisciplineGateway({ isPersian = false }) {
             ? 'انتخاب حوزه فعالیت | استودیو سیاوش'
             : 'Select Discipline | SIAWSH Studio'}
         </title>
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={activeIsPersian ? 'https://siavashstudio.ir/fa/gateway' : 'https://siavashstudio.ir/gateway'} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="alternate icon" href="/favicon.ico" />

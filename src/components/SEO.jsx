@@ -7,7 +7,7 @@ import { useStudioTheme } from '../context/ThemeContext.jsx';
  * Props:
  *  - title        (string)
  *  - description  (string)
- *  - canonical    (string, absolute URL or path)
+ *  - canonical    (string, absolute URL or path starting with /)
  *  - keywords     (array of strings | string)
  *  - schema       (object | array — JSON-LD structured data)
  *  - image        (string, absolute og:image URL or site path)
@@ -15,7 +15,7 @@ import { useStudioTheme } from '../context/ThemeContext.jsx';
  *  - noindex      (bool — for gateway/utility pages)
  */
 
-const SITE_URL = 'https://siavashstudio.ir';   // Primary domain (siavashstudio.ir). Keep in sync with vite.config.js HOSTNAME
+const SITE_URL = 'https://www.siavashstudio.ir'; // Primary canonical domain with www
 const DEFAULT_OG_IMAGE = `${SITE_URL}/projects/croissanthouse/croissant_house_coffee_cup_and_fresh_croissant.webp`;
 
 // Site-wide Organization schema — rendered on every page for brand entity building
@@ -52,14 +52,23 @@ export default function SEO({
   const fullTitle =
     title && (title.includes('SIAWSH') || title.includes('سیاوش'))
       ? title
-      : `${title} | SIAWSH Studio`;
+      : title
+      ? `${title} | SIAWSH Studio`
+      : 'SIAWSH — Spatial Architecture, 3D Motion & Design Studio | استودیو سیاوش';
 
+  // Format Canonical URL
+  const canonicalPath = canonical ? (canonical.startsWith('http') ? new URL(canonical).pathname : canonical) : '';
   const canonicalUrl = canonical
-    ? (canonical.startsWith('http') ? canonical : `${SITE_URL}${canonical}`)
-    : SITE_URL;
+    ? (canonical.startsWith('http') ? canonical : `${SITE_URL}${canonical.startsWith('/') ? '' : '/'}${canonical}`)
+    : `${SITE_URL}/`;
+
+  // Dynamic hreflang generation based on current route path
+  const basePath = canonicalPath.replace(/^\/(fa\/|fa$)/, '/').replace(/\/$/, '') || '/home';
+  const enPath = basePath.startsWith('/') ? basePath : `/${basePath}`;
+  const faPath = `/fa${enPath === '/' ? '' : enPath}`;
 
   const ogImage = image
-    ? (image.startsWith('http') ? image : `${SITE_URL}${image}`)
+    ? (image.startsWith('http') ? image : `${SITE_URL}${image.startsWith('/') ? '' : '/'}${image}`)
     : DEFAULT_OG_IMAGE;
 
   const keywordString = Array.isArray(keywords) ? keywords.join(', ') : keywords;
@@ -69,7 +78,7 @@ export default function SEO({
   return (
     <Helmet>
       {/* Primary Meta Tags */}
-      {title && <title>{fullTitle}</title>}
+      <title>{fullTitle}</title>
       {description && <meta name="description" content={description} />}
       {keywordString && <meta name="keywords" content={keywordString} />}
       <meta
@@ -78,14 +87,14 @@ export default function SEO({
       />
       <link rel="canonical" href={canonicalUrl} />
 
-      {/* hreflang — EN/FA alternates */}
-      <link rel="alternate" hrefLang="en" href={`${SITE_URL}/home`} />
-      <link rel="alternate" hrefLang="fa" href={`${SITE_URL}/fa/home`} />
-      <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}/home`} />
+      {/* Dynamic Route hreflang Alternates */}
+      <link rel="alternate" hrefLang="en" href={`${SITE_URL}${enPath}`} />
+      <link rel="alternate" hrefLang="fa" href={`${SITE_URL}${faPath}`} />
+      <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}${enPath}`} />
 
       {/* Open Graph */}
       <meta property="og:site_name" content={isFa ? 'استودیو سیاوش | SIAWSH Studio' : 'SIAWSH Studio'} />
-      {title && <meta property="og:title" content={fullTitle} />}
+      <meta property="og:title" content={fullTitle} />
       {description && <meta property="og:description" content={description} />}
       <meta property="og:type" content={type} />
       <meta property="og:url" content={canonicalUrl} />
@@ -96,7 +105,7 @@ export default function SEO({
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
-      {title && <meta name="twitter:title" content={fullTitle} />}
+      <meta name="twitter:title" content={fullTitle} />
       {description && <meta name="twitter:description" content={description} />}
       <meta name="twitter:image" content={ogImage} />
 

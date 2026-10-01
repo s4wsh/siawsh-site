@@ -2,17 +2,30 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import sitemap from 'vite-plugin-sitemap'
+import fs from 'node:fs'
+import path from 'node:path'
 import { projectsData } from './src/data/projectsData.js'
-import { articles } from './src/data/articles.js'
 
 // Primary canonical domain — matching Vercel target
 const HOSTNAME = 'https://www.siavashstudio.ir'
 
-// Dynamic routes for portfolio projects & case studies / articles
+// Dynamic routes for portfolio projects
 const dynamicProjectRoutes = (projectsData || []).map((project) => `/work/${project.id}`)
-const dynamicArticleRoutes = (articles || [])
-  .filter((article) => article && article.slug)
-  .map((article) => `/insights/${article.slug}`)
+
+// Read article slugs directly from file system to avoid importing Vite runtime macros in Node.js
+const articlesDir = path.resolve(process.cwd(), 'src/data/articles')
+let dynamicArticleRoutes = []
+
+try {
+  if (fs.existsSync(articlesDir)) {
+    const files = fs.readdirSync(articlesDir)
+    dynamicArticleRoutes = files
+      .filter((file) => file.endsWith('.js') && file !== 'index.js')
+      .map((file) => `/insights/${file.replace(/\.js$/, '')}`)
+  }
+} catch (e) {
+  console.warn('Could not read articles directory for sitemap generation:', e)
+}
 
 // Static crawlable routes
 const staticRoutes = [

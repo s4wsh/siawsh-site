@@ -974,3 +974,25 @@ html[dir="rtl"] .discipline-pill {
   animation: cloudPulse3 26s ease-in-out infinite;
 }
 }
+/* ─── INSIGHT (BLOG) ARTICLE — Vazirmatn everywhere ─── */
+.insight-detail,
+.insight-detail p,
+.insight-detail h1,
+.insight-detail h2,
+.insight-detail h3,
+.insight-detail figcaption,
+.insight-detail td,
+.insight-detail th {
+  font-family: 'Vazirmatn', 'Vazirmatn FD', system-ui, sans-serif;
+}
+.insight-detail blockquote { text-align: start; }
+/* ─── FORCE Vazirmatn ON ENTIRE INSIGHT ARTICLE PAGE (overrides font-mono/font-sans) ─── */
+.insight-detail,
+.insight-detail *:not(code):not(pre):not(pre *) {
+  font-family: 'Vazirmatn', 'Vazirmatn FD', system-ui, sans-serif !important;
+}
+/* keep code blocks mono — code must stay monospace */
+.insight-detail pre,
+.insight-detail code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+}

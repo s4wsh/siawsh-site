@@ -1,99 +1,257 @@
 export const projectsData = [
-  {
-    id: "croissant-house-branding",
+{
+    id: "modern-kitchen-spatial-redesign",
     title: {
-      en: "Croissant House Brand Identity & Packaging Design | Bakery Branding Germany",
-      fa: "طراحی هویت بصری و بسته‌بندی کروسان هاوس | برندینگ کافه در آلمان"
+      en: "Kitchen Redesign: Circulation, Ergonomics & Modular Cabinetry",
+      fa: "بازطراحی آشپزخانه: گردش حرکتی، ارگونومی و کابینت مدولار"
     },
-    categoryType: ["cinematic"],
-    tags: ["brand-identity"],
-    year: "2024",
-    client: "Croissant House",
-    location: "Germany",
+    categoryType: ["spatial"],
+    tags: ["interior", "cabinets"],
+    year: "2026",
+    yearFa: "۲۰۲۶",
+    client: "Private Residential (Case Study)",
+    clientFa: "پروژه مسکونی (مطالعه موردی)",
+    location: "Tehran, Iran",
+    locationFa: "تهران، ایران",
     shortDesc: {
-      en: "Complete brand identity system for Croissant House bakery in Germany — custom logo mark, premium color palette, packaging design, storefront window graphics, and warm interior signage. Brand identity system, cafe interior branding and commercial packaging built in Illustrator, Photoshop and Figma.",
-      fa: "هویت بصری کامل کروسان هاوس در آلمان — طراحی لوگو اختصاصی، پالت رنگی پرمیوم، بسته‌بندی تجاری، گرافیک ویترین مغازه و تابلوهای داخلی. طراحی هویت بصری و برندینگ کافه با ایلاستریتور، فتوشاپ و فیگما."
+      en: "A design-phase redesign of a Tehran apartment kitchen. We removed a barrier wall, opened the entrance to natural light, and doubled the sink-to-cooktop clearance with a peninsula layout and German-inspired modular cabinetry.",
+      fa: "بازطراحی آشپزخانه یک آپارتمان در تهران در فاز طراحی. با حذف دیوار حائل، ورود نور طبیعی به عمق فضا و نزدیک به دو برابر شدن فاصله سینک تا گاز، آشپزخانه‌ای باز، ایمن و مدولار با الهام از استانداردهای آلمانی ساخته‌ایم."
     },
     seoKeywords: [
-      "brand identity system",
-      "bakery brand identity design",
-      "cafe interior branding",
-      "storefront signage design",
-      "commercial packaging design",
-      "Croissant House branding",
-      "cafe visual identity",
-      "bakery logo design",
-      "spatial branding Germany",
-      "طراحی هویت بصری",
-      "برندینگ کافه",
-      "طراحی بسته‌بندی تجاری",
-      "طراحی داخلی ۳ بعدی"
+      "kitchen spatial planning",
+      "modern kitchen circulation",
+      "ergonomic cabinetry engineering",
+      "work triangle optimization",
+      "german modular kitchen design",
+      "3d architectural kitchen render",
+      "nkba kitchen standards",
+      "Siavash Studio interior design",
+      "طراحی داخلی آشپزخانه",
+      "سیرکولاسیون فضایی آشپزخانه",
+      "طراحی کابینت مدرن",
+      "ارگونومی مثلث کار",
+      "رندر سه‌بعدی معماری",
+      "استودیو سیاوش"
     ],
-    subtitle: "Developing a warm, modern brand identity, logo mark, and physical environmental design for Croissant House.",
-    subtitleFa: "خلق یک هویت بصری مدرن، صمیمی و منسجم همراه با سیستم لوگو و طراحی اقلام بسته‌بندی برای شعب کروسان هاوس در آلمان.",
-    tagline: "BRAND IDENTITY & SPATIAL INTEGRATION FOR A GERMAN BAKERY",
-    taglineFa: "هویت بصری و پکیج بسته‌بندی کافی‌شاپ کروسان هاوس آلمان",
+    subtitle: "How a blocked, cramped kitchen became an open, ergonomic workspace, resolved on screen before any demolition.",
+    subtitleFa: "چگونه آشپزخانه‌ای تنگ و مسدود به فضایی باز و ارگونومیک تبدیل شد؛ همه‌چیز پیش از اولین ضربه تخریب روی صفحه حل شد.",
+    tagline: "OPEN PLAN. SAFE CLEARANCES. SIMULATED BEFORE BUILT.",
+    taglineFa: "پلان باز. فواصل ایمن. شبیه‌‌سازی پیش از ساخت.",
     aspectRatio: "rectangular",
     logo: null,
 
     // SEO Metadata
-    metaTitle: "Croissant House Branding Case Study | Identity & Spatial Design (Germany)",
-    metaTitleFa: "طراحی هویت بصری و لوگو کافی شاپ کروسان هاوس | استودیو سیاوش",
-    metaDescription: "Visual identity, logo design, color palette, and physical space application for Croissant House cafe in Germany (2024).",
-    metaDescriptionFa: "نمونه‌کار تخصصی طراحی هویت بصری، لوگو و بسته‌بندی کافی‌شاپ کروسان هاوس آلمان توسط استودیو سیاوش. خلق سیستم بصری هوشمندانه و پرمیوم.",
+    metaTitle: "Modern Kitchen Redesign Case Study: Ergonomics & Modular Cabinetry | Siavash Studio",
+    metaTitleFa: "مطالعه موردی بازطراحی آشپزخانه مدرن: ارگونومی و کابینت مدولار | استودیو سیاوش",
+    metaDescription: "See how Siavash Studio redesigned a Tehran kitchen: AI-assisted layout planning, NKBA and Neufert ergonomics, a 58 cm sink-to-cooktop clearance, 3-layer lighting, and photorealistic 3D rendering.",
+    metaDescriptionFa: "ببینید استودیو سیاوش چگونه یک آشپزخانه در تهران را بازطراحی کرد: چیدمان با کمک هوش مصنوعی، ارگونومی NKBA و نوفرت، فاصله ایمن ۵۸ سانتی‌متری سینک تا گاز، نورپردازی سه‌لایه و رندر سه‌بعدی فوتورئال.",
     keywords: [
-      "Croissant House branding",
-      "cafe visual identity",
-      "bakery logo design",
-      "spatial branding Germany"
+      "kitchen spatial planning",
+      "modern kitchen circulation",
+      "3d architectural kitchen render",
+      "Siavash Studio interior design"
     ],
     schemaType: "CreativeWork",
 
     // Media
-    heroImage: "/projects/croissanthouse/croissant_house_coffee_cup_and_fresh_croissant.webp",
+    heroImage: "/projects/kitchen-redesign-case-study/cover-kitchen-render.jpg",
 
     // Technical Specifications Matrix
     specs: {
-      client: "Croissant House",
-      year: "2024",
-      location: "Germany",
-      deliverables: "Custom logo & monogram design, professional color palette development, print packaging design (coffee cups, takeaway paper bags and stickers)",
-      tools: "Adobe Illustrator, Adobe Photoshop, Figma"
+      client: "Private Residential (Case Study)",
+      year: "2026",
+      location: "Tehran, Iran",
+      deliverables: "AI-assisted spatial planning, NKBA and Neufert ergonomic optimization, photorealistic 3D rendering, 3-layer lighting design, material and hardware specification",
+      tools: "Blender, Figma, AI parametric planning tools, Adobe Photoshop"
     },
     specsFa: {
-      client: "کروسان هاوس (Croissant House)",
-      year: "۲۰۲۴",
-      location: "آلمان",
-      deliverables: "طراحی لوگو و مونوگرام اختصاصی، تدوین پالت رنگی حرفه‌ای، طراحی اقلام بسته‌بندی چاپی (لیوان قهوه، پاکت‌های کاغذی بیرون‌بر و استیکر)",
-      tools: "ادوبی ایلاستریتور، ادوبی فتوشاپ، فیگما"
+      client: "پروژه مسکونی (مطالعه موردی)",
+      year: "۲۰۲۶",
+      location: "تهران، ایران",
+      deliverables: "برنامه‌‌ریزی فضایی با کمک هوش مصنوعی، بهینه‌سازی ارگونومیک بر پایه استانداردهای NKBA و نوفرت، رندر سه‌بعدی فوتورئال، طراحی نورپردازی سه‌لایه، تدوین مشخصات متریال و یراق‌آلات",
+      tools: "بلندر، فیگما، ابزارهای برنامه‌ریزی پارامتریک با هوش مصنوعی، ادوبی فتوشاپ"
     },
 
     // Section 01: Concept & Context
-    contextParagraph: "Croissant House needed a cohesive brand identity for its launch in Germany (2024). The identity required a flexible logo system that translated seamlessly from digital assets and takeaway packaging to physical storefront windows and warm interior spaces.",
-    contextParagraphFa: "برند «کروسان هاوس» برای شروع پرقدرت فعالیت خود در آلمان (۲۰۲۴)، نیازمند یک هویت بصری متمایز، ماندگار و منسجم بود. چالش اصلی این پروژه، خلق یک سیستم بصری منعطف توسط استودیو سیاوش بود تا بتواند حس صمیمیت، اصالت و کیفیت شیرینی‌های تازه را از دارایی‌های دیجیتال تا اقلام بسته‌بندی چاپی به مشتریان منتقل کند.",
-    contextImage: "/projects/croissanthouse/croissant_house_brand_color_palette_and_logo_variants.webp",
+    contextParagraph: "The original plan had a structural problem at its core. A poorly placed wall at the entrance blocked natural light and made the space feel cramped the moment you walked in. The sink and cooktop sat less than 30 cm apart, which left no prep surface and fell short of NKBA and Neufert ergonomic standards.",
+    contextParagraphFa: "پلان اولیه از ریشه مشکل داشت. دیواری نامتناسب در ورودی، مانع رسیدن نور طبیعی به عمق فضا بود و از همان قدم اول حس گرفتگی ایجاد می‌کرد. فاصله سینک و گاز هم کمتر از ۳۰ سانتی‌متر بود؛ یعنی نه سطحی برای آماده‌سازی غذا می‌ماند و نه استانداردهای ارگونومی NKBA و نوفرت رعایت می‌شد.",
+    contextImage: "/projects/kitchen-redesign-case-study/fig-6-mechanical-simulation.webp",
 
     // Section 02: Execution & Strategy
-    mainParagraph: "The logo centers on an organic line-art mark combining steam, pastry contours, and the integrated \"CH\" monogram. A color system featuring Burnt Sienna, Deep Teal, and Neutral Grey was established to provide versatility across light and dark applications. The identity was then extended to physical touchpoints—including custom coffee cups, paper takeaway bags, store window vinyl cutouts, and mounted interior acrylic signage.",
-    mainParagraphFa: "هسته اصلی لوگو بر پایه یک نشان خطی (Line-art) ارگانیک و هوشمندانه شکل گرفته است؛ ترکیبی از ظرافت بخار داغ، منحنی‌های شیرینی کروسان و مونوگرام ادغام‌شده «CH». برای دستیابی به حداکثر انعطاف‌پذیری بصری در تم‌های روشن و تیره، پالت رنگی اختصاصی شامل خرمایی (Burnt Sienna)، فیروزه‌ای تیره (Deep Teal) و خاکستری خنثی (Neutral Grey) تدوین گردید. این سیستم بصری هوشمند، بستری منسجم برای تمام نقاط تماس مشتری از جمله لیوان‌های اختصاصی قهوه و پاکت‌های کاغذی بیرون‌بر ایجاد کرد.",
-    mainImage: "/projects/croissanthouse/croissant_house_takeaway_packaging_mockup.webp",
+    mainParagraph: "The goal was to fix the layout without costly plumbing or structural changes. We fed the room's fixed constraints (risers, water and drainage points, gas outlet, hood duct) into a parametric model and evaluated more than 20 layouts. The winning plan removes the non-structural wall, adds an open peninsula, and widens the sink-to-cooktop clearance to 58 cm. Its cabinetry takes cues from Leicht, Nobilia and Bulthaup: handleless matte fronts, full-height wall units, and Magic Corner hardware for blind corners.",
+    mainParagraphFa: "هدف این بود که بدون جابه‌جایی‌های پرهزینه تأسیسات و سازه، چیدمان اصلاح شود. محدودیت‌های ثابت فضا، یعنی رایزرها، نقاط آب و فاضلاب، خروجی گاز و کانال هود را وارد مدل پارامتریک کردیم و بیش از ۲۰ چیدمان را سنجیدیم. طرح منتخب دیوار غیرباربر را حذف می‌کند، یک نیم‌‌جزیره باز می‌سازد و فاصله سینک تا گاز را به ۵۸ سانتی‌متر می‌رساند. کابینت‌ها با الهام از Leicht، Nobilia و Bulthaup طراحی شده‌اند: سطوح مات بدون دستگیره، کابینت دیواری تا سقف و مکانیزم Magic Corner برای کنج‌های کور.",
+    mainImage: "/projects/kitchen-redesign-case-study/fig-8-lighting-layers.webp",
 
-    // Section 04: Impact & Recognition
-    recognition: "Featured Brand Identity & Spatial Design Case Study",
-    recognitionFa: "خروجی نهایی و توسعه هویت بصری",
-    theySaidTitle: "Project Outcome & Reflection",
-    theySaidTitleFa: "دستاوردهای پروژه",
-    theySaidParagraph: "Delivered a complete brand identity package and spatial execution for Croissant House's flagship German location, establishing a welcoming brand experience from packaging to store interior.",
-    theySaidParagraphFa: "ماحصل این همکاری، تدوین سیستم جامع استانداردهای بصری و اجرای کامل بسته‌بندی‌های اختصاصی برای کروسان هاوس بود؛ ساختاری منسجم که علاوه بر تثبیت حضور برند در بازار آلمان، ارتباطی مؤثر و ماندگار میان مخاطب و اقلام فیزیکی محصول ایجاد کرد.",
+    // Section 03: Challenges → Solutions (EXPANDED)
+    challengesTitle: { en: "The Challenges", fa: "چالش‌ها" },
+    challenges: {
+      en: [
+        "A barrier wall at the entrance blocked daylight and made the space feel closed in the moment you walked through the door.",
+        "In an open-concept layout, that wall was a visual error: it cut the kitchen off from the living area and shortened the sense of depth.",
+        "The sink and cooktop were less than 30 cm apart, leaving no prep counter and creating a safety risk.",
+        "The wash zone was badly placed and exposed to the entrance, with no privacy.",
+        "The counter was broken up and unusable, so two people could not work at the same time."
+      ],
+      fa: [
+        "دیوار حائل ورودی، نور طبیعی را مسدود می‌کرد و فضا را از همان لحظه ورود بسته و تنگ نشان می‌داد.",
+        "در یک پلان باز، این دیوار خطای بصری آشکاری بود: آشپزخانه را از سالن جدا می‌کرد و حس عمق فضا را کم می‌کرد.",
+        "فاصله سینک و گاز کمتر از ۳۰ سانتی‌متر بود؛ نه کانتر آماده‌سازی داشت و نه ایمنی کافی.",
+        "جانمایی ناصحیح ناحیه شست‌وشو، آن را در دید مستقیم ورودی قرار داده بود و محرمیتی نداشت.",
+        "سطح کانتر پراکنده و غیرقابل استفاده بود و کار هم‌زمان دو نفر ممکن نبود."
+      ]
+    },
+    solutionsTitle: { en: "The Design Response", fa: "راهکار طراحی" },
+    solutions: {
+      en: [
+        "AI-assisted parametric planning generated and scored 20+ layout options against real plumbing and structural limits.",
+        "Risers, water and drainage inlets, the gas outlet and the hood duct were locked in as fixed constraints, so pipes needed minimal rerouting and only light chasing in floors and walls.",
+        "The non-structural wall is removed and replaced by an open peninsula counter.",
+        "A continuous, engineered counter between sink and cooktop creates a real prep zone for two users.",
+        "Sliding sink covers turn the sink into extra chopping space when it is not in use.",
+        "Full-height wall cabinets, pull-out pantry units and Magic Corner hardware turn dead corners into usable storage.",
+        "Long horizontal lines and handleless fronts give the room a clean, modern form.",
+        "A three-layer lighting plan (ambient, task, accent) shapes the room by day and night."
+      ],
+      fa: [
+        "برنامه‌ریزی پارامتریک با کمک هوش مصنوعی، بیش از ۲۰ چیدمان را بر اساس محدودیت‌های واقعی لوله‌‌کشی و سازه تولید و ارزیابی کرد.",
+        "رایزرها، ورودی‌های آب و فاضلاب، خروجی گاز و کانال هود به‌عنوان محدودیت ثابت وارد مدل شدند؛ در نتیجه تغییر مسیر لوله‌ها حداقل است و شیارزنی کف و دیوار به کمترین حد می‌رسد.",
+        "دیوار غیرباربر حذف شد و کانتر نیم‌جزیره‌ای باز جای آن را گرفت.",
+        "کانتر یکپارچه و مهندسی‌شده میان سینک و گاز، یک ناحیه آماده‌سازی واقعی برای دو کاربر می‌سازد.",
+        "صفحات کشویی روی سینک، در زمان‌هایی که از سینک استفاده نمی‌شود، آن را به فضای اضافه برای خردکردن مواد غذایی تبدیل می‌کنند.",
+        "کابینت‌های دیواری تا سقف، کابینت‌های کشویی سوپرمارکتی و مکانیزم Magic Corner، کنج‌های بلااستفاده را به فضای ذخیره‌سازی تبدیل کردند.",
+        "خطوط افقی کشیده و کابینت‌های بدون دستگیره، زبان فرمی مدرن و تمیزی به فضا می‌دهند.",
+        "نورپردازی سه‌لایه (عمومی، وظیفه‌ای، تزئینی) فضا را در روز و شب شکل می‌دهد."
+      ]
+    },
+
+    // Section 04: Key Metrics
+    metricsTitle: { en: "Results at a Glance", fa: "نتایج در یک نگاه" },
+    metrics: [
+      {
+        value: { en: "58 cm", fa: "۵۸ سانتی‌متر" },
+        label: { en: "Sink-to-cooktop clearance, up from under 30 cm", fa: "فاصله سینک تا گاز، از کمتر از ۳۰ سانتی‌متر" }
+      },
+      {
+        value: { en: "+93%", fa: "۹۳٪+" },
+        label: { en: "Increase in safety clearance", fa: "افزایش فاصله ایمنی" }
+      },
+      {
+        value: { en: "20+", fa: "+۲۰" },
+        label: { en: "Layout scenarios evaluated", fa: "چیدمان ارزیابی‌شده" }
+      },
+      {
+        value: { en: "3", fa: "۳" },
+        label: { en: "Lighting layers: ambient, task, accent", fa: "لایه نورپردازی: عمومی، وظیفه‌ای، تزئینی" }
+      }
+    ],
+
+    // Section 05: Materials & Lighting (EXPANDED)
+    materialsTitle: { en: "Materials & Lighting", fa: "متریال و نورپردازی" },
+    materialsParagraph: {
+      en: "A modern kitchen without proper lighting feels lifeless, and a kitchen without durable surfaces does not stay beautiful for long. Cabinet fronts are antibacterial matte high-gloss MDF, which resists fingerprints and is easy to keep clean. The prep zone between sink and cooktop uses engineered quartz, Corian or Dekton slab, chosen for scratch resistance, near-zero staining and antibacterial properties. Lighting is built in three layers. Recessed downlights provide ambient light for the whole room. Concealed LED strips under the wall cabinets deliver task light directly onto the prep counter and sink. Accent lighting inside the display cabinets and under the peninsula adds visual depth in the evening.",
+      fa: "آشپزخانه مدرن بدون نورپردازی درست بی‌روح است و آشپزخانه بدون متریال بادوام، زیبایی‌‌اش دیری نمی‌پاید. نماهای کابینت از ام‌دی‌اف آنتی‌باکتریال مات هایگلاس است که ضدلک است و تمیز کردنش آسان است. در ناحیه آماده‌سازی میان سینک و گاز، اسلب مهندسی‌شده کوارتز، کورین یا دکتون پیشنهاد شده است؛ به‌دلیل مقاومت در برابر خط‌وخش، لکه‌پذیری بسیار کم و خاصیت آنتی‌باکتریال. نورپردازی در سه لایه طراحی شده است. دان‌لایت‌های سقفی نور عمومی کل فضا را تأمین می‌کنند. ریسه‌های LED مخفی زیر کابینت‌های دیواری، نور وظیفه‌ای را مستقیم روی کانتر آماده‌سازی و سینک می‌اندازند. نورپردازی تزئینی داخل ویترین و زیر نیم‌جزیره هم شب‌ها به فضا عمق بصری می‌دهد."
+    },
+
+    // Section 06: Work Triangle (NEW)
+    triangleTitle: { en: "The Work Triangle: Why It Matters", fa: "مثلث کار: چرا مهم است؟" },
+    triangleParagraph: {
+      en: "The work triangle is one of the most basic rules in kitchen design. It sets the best distances and movement paths between the three main poles of the kitchen. When one pole is misplaced, as the sink and cooktop were here, every meal costs extra steps, extra fatigue and extra risk.",
+      fa: "مثلث کار یکی از بنیادی‌ترین قانون‌های طراحی آشپزخانه است. این قانون فاصله‌ها و مسیرهای حرکتی بهینه میان سه قطب اصلی آشپزخانه را تعیین می‌کند. وقتی یکی از قطب‌ها جای درست خودش نباشد، مثل سینک و گاز در این پروژه، هر وعده غذا قدم‌های اضافه، خستگی بیشتر و ریسک بالاتری دارد."
+    },
+    triangleItems: [
+      {
+        title: { en: "Storage pole", fa: "قطب نگهداری" },
+        text: { en: "Refrigerator and freezer", fa: "یخچال و فریزر" }
+      },
+      {
+        title: { en: "Prep and wash pole", fa: "قطب آماده‌سازی و شست‌وشو" },
+        text: { en: "Sink and dishwasher", fa: "سینک ظرفشویی و ماشین ظرفشویی" }
+      },
+      {
+        title: { en: "Cooking pole", fa: "قطب پخت‌وپز" },
+        text: { en: "Cooktop, oven and hood", fa: "اجاق گاز صفحه‌ای، فر و هود" }
+      }
+    ],
+
+    // Section 07: Localization (NEW)
+    localizationTitle: { en: "German Standards, Built for Tehran", fa: "استاندارد آلمانی، بومی‌سازی‌شده برای تهران" },
+    localizationParagraph: {
+      en: "Leicht, Nobilia and Bulthaup are known for their heavy use of sliding mechanisms, movable sink covers and multi-purpose counters. This design borrows those ideas, but it does not copy the products. Importing German hardware directly is impractical because of sanctions and heavy currency costs. So the studio adapted the engineering principles to what can be built and sourced in the Tehran market, keeping the quality of the system at a cost that makes sense.",
+      fa: "برندهای Leicht، Nobilia و Bulthaup به‌دلیل استفاده گسترده از مکانیزم‌های کشویی، صفحات متحرک روی سینک و کانترهای چندمنظوره شهرت دارند. این طرح از همین ایده‌ها الهام گرفته است، اما محصولات را کپی نمی‌کند. واردات مستقیم تجهیزات آلمانی به‌دلیل تحریم‌ها و هزینه‌های سنگین ارزی منطقی نیست. به همین دلیل استودیو اصول مهندسی را با امکانات ساخت و تأمین بازار تهران تطبیق داده است تا کیفیت سیستم با هزینه‌ای منطقی حفظ شود."
+    },
+
+    // Section 08: Key Notes (NEW)
+    notesTitle: { en: "Key Notes Before You Renovate", fa: "نکات مهم پیش از بازسازی آشپزخانه" },
+    notes: [
+      {
+        title: { en: "See it before you demolish", fa: "پیش از تخریب ببینید" },
+        text: {
+          en: "A 3D simulation lets you judge the final result and catch layout mistakes before any money is spent on demolition.",
+          fa: "شبیه‌سازی سه‌بعدی به شما اجازه می‌دهد نتیجه نهایی را بسنجید و اشتباه‌های چیدمان را پیش از هزینه‌کردن برای تخریب پیدا کنید."
+        }
+      },
+      {
+        title: { en: "Never squeeze the sink and cooktop together", fa: "سینک و گاز را به هم نچسبانید" },
+        text: {
+          en: "With under 30 cm between them there is no room to prep food, and wet and hot zones sit dangerously close.",
+          fa: "با فاصله کمتر از ۳۰ سانتی‌متر، جایی برای آماده‌سازی غذا نمی‌ماند و ناحیه‌های خیس و داغ خطرناک نزدیک هم قرار می‌گیرند."
+        }
+      },
+      {
+        title: { en: "Work with your plumbing, not against it", fa: "با لوله‌کشی موجود کار کنید" },
+        text: {
+          en: "Mapping risers, water and drainage points, the gas outlet and the hood duct first avoids heavy structural work and expensive rerouting.",
+          fa: "ثبت دقیق رایزرها، نقاط آب و فاضلاب، خروجی گاز و کانال هود از همان ابتدا، از تخریب سنگین و جابه‌جایی پرهزینه تأسیسات جلوگیری می‌کند."
+        }
+      },
+      {
+        title: { en: "Check which walls are structural", fa: "باربر بودن دیوار را بررسی کنید" },
+        text: {
+          en: "Removing a wall can transform a kitchen, but only a non-structural one. Confirm this with an engineer before any demolition.",
+          fa: "حذف دیوار می‌تواند آشپزخانه را متحول کند، اما فقط اگر غیرباربر باشد. پیش از هر تخریبی با مهندس بررسی کنید."
+        }
+      },
+      {
+        title: { en: "Use every corner", fa: "از تمام کنج‌ها استفاده کنید" },
+        text: {
+          en: "Magic Corner and LeMans-style hardware, plus full-height wall cabinets, turn blind corners and unused height into storage.",
+          fa: "یراق‌آلات کنجی مانند Magic Corner و LeMans و کابینت‌های دیواری تا سقف، کنج‌های کور و ارتفاع بلااستفاده را به فضای ذخیره‌سازی تبدیل می‌کنند."
+        }
+      },
+      {
+        title: { en: "Plan lighting from day one", fa: "نورپردازی را از ابتدا برنامه‌ریزی کنید" },
+        text: {
+          en: "Ambient, task and accent layers should be designed with the cabinets, not added afterwards.",
+          fa: "لایه‌های عمومی، وظیفه‌ای و تزئینی باید هم‌زمان با کابینت‌ها طراحی شوند، نه بعد از آن‌ها."
+        }
+      },
+      {
+        title: { en: "Choose durable surfaces for the prep zone", fa: "برای ناحیه آماده‌سازی متریال بادوام انتخاب کنید" },
+        text: {
+          en: "Engineered quartz, Corian or Dekton resist scratches and stains and stay hygienic where you work the most.",
+          fa: "کوارتز مهندسی‌شده، کورین یا دکتون در برابر خط‌وخش و لکه مقاوم‌اند و در پرکاربردترین بخش آشپزخانه بهداشت را حفظ می‌کنند."
+        }
+      }
+    ],
+
+    // Section 09: Impact & Recognition
+    recognition: "Design-phase case study: spatial planning and interior engineering",
+    recognitionFa: "مطالعه موردی فاز طراحی: برنامه‌ریزی فضایی و مهندسی داخلی",
+    theySaidTitle: "Outcome",
+    theySaidTitleFa: "نتیجه",
+    theySaidParagraph: "The final design opens the entrance to daylight, nearly doubles the safe distance between sink and cooktop, lets two people cook at once, and meets NKBA and Neufert guidelines. Every execution question was answered in 3D before demolition began.",
+    theySaidParagraphFa: "طرح نهایی ورودی را به روی نور طبیعی باز می‌کند، فاصله ایمن سینک و گاز را نزدیک به دو برابر می‌کند، امکان کار هم‌زمان دو نفر را می‌دهد و با رهنمودهای NKBA و نوفرت هم‌خوان است. تمام ابهام‌های اجرایی پیش از تخریب، در محیط سه‌بعدی پاسخ گرفتند.",
 
     // Gallery Assets
     theySaidImages: [
-      "/projects/croissanthouse/croissant_house_exterior_storefront_window_graphics.webp",
-      "/projects/croissanthouse/croissant_house_interior_spatial_design_and_signage.webp"
+      "/projects/kitchen-redesign-case-study/fig-2-work-triangle-diagram.jpg",
+      "/projects/kitchen-redesign-case-study/fig-7-wrie-frame-plan.webp",
+      "/projects/kitchen-redesign-case-study/fig-3-ai-spatial-simulation.jpg"
+
     ],
     theySaidVideos: []
   },
-  {
+    {
     id: "skinny-cow-packaging-redesign",
     title: {
       en: "Skinny Cow AI Packaging Redesign | 3D Product Rendering & Blender Cycles",

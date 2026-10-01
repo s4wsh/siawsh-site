@@ -1,3 +1,4 @@
+// src/pages/InsightsPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
@@ -13,14 +14,23 @@ export default function InsightsPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = isFa ? "مقالات، انیمیشن سه‌بعدی و رندرینگ — استودیو سیاوش" : "Insights & R&D — SIAWSH Studio";
+    document.title = isFa ? "مقالات، انیمیشن سه‌بعدی و رندرینگ — استودیو سیاوش" : "Insights & R&D — SIAVASH Studio";
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute(
+        'content',
+        isFa
+          ? 'مقالات تخصصی استودیو سیاوش؛ رندر معماری، انیمیشن سه‌بعدی، طراحی داخلی و تحقیق و توسعه (R&D).'
+          : 'Technical insights & R&D articles by SIAVASH Studio — architectural rendering, 3D animation, interior design and spatial research.'
+      );
+    }
   }, [isFa]);
 
   const categories = isFa 
     ? [
         { id: 'All', label: 'همه مقالات' },
         { id: 'Spatial Design', label: 'رندرینگ و معماری' },
-        { id: '3D Motion', label: 'انیمیشن و مووشن سه‌بعدی' },
+        { id: '3D Motion', label: 'انیمیشن و موشن سه‌بعدی' },
         { id: 'R&D', label: 'تحقیق و توسعه (R&D)' }
       ]
     : [
@@ -30,15 +40,19 @@ export default function InsightsPage() {
         { id: 'R&D', label: 'R&D' }
       ];
 
+  const allArticles = ARTICLES || [];
+
   const filteredArticles = selectedCategory === 'All'
-    ? ARTICLES
-    : ARTICLES.filter((a) => a.category === selectedCategory);
+    ? allArticles
+    : allArticles.filter((a) => a.category === selectedCategory);
 
   return (
     <div 
       dir={isFa ? 'rtl' : 'ltr'}
-      className={`min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}
-      style={{ fontFamily: isFa ? "Vazirmatn, var(--font-sans), system-ui, sans-serif" : "inherit" }}
+      lang={isFa ? 'fa' : 'en'}
+      className={`insights-page min-h-screen transition-colors duration-500 ${isLight ? 'bg-white text-black' : 'bg-black text-white'}`}
+      /* Vazirmatn for BOTH languages — it covers Latin glyphs too, no more system-font fallback */
+      style={{ fontFamily: "'Vazirmatn', 'Vazirmatn FD', system-ui, sans-serif" }}
     >
       <Navbar />
       
@@ -47,8 +61,8 @@ export default function InsightsPage() {
         <div className={`mb-12 border-b pb-10 ${isLight ? 'border-neutral-200' : 'border-neutral-800/40'}`}>
           <div className="flex items-center gap-2 mb-3">
             <span className="h-1.5 w-1.5 rounded-full bg-[#00f0ff] animate-pulse" />
-            <span className="text-xs tracking-[0.3em] uppercase opacity-50 font-mono text-[#00f0ff]">
-              {isFa ? 'ژورنال تخصصی // رندرینگ، انیمیشن و معماری' : 'TECHNICAL JOURNAL // SIAWSH STUDIO'}
+            <span className="text-xs tracking-[0.3em] uppercase opacity-50 text-[#00f0ff]">
+              {isFa ? 'ژورنال تخصصی // رندرینگ، انیمیشن و معماری' : 'TECHNICAL JOURNAL // SIAVASH STUDIO'}
             </span>
           </div>
           <h1 className="text-4xl md:text-6xl font-light tracking-tight">
@@ -63,12 +77,11 @@ export default function InsightsPage() {
               key={cat.id}
               type="button"
               onClick={() => setSelectedCategory(cat.id)}
-              className={`text-xs uppercase tracking-widest px-5 py-2.5 border rounded-none transition-all duration-300 ${
+              className={`text-xs uppercase tracking-widest px-5 py-2.5 border rounded-none transition-all duration-300 shrink-0 ${
                 selectedCategory === cat.id
                   ? (isLight ? 'border-black bg-black text-white' : 'border-white bg-white text-black')
                   : (isLight ? 'border-neutral-300 hover:border-black text-neutral-700' : 'border-neutral-800 hover:border-white text-neutral-400')
               }`}
-              style={{ fontFamily: 'inherit' }}
             >
               {cat.label}
             </button>
@@ -95,12 +108,14 @@ export default function InsightsPage() {
                   <img 
                     src={article.coverImage} 
                     alt={isFa ? article.titleFa || article.title : article.title} 
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover rounded-none transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 </div>
 
                 {/* Article Meta Header */}
-                <div className="flex items-center gap-3 text-xs opacity-50 mb-4 tracking-widest uppercase font-mono">
+                <div className="flex items-center gap-3 text-xs opacity-50 mb-4 tracking-widest uppercase">
                   <span>{isFa ? article.categoryFa || article.category : article.category}</span>
                   <span>/</span>
                   <span>{isFa ? article.dateFa || article.date : article.date}</span>

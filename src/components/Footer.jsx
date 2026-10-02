@@ -40,7 +40,7 @@ export default function Footer() {
       style={farsiFontStyle}
       dir={isFa ? 'rtl' : 'ltr'}
     >
-      <div className="mx-auto max-w-7xl px-6 md:px-12 w-full py-12 md:py-16">
+      <div className="mx-auto max-w-7xl px-6 md:px-12 w-full pb-12 md:pb-16">
         
         {/* Main Grid Section */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 pb-12 border-b border-black/10 dark:border-white/10 items-start">

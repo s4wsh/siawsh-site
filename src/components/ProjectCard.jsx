@@ -135,6 +135,16 @@ const activeTagline =
             {activeTagline}
           </span>
         )}
+
+        {/* Read Project CTA */}
+        <div className="mt-2 flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase transition-all duration-300 group-hover:gap-2.5">
+          <span className={isLight ? 'text-neutral-900' : 'text-white/90'}>
+            {t?.projectCard?.readMore || (isFa ? 'مشاهده پروژه' : 'Read Project')}
+          </span>
+          <span className={`inline-block transition-transform duration-300 ${isFa ? 'group-hover:-translate-x-1' : 'group-hover:translate-x-1'} ${isLight ? 'text-neutral-900' : 'text-white/90'}`}>
+            {isFa ? '←' : '→'}
+          </span>
+        </div>
       </div>
     </div>
   );

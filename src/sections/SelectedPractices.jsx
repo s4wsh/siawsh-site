@@ -5,7 +5,10 @@ import TunnelGrid from '../components/TunnelGrid.jsx';
 import ProjectModal from '../components/ProjectModal.jsx';
 import { safeArray } from '../utils/localize.js';
 
-// Separate, distinct service tags for Spatial and Cinematic practices
+/* Must be identical to the hero surface colors and index.css (--surface-spatial) */
+const SURFACE_LIGHT = '#e8edf4'; // blue-gray
+const SURFACE_DARK = '#0b0b0d';
+
 const SPATIAL_TAGS = [
   { id: 'all', en: 'All Spatial', fa: 'همه پروژه‌های معماری' },
   { id: 'interior', en: 'Interior Design', fa: 'طراحی داخلی' },
@@ -36,40 +39,34 @@ export default function SelectedPractices() {
   const [activeSubTag, setActiveSubTag] = useState('all');
   const [isVisible, setIsVisible] = useState(false);
 
-  // IntersectionObserver to pause rendering when section is off-screen
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
+      ([entry]) => setIsVisible(entry.isIntersecting),
       { threshold: 0.05 }
     );
-
     observer.observe(section);
     return () => observer.disconnect();
   }, []);
 
-  // Reset tag selection back to 'all' whenever mode toggles between spatial and cinematic
   useEffect(() => {
     setActiveSubTag('all');
   }, [mode]);
 
-  // Select active tag taxonomy based on mode
-  const currentServiceTags = useMemo(() => {
-    return mode === 'cinematic' ? CINEMATIC_TAGS : SPATIAL_TAGS;
-  }, [mode]);
+  const currentServiceTags = useMemo(
+    () => (mode === 'cinematic' ? CINEMATIC_TAGS : SPATIAL_TAGS),
+    [mode]
+  );
 
-  // Filter projects by current practice (spatial or cinematic)
-  const baseModeProjects = useMemo(() => {
-    return (projectsData || []).filter((project) =>
-      safeArray(project.categoryType).includes(mode)
-    );
-  }, [mode]);
+  const baseModeProjects = useMemo(
+    () =>
+      (projectsData || []).filter((project) =>
+        safeArray(project.categoryType).includes(mode)
+      ),
+    [mode]
+  );
 
-  // Secondary filter by specific service sub-tag (array-safe)
   const filteredProjects = useMemo(() => {
     if (activeSubTag === 'all') return baseModeProjects;
     return baseModeProjects.filter((project) =>
@@ -77,7 +74,7 @@ export default function SelectedPractices() {
     );
   }, [baseModeProjects, activeSubTag]);
 
-  // Canvas Particle Animation with Thread & Off-screen Guard
+  // Particle canvas (no background fill: the section owns the solid color)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !isVisible) return;
@@ -93,7 +90,6 @@ export default function SelectedPractices() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Particles/Stars setup
     const isMobile = window.innerWidth < 768;
     const numParticles = isMobile ? 60 : 110;
     const particles = Array.from({ length: numParticles }, () => ({
@@ -104,7 +100,6 @@ export default function SelectedPractices() {
       speed: Math.random() * 0.012 + 0.004,
     }));
 
-    // Scroll positioning synced for camera motion
     let scrollY = window.scrollY;
     const handleScroll = () => {
       scrollY = window.scrollY;
@@ -114,7 +109,6 @@ export default function SelectedPractices() {
     let angle = 0;
 
     const render = () => {
-      // Pause frame execution if tab is inactive or hidden
       if (document.hidden) {
         animationFrameId = requestAnimationFrame(render);
         return;
@@ -125,26 +119,12 @@ export default function SelectedPractices() {
       angle += 0.002;
       const cameraX = Math.sin(angle) * (isMobile ? 40 : 120);
       const cameraY = scrollY * 0.35 + Math.cos(angle * 0.8) * 50;
-
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
 
-      // Smooth atmospheric gradient fading to transparent at top and bottom boundaries
-      if (isLight) {
-        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        gradient.addColorStop(0, 'rgba(226, 232, 240, 0)');
-        gradient.addColorStop(0.15, 'rgba(226, 232, 240, 0.8)');
-        gradient.addColorStop(0.5, '#f1f5f9');
-        gradient.addColorStop(0.85, 'rgba(248, 250, 252, 0.8)');
-        gradient.addColorStop(1, 'rgba(248, 250, 252, 0)');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      }
-
-      // Render floating particles
       particles.forEach((particle) => {
-        let projectedX = particle.x - cameraX;
-        let projectedY = particle.y - cameraY;
+        const projectedX = particle.x - cameraX;
+        const projectedY = particle.y - cameraY;
 
         if (projectedX < -centerX * 1.5) particle.x += canvas.width * 2;
         if (projectedX > centerX * 1.5) particle.x -= canvas.width * 2;
@@ -155,19 +135,13 @@ export default function SelectedPractices() {
         const screenY = centerY + projectedY;
 
         particle.alpha += particle.speed;
-        if (particle.alpha > 1 || particle.alpha < 0) {
-          particle.speed = -particle.speed;
-        }
+        if (particle.alpha > 1 || particle.alpha < 0) particle.speed = -particle.speed;
 
         ctx.beginPath();
         ctx.arc(screenX, screenY, particle.radius, 0, Math.PI * 2);
-
-        if (isLight) {
-          ctx.fillStyle = `rgba(180, 150, 100, ${Math.abs(particle.alpha) * 0.35})`;
-        } else {
-          ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(particle.alpha) * 0.8})`;
-        }
-
+        ctx.fillStyle = isLight
+          ? `rgba(180, 150, 100, ${Math.abs(particle.alpha) * 0.35})`
+          : `rgba(255, 255, 255, ${Math.abs(particle.alpha) * 0.8})`;
         ctx.fill();
       });
 
@@ -183,56 +157,59 @@ export default function SelectedPractices() {
     };
   }, [isLight, isVisible]);
 
+  const numberFmt = new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US');
+
   return (
-    <section 
+    <section
       ref={sectionRef}
-      className={`relative overflow-hidden pt-8 pb-4 md:pt-12 md:pb-6 transition-colors duration-500 font-'Vazirmatn',_sans-serif ${
-        isLight ? 'bg-transparent text-black' : 'bg-black text-white'
+      style={{ backgroundColor: isLight ? SURFACE_LIGHT : SURFACE_DARK }}
+      className={`relative overflow-hidden pt-10 pb-4 md:pt-14 md:pb-6 transition-colors duration-500 font-['Vazirmatn',sans-serif] ${
+        isLight ? 'text-black' : 'text-white'
       }`}
     >
-      {/* Background Canvas Effect */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none z-0"
       />
 
-      {/* Standardized max-width container wrapper */}
       <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-12 w-full">
-        {/* Section Header */}
-        <div className={`flex items-center justify-between border-b pb-6 ${
-          isLight ? 'border-black/10' : 'border-white/10'
-        }`}>
-          <h2 className="text-3xl md:text-4xl font-normal tracking-normal font-'Vazirmatn',_sans-serif">
+        <div
+          className={`flex items-center justify-between border-b pb-6 ${
+            isLight ? 'border-black/10' : 'border-white/10'
+          }`}
+        >
+          <h2 className="text-3xl md:text-4xl font-normal tracking-normal">
             {t.works.selectedPractices}
           </h2>
-          <span className={`text-sm md:text-base tracking-wide font-normal font-'Vazirmatn',_sans-serif ${
-            isLight ? 'text-black/60' : 'text-white/60'
-          }`}>
-            {new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US').format(filteredProjects.length)} {filteredProjects.length === 1 ? t.works.project : t.works.projects}
+          <span
+            className={`text-sm md:text-base tracking-wide font-normal ${
+              isLight ? 'text-black/60' : 'text-white/60'
+            }`}
+          >
+            {numberFmt.format(filteredProjects.length)}{' '}
+            {filteredProjects.length === 1 ? t.works.project : t.works.projects}
           </span>
         </div>
 
-        {/* Dynamic Editorial Filter Bar for Spatial & Cinematic */}
-        <div className={`mb-10 w-full border-b pb-5 pt-5 ${
-          isLight ? 'border-black/10' : 'border-white/10'
-        }`}>
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-4 text-sm md:text-base font-normal tracking-wide font-'Vazirmatn',_sans-serif">
+        <div
+          className={`mb-10 w-full border-b pb-5 pt-5 ${
+            isLight ? 'border-black/10' : 'border-white/10'
+          }`}
+        >
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-4 text-sm md:text-base font-normal tracking-wide">
             {currentServiceTags.map((tag) => {
               const isActive = activeSubTag === tag.id;
               const tagLabel = lang === 'fa' ? tag.fa : tag.en;
-
-              // Calculate dynamic project count for each tag (array-safe)
-              const count = tag.id === 'all'
-                ? baseModeProjects.length
-                : baseModeProjects.filter((p) => safeArray(p.tags).includes(tag.id)).length;
-
-              const formattedCount = new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US').format(count);
+              const count =
+                tag.id === 'all'
+                  ? baseModeProjects.length
+                  : baseModeProjects.filter((p) => safeArray(p.tags).includes(tag.id)).length;
 
               return (
                 <button
                   key={tag.id}
                   onClick={() => setActiveSubTag(tag.id)}
-                  className={`relative py-1.5 transition-all duration-300 flex items-center gap-2 rounded-none font-'Vazirmatn',_sans-serif ${
+                  className={`relative py-1.5 transition-all duration-300 flex items-center gap-2 rounded-none ${
                     isActive
                       ? isLight
                         ? 'text-black font-semibold'
@@ -243,9 +220,9 @@ export default function SelectedPractices() {
                   }`}
                 >
                   <span className="leading-relaxed">{tagLabel}</span>
-                  <span className="text-[11px] md:text-xs opacity-70 font-normal">({formattedCount})</span>
-
-                  {/* Active Bottom Line Indicator */}
+                  <span className="text-[11px] md:text-xs opacity-70 font-normal">
+                    ({numberFmt.format(count)})
+                  </span>
                   {isActive && (
                     <span
                       className={`absolute bottom-0 left-0 right-0 h-2px transition-all duration-300 ${
@@ -259,10 +236,8 @@ export default function SelectedPractices() {
           </div>
         </div>
 
-        {/* Dynamic Cards Grid */}
         <TunnelGrid projects={filteredProjects} onSelectProject={setSelectedProject} />
 
-        {/* Detail Modal */}
         <ProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
